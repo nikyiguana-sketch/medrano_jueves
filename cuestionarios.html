@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuestionarios — Ley de Ohm</title>
+<meta name="description" content="Cuestionarios respondidos sobre multímetros, Ley de Ohm y potenciómetros.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --panel:#151A20;
+  --panel-2:#1E262F;
+  --paper:#E9EDEA;
+  --sheet:#FBFCFB;
+  --grid:#D3DCD6;
+  --ink:#1B2127;
+  --ink-soft:#4C585F;
+  --rule:#C9D2CC;
+  --lcd:#E8A33D;
+  --probe:#1F5F8B;
+  --ok:#2E7D4F;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+
+h1,h2,h3,nav,a,.ui{
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+}
+
+code,.mono{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+/* Barra superior */
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:var(--panel);
+  color:#DDE4E8;
+  border-bottom:1px solid #000;
+}
+
+.topbar .in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:.55rem 1.2rem;
+  display:flex;
+  gap:1.4rem;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.topbar strong{
+  font-weight:600;
+  font-size:.95rem;
+}
+
+.topbar a{
+  color:#9FB2BD;
+  text-decoration:none;
+  font-size:.88rem;
+}
+
+.topbar a:hover{
+  color:var(--lcd);
+}
+
+/* Contenido */
+
+main{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 1.2rem 5rem;
+}
+
+.sheet{
+  background:var(--sheet);
+  border:1px solid var(--rule);
+  border-top:none;
+  padding:2.4rem 3rem 3rem;
+}
+
+.hero{
+  background:var(--panel);
+  color:#E6EDF1;
+  border-bottom:4px solid #0A0D10;
+}
+
+.hero .in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:2.5rem 1.2rem;
+}
+
+.hero h1{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:2.4rem;
+  line-height:1.1;
+  margin:0 0 .6rem;
+}
+
+.hero p{
+  color:#A9BAC4;
+  margin:0;
+}
+
+section{
+  scroll-margin-top:70px;
+}
+
+h2{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:1.55rem;
+  margin:2.8rem 0 .3rem;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:.4rem;
+}
+
+h2:first-child{
+  margin-top:0;
+}
+
+.question{
+  border-bottom:1px solid var(--rule);
+  padding:1.1rem 0 1.2rem;
+}
+
+.question:last-child{
+  border-bottom:none;
+}
+
+.question h3{
+  font-size:1rem;
+  margin:0 0 .45rem;
+  color:#2B333A;
+}
+
+.answer{
+  margin:0;
+  padding:.8rem 1rem;
+  background:#F1F4F2;
+  border-left:3px solid var(--probe);
+}
+
+.formula{
+  display:inline-block;
+  background:#EEF2F0;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  padding:.08rem .38rem;
+  font-family:"IBM Plex Mono",monospace;
+}
+
+.note{
+  border-left:3px solid var(--lcd);
+  background:#FCF6EA;
+  padding:.7rem 1rem;
+  margin:1.2rem 0;
+}
+
+.back{
+  display:inline-block;
+  margin-top:1.5rem;
+  background:var(--probe);
+  color:white;
+  text-decoration:none;
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:.9rem;
+  padding:.55rem .9rem;
+  border-radius:4px;
+}
+
+.back:hover{
+  background:#17496b;
+}
+
+footer{
+  max-width:1080px;
+  margin:0 auto;
+  padding:1.4rem 1.2rem 3rem;
+  font-size:.85rem;
+  color:var(--ink-soft);
+  font-family:"IBM Plex Sans",sans-serif;
+}
+
+ul{
+  margin-top:.4rem;
+}
+
+li{
+  margin:.25rem 0;
+}
+
+@media(max-width:860px){
+  .sheet{
+    padding:1.6rem 1.2rem 2.4rem;
+  }
+
+  main{
+    padding:0 .7rem 4rem;
+  }
+
+  .hero h1{
+    font-size:2rem;
+  }
+
+  body{
+    font-size:16px;
+  }
+
+  .topbar .in{
+    gap:.9rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <strong>Ley de Ohm</strong>
+    <a href="index.html">Inicio</a>
+    <a href="#cuestionario1">Cuestionario 1</a>
+    <a href="#cuestionario2">Cuestionario 2</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="in">
+    <h1>Cuestionarios respondidos</h1>
+    <p>
+      Preguntas y respuestas sobre multímetros, mediciones eléctricas,
+      Ley de Ohm, potenciómetros y reóstatos.
+    </p>
+  </div>
+</header>
+
+<main>
+<div class="sheet">
+
+<section id="cuestionario1">
+
+<h2>Cuestionario 1 — Multímetro y mediciones eléctricas</h2>
+
+<div class="question">
+  <h3>1. ¿Qué es un multímetro?</h3>
+  <p class="answer">
+    Es un instrumento de medición eléctrica que contiene <strong>2 o más elementos de medición</strong>
+    y con esto permite medir diferentes magnitudes, como <strong>tensión, corriente y resistencia</strong>.
+  </p>
+</div>
+
+<div class="question">
+  <h3>2. ¿Qué magnitud se mide con un VOLTÍMETRO?</h3>
+  <p class="answer">
+    Se mide la <strong>tensión eléctrica o diferencia de potencial</strong>,
+    expresada en voltios (V).
+  </p>
+</div>
+
+<div class="question">
+  <h3>3. ¿Qué tipo de conexión hay que utilizar para medir una tensión eléctrica con un voltímetro?</h3>
+  <p class="answer">
+    Se debe conectar el voltímetro <strong>en paralelo</strong> con el elemento
+    cuya tensión queremos medir.
+  </p>
+</div>
+
+<div class="question">
+  <h3>4. ¿Qué magnitud se mide con un AMPERÍMETRO?</h3>
+  <p class="answer">
+    Se mide la <strong>intensidad o corriente eléctrica</strong>,
+    expresada en amperios (A).
+  </p>
+</div>
+
+<div class="question">
+  <h3>5. ¿Qué tipo de conexión hay que utilizar para medir una corriente eléctrica con un amperímetro?</h3>
+  <p class="answer">
+    Se debe conectar el amperímetro <strong>en serie</strong> con el circuito
+    para que la corriente circule a través del instrumento.
+  </p>
+</div>
+
+<div class="question">
+  <h3>6. ¿Qué magnitud se mide con un OHMETRO?</h3>
+  <p class="answer">
+    Se mide la <strong>resistencia eléctrica</strong>, expresada en ohmios (Ω).
+  </p>
+</div>
+
+<div class="question">
+  <h3>7. ¿Qué tipo de conexión hay que utilizar para medir una resistencia eléctrica con un óhmetro?</h3>
+  <p class="answer">
+    El óhmetro se conecta <strong>en paralelo con la resistencia</strong>,
+    pero el circuito debe estar desconectado de la alimentación eléctrica.
+  </p>
+</div>
+
+<div class="question">
+  <h3>8. ¿Qué nos indica el "1" o las siglas "OL" a la izquierda de la pantalla de un multímetro?</h3>
+  <p class="answer">
+    Generalmente indica que la medición está <strong>fuera de rango</strong>
+    o que existe un <strong>circuito abierto</strong>.
+  </p>
+</div>
+
+<div class="question">
+  <h3>9. ¿Cuáles son las partes que componen a un multímetro?</h3>
+  <div class="answer">
+    <ul>
+      <li><strong>Pantalla:</strong> muestra el valor medido.</li>
+      <li><strong>Selector o perilla:</strong> permite seleccionar la función y escala.</li>
+      <li><strong>Bornes o conectores:</strong> permiten conectar las puntas de prueba.</li>
+      <li><strong>Puntas de prueba:</strong> cables utilizados para realizar las mediciones.</li>
+      <li><strong>Carcasa:</strong> protege los componentes internos.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question">
+  <h3>10. ¿Cuál es la diferencia entre un multímetro del tipo "autorango" y un multímetro de "selección manual"?</h3>
+  <p class="answer">
+    El multímetro <strong>autorango</strong> selecciona automáticamente la escala adecuada.
+    En cambio, en uno de <strong>selección manual</strong>, el usuario debe seleccionar
+    la escala apropiada.
+  </p>
+</div>
+
+<div class="question">
+  <h3>11. Según la Ley de Ohm, ¿qué otras 2 magnitudes hay que conocer para obtener la INTENSIDAD eléctrica por cálculo?</h3>
+  <p class="answer">
+    Hay que conocer la <strong>tensión (V)</strong> y la <strong>resistencia (R)</strong>.
+    <br>
+    <span class="formula">I = V / R</span>
+  </p>
+</div>
+
+<div class="question">
+  <h3>12. Según la Ley de Ohm, ¿qué otras 2 magnitudes hay que conocer para obtener la RESISTENCIA eléctrica por cálculo?</h3>
+  <p class="answer">
+    Hay que conocer la <strong>tensión (V)</strong> y la <strong>intensidad (I)</strong>.
+    <br>
+    <span class="formula">R = V / I</span>
+  </p>
+</div>
+
+<div class="question">
+  <h3>13. Según la Ley de Ohm, ¿qué otras 2 magnitudes hay que conocer para obtener la TENSIÓN eléctrica por cálculo?</h3>
+  <p class="answer">
+    Hay que conocer la <strong>intensidad (I)</strong> y la <strong>resistencia (R)</strong>.
+    <br>
+    <span class="formula">V = I × R</span>
+  </p>
+</div>
+
+<div class="question">
+  <h3>14. ¿Cuál es la única condición de seguridad que hay que tomar en cuenta para medir una resistencia eléctrica con un óhmetro?</h3>
+  <p class="answer">
+    La resistencia debe estar <strong>sin tensión</strong>, es decir,
+    el circuito debe estar desconectado de la alimentación eléctrica.
+  </p>
+</div>
+
+<div class="question">
+  <h3>15. En un instrumento de selección manual, ¿qué nos indica la "escala" a seleccionar?</h3>
+  <p class="answer">
+    Indica el <strong>rango máximo de la magnitud que se va a medir</strong>.
+    Por ejemplo, si seleccionamos 20 V, el instrumento permite medir tensiones
+    dentro de ese rango.
+  </p>
+</div>
+
+</section>
+
+<hr>
+
+<section id="cuestionario2">
+
+<h2>Cuestionario 2 — Ley de Ohm y potenciómetros</h2>
+
+<div class="question">
+  <h3>1. ¿Qué magnitudes intervienen en la Ley de Ohm?</h3>
+  <p class="answer">
+    Intervienen tres magnitudes:
+    <strong>tensión eléctrica (V)</strong>,
+    <strong>intensidad de corriente (I)</strong>
+    y <strong>resistencia eléctrica (R)</strong>.
+  </p>
+</div>
+
+<div class="question">
+  <h3>2. ¿Cómo se obtiene la V aplicando la Ley de Ohm?</h3>
+  <p class="answer">
+    <span class="formula">V = I × R</span>
+    <br>
+    La tensión se obtiene multiplicando la intensidad por la resistencia.
+  </p>
+</div>
+
+<div class="question">
+  <h3>3. ¿Cómo se obtiene la I aplicando la Ley de Ohm?</h3>
+  <p class="answer">
+    <span class="formula">I = V / R</span>
+    <br>
+    La intensidad se obtiene dividiendo la tensión por la resistencia.
+  </p>
+</div>
+
+<div class="question">
+  <h3>4. ¿Cómo se obtiene la R aplicando la Ley de Ohm?</h3>
+  <p class="answer">
+    <span class="formula">R = V / I</span>
+    <br>
+    La resistencia se obtiene dividiendo la tensión por la intensidad.
+  </p>
+</div>
+
+<div class="question">
+  <h3>5. ¿Cuál es el único elemento de un circuito eléctrico que determina el sentido de la circulación de la corriente eléctrica?</h3>
+  <p class="answer">
+    La <strong>fuente o generador de tensión</strong>, como una pila o batería,
+    determina la polaridad y, por lo tanto, el sentido convencional de circulación
+    de la corriente eléctrica.
+  </p>
+</div>
+
+<div class="question">
+  <h3>6. ¿Cómo es la relación entre los puntos (A-C) y (B-C) de un potenciómetro?</h3>
+  <p class="answer">
+    La relación entre los tramos <strong>A-C y B-C es inversamente proporcional
+    y complementaria</strong>.
+    <br><br>
+    Esto significa que lo que un tramo gana de resistencia, el otro lo pierde,
+    manteniendo siempre una suma constante.
+    <br><br>
+    Ambos tramos dependen de la posición del cursor (C), y su relación está
+    determinada por la resistencia total del potenciómetro (A-B):
+    <br><br>
+    <span class="formula">(A-C) + (B-C) = (A-B)</span>
+  </p>
+</div>
+
+<div class="question">
+  <h3>7. En un potenciómetro, ¿qué determinan los puntos (A-B)?</h3>
+  <p class="answer">
+    Los puntos <strong>A-B determinan la resistencia total o nominal del potenciómetro</strong>.
+    Es un valor fijo establecido por el fabricante.
+  </p>
+</div>
+
+<div class="question">
+  <h3>8. ¿Qué tipos de potenciómetros hay?</h3>
+  <p class="answer">
+    Hay potenciómetros <strong>desplazantes</strong> y <strong>circulares</strong>.
+  </p>
+</div>
+
+<div class="question">
+  <h3>9. ¿Cuál es la diferencia entre un potenciómetro y un reóstato?</h3>
+  <p class="answer">
+    Un <strong>potenciómetro</strong> se utiliza normalmente para regular tensión,
+    utilizando sus tres terminales. Un <strong>reóstato</strong> se utiliza
+    normalmente para regular corriente, utilizando dos terminales.
+  </p>
+</div>
+
+<div class="question">
+  <h3>10. ¿Qué determina el único valor dado por el fabricante de un potenciómetro o un reóstato?</h3>
+  <p class="answer">
+    Determina su <strong>resistencia nominal o máxima</strong>, expresada en ohmios (Ω).
+    <br><br>
+    Por ejemplo, un potenciómetro de <strong>10 kΩ</strong> tiene una resistencia
+    máxima de 10.000 Ω entre sus terminales extremos.
+  </p>
+</div>
+
+</section>
+
+<a class="back" href="index.html">← Volver al manual de Ley de Ohm</a>
+
+</div>
+</main>
+
+<footer>
+  Ley de Ohm — Cuestionarios respondidos
+</footer>
+
+</body>
+</html>
