@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Texto guía — Pasos 00 a 09</title>
+<meta name="description" content="Resumen explicado del texto guía de la Consola Didáctica CDE-1, pasos 00 a 09: tensión, corriente, resistencia, Ley de Ohm, potenciómetros y circuito serie.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --panel:#151A20;
+  --panel-2:#1E262F;
+  --paper:#E9EDEA;
+  --sheet:#FBFCFB;
+  --grid:#D3DCD6;
+  --ink:#1B2127;
+  --ink-soft:#4C585F;
+  --rule:#C9D2CC;
+  --lcd:#E8A33D;
+  --probe:#1F5F8B;
+  --ok:#2E7D4F;
+  --no:#B8332A;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+
+body{
+  margin:0;
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+
+h1,h2,h3,h4,nav,th,figcaption,summary,.ui{
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+}
+
+code,.mono{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+/* Barra superior */
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:var(--panel);
+  color:#DDE4E8;
+  border-bottom:1px solid #000;
+}
+
+.topbar .in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:.55rem 1.2rem;
+  display:flex;
+  gap:1.4rem;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.topbar strong{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+.topbar a{
+  font-family:"IBM Plex Sans",sans-serif;
+  color:#9FB2BD;
+  text-decoration:none;
+  font-size:.88rem;
+}
+
+.topbar a:hover,
+.topbar a:focus-visible{
+  color:var(--lcd);
+}
+
+/* Hero */
+
+.hero{
+  background:var(--panel);
+  color:#E6EDF1;
+  border-bottom:4px solid #0A0D10;
+}
+
+.hero .in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:2.5rem 1.2rem;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:2rem;
+  align-items:center;
+}
+
+.hero h1{
+  font-size:2.4rem;
+  line-height:1.1;
+  margin:0 0 .6rem;
+  letter-spacing:-.02em;
+}
+
+.hero p{
+  color:#A9BAC4;
+  margin:0;
+  max-width:52ch;
+}
+
+.hero .kicker{
+  font-family:"IBM Plex Mono",monospace;
+  color:var(--lcd);
+  font-size:.85rem;
+  margin-bottom:.5rem;
+}
+
+.hero img{
+  width:200px;
+  border-radius:6px;
+  background:#fff;
+  padding:.4rem;
+}
+
+/* Contenido */
+
+main{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 1.2rem 5rem;
+}
+
+.sheet{
+  background:var(--sheet);
+  border:1px solid var(--rule);
+  border-top:none;
+  padding:2.4rem 3rem 3rem;
+}
+
+section{
+  scroll-margin-top:60px;
+}
+
+h2{
+  font-size:1.55rem;
+  margin:3.2rem 0 .3rem;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:.4rem;
+  display:flex;
+  gap:.8rem;
+  align-items:baseline;
+  flex-wrap:wrap;
+}
+
+.sheet > section:first-child h2{
+  margin-top:0;
+}
+
+h2 .tag{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem;
+  font-weight:600;
+  background:var(--panel);
+  color:var(--lcd);
+  padding:.12rem .5rem;
+  border-radius:3px;
+}
+
+h2 + .dek{
+  margin:.3rem 0 1.2rem;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+
+h3{
+  font-size:1.06rem;
+  margin:1.9rem 0 .5rem;
+  color:#2B333A;
+}
+
+p,li{
+  max-width:72ch;
+}
+
+li{
+  margin:.25rem 0;
+}
+
+strong{
+  font-weight:600;
+}
+
+a{
+  color:var(--probe);
+}
+
+hr{
+  border:none;
+  border-top:1px solid var(--rule);
+  margin:2.6rem 0;
+}
+
+/* Índice */
+
+.toc{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:.6rem;
+  margin:1.2rem 0 0;
+  padding:0;
+  list-style:none;
+}
+
+.toc li{
+  margin:0;
+  max-width:none;
+}
+
+.toc a{
+  display:block;
+  border:1px solid var(--rule);
+  border-left:4px solid var(--probe);
+  border-radius:4px;
+  padding:.5rem .7rem;
+  text-decoration:none;
+  color:var(--ink);
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:.9rem;
+  line-height:1.35;
+  background:#fff;
+}
+
+.toc a:hover,
+.toc a:focus-visible{
+  border-left-color:var(--lcd);
+  background:#F4F7F5;
+}
+
+.toc .n{
+  display:block;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.78rem;
+  color:var(--ink-soft);
+}
+
+/* Figuras */
+
+figure{
+  margin:1.4rem 0;
+  max-width:72ch;
+}
+
+figure img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border:1px solid var(--rule);
+  border-radius:4px;
+  background:#fff;
+  padding:.5rem;
+}
+
+figure.sm img{max-width:340px}
+figure.md img{max-width:460px}
+
+figcaption{
+  font-size:.82rem;
+  color:var(--ink-soft);
+  margin-top:.4rem;
+}
+
+.figs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1rem;
+  max-width:72ch;
+}
+
+.figs figure{
+  margin:.6rem 0;
+}
+
+/* Bloques */
+
+.formula{
+  display:inline-block;
+  background:#EEF2F0;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  padding:.08rem .38rem;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.95em;
+}
+
+.big-formula{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:1.2rem;
+  font-weight:600;
+  background:#EEF2F0;
+  border:1px solid var(--rule);
+  border-radius:4px;
+  padding:.6rem 1rem;
+  display:inline-block;
+  margin:.4rem 0;
+}
+
+.note{
+  border-left:3px solid var(--lcd);
+  background:#FCF6EA;
+  padding:.7rem 1rem;
+  margin:1.2rem 0;
+  max-width:72ch;
+  font-size:.96rem;
+}
+
+.warn{
+  border-left:3px solid var(--no);
+  background:#FDF2F1;
+  padding:.7rem 1rem;
+  margin:1.2rem 0;
+  max-width:72ch;
+  font-size:.96rem;
+}
+
+.key{
+  border:1px solid var(--rule);
+  border-left:4px solid var(--ok);
+  background:#F0F8F3;
+  padding:.8rem 1rem;
+  margin:1.4rem 0;
+  max-width:72ch;
+}
+
+.key h4{
+  margin:0 0 .35rem;
+  font-size:.92rem;
+  color:var(--ok);
+}
+
+.key ul{
+  margin:0;
+  padding-left:1.2rem;
+}
+
+.why{
+  background:#F1F4F2;
+  border-left:3px solid var(--probe);
+  padding:.7rem 1rem;
+  margin:1rem 0;
+  max-width:72ch;
+  font-size:.96rem;
+}
+
+.why p{
+  margin:.3rem 0;
+}
+
+ol.steps{
+  padding-left:0;
+  list-style:none;
+  counter-reset:none;
+}
+
+ol.steps > li{
+  position:relative;
+  padding-left:2.2rem;
+  margin:.55rem 0;
+}
+
+ol.steps > li > .l{
+  position:absolute;
+  left:0;
+  top:.05rem;
+  width:1.6rem;
+  height:1.6rem;
+  border-radius:50%;
+  background:var(--panel);
+  color:var(--lcd);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.8rem;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Tablas */
+
+.table-wrap{
+  overflow-x:auto;
+  max-width:100%;
+}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:1.1rem 0;
+  font-size:.92rem;
+  font-family:"IBM Plex Sans",sans-serif;
+}
+
+th{
+  text-align:left;
+  font-weight:600;
+  font-size:.82rem;
+  color:var(--ink-soft);
+  border-bottom:2px solid var(--ink);
+  padding:.4rem .6rem;
+  vertical-align:bottom;
+}
+
+td{
+  padding:.45rem .6rem;
+  border-bottom:1px solid var(--rule);
+  vertical-align:top;
+}
+
+tbody tr:hover{
+  background:#F2F5F3;
+}
+
+td.num,th.num{
+  font-family:"IBM Plex Mono",monospace;
+}
+
+/* Autoevaluación */
+
+details{
+  border:1px solid var(--rule);
+  border-radius:4px;
+  margin:.5rem 0;
+  max-width:72ch;
+  background:#fff;
+}
+
+summary{
+  cursor:pointer;
+  padding:.6rem .9rem;
+  font-size:.95rem;
+  font-weight:500;
+}
+
+summary:hover{
+  background:#F4F7F5;
+}
+
+details[open] summary{
+  border-bottom:1px solid var(--rule);
+}
+
+details .ans{
+  padding:.6rem .9rem .8rem;
+  font-size:.96rem;
+}
+
+details .ans p{
+  margin:.3rem 0;
+}
+
+:focus-visible{
+  outline:2px solid var(--probe);
+  outline-offset:2px;
+}
+
+.back{
+  display:inline-block;
+  margin-top:1.5rem;
+  background:var(--probe);
+  color:white;
+  text-decoration:none;
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:.9rem;
+  padding:.55rem .9rem;
+  border-radius:4px;
+}
+
+.back:hover{
+  background:#17496b;
+}
+
+.to-top{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:.82rem;
+  text-decoration:none;
+  color:var(--ink-soft);
+}
+
+.to-top:hover{
+  color:var(--probe);
+}
+
+footer{
+  max-width:1080px;
+  margin:0 auto;
+  padding:1.4rem 1.2rem 3rem;
+  font-size:.85rem;
+  color:var(--ink-soft);
+  font-family:"IBM Plex Sans",sans-serif;
+}
+
+@media(max-width:860px){
+  .hero .in{
+    grid-template-columns:1fr;
+    padding:2rem 1.2rem;
+  }
+
+  .hero img{
+    width:150px;
+  }
+
+  .hero h1{
+    font-size:2rem;
+  }
+
+  .sheet{
+    padding:1.6rem 1rem 2.4rem;
+  }
+
+  main{
+    padding:0 .5rem 4rem;
+  }
+
+  body{
+    font-size:16px;
+  }
+
+  .topbar .in{
+    gap:.9rem;
+  }
+}
+</style>
+</head>
+
+<body id="arriba">
+
+<div class="topbar">
+  <div class="in">
+    <strong>Ley de Ohm</strong>
+    <a href="index.html">Inicio</a>
+    <a href="cuestionarios.html">Cuestionarios</a>
+    <a href="#indice">Pasos</a>
+    <a href="#tabla-resumen">Resumen</a>
+    <a href="#autoevaluacion">Autoevaluación</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="in">
+    <div>
+      <div class="kicker">CONSOLA DIDÁCTICA CDE-1 · TEXTO GUÍA DEL ALUMNO</div>
+      <h1>Pasos 00 a 09, explicados</h1>
+      <p>
+        Resumen completo de la primera parte del texto guía: cómo usar el tester
+        como voltímetro, amperímetro y óhmetro, la Ley de Ohm, los resistores
+        variables y el circuito serie. Cada paso tiene su teoría, el
+        procedimiento en la consola y la explicación de lo que deberías observar.
+      </p>
+    </div>
+    <img src="img/guia/tuercalin.png" alt="Tuercalín, el personaje del texto guía, junto a un mecánico">
+  </div>
+</header>
+
+<main>
+<div class="sheet">
+
+<!-- ================= INTRO ================= -->
+<section id="intro">
+  <h2>Antes de empezar</h2>
+  <p class="dek">De qué se trata la guía y cómo se trabaja con la consola.</p>
+
+  <p>
+    El texto guía está pensado para mecánicos y estudiantes del automotor que
+    vienen del mundo de los <strong>mecanismos</strong> —cosas que se ven, se
+    tocan y se miden con calibre, micrómetro o manómetro— y ahora tienen que
+    lidiar con magnitudes más abstractas: <strong>tensión, intensidad de
+    corriente, resistencia</strong>, ciclos de trabajo de una señal. El objetivo
+    es aprender a usar el <strong>multímetro</strong> (también llamado
+    <em>tester</em> o <em>polímetro</em>) para diagnosticar y detectar averías
+    en los sistemas eléctricos y electrónicos del auto.
+  </p>
+
+  <h3>Método de trabajo</h3>
+  <ul>
+    <li>Se trabaja sobre una <strong>consola de mediciones</strong> que tiene distintos componentes (resistores, lámparas, potenciómetros) y una fuente de alimentación (la <strong>BATERÍA</strong>, de unos 12 V).</li>
+    <li>Las experiencias están grabadas en la memoria de la consola. El pulsador <strong>AVANZA</strong> pasa al paso siguiente; el pulsador <strong>MARCHA</strong> activa la experiencia del paso actual; <strong>RESET</strong> vuelve al inicio.</li>
+    <li>La consola <strong>enciende leds</strong> al lado de los bornes que tenés que conectar: los del componente, los de la fuente y los del tester. Si un borne no tiene el led prendido, no lo conectes.</li>
+    <li>El instrumento principal es el tester; el instructor responde las dudas.</li>
+  </ul>
+
+  <h3>Las partes del tester que vas a usar</h3>
+  <p>
+    El tester de la guía es un <strong>M890G</strong> de selección manual.
+    Tiene una <strong>llave selectora</strong> dividida en sectores (cada
+    sector es una función y cada posición dentro del sector es un
+    <strong>alcance</strong> o escala), un <strong>display</strong> y cuatro
+    bornes para las puntas:
+  </p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Borne</th><th>Para qué se usa</th><th>Punta</th></tr></thead>
+    <tbody>
+      <tr><td class="num">COM</td><td>Común, la referencia de todas las mediciones.</td><td>Negra, siempre acá.</td></tr>
+      <tr><td class="num">VΩ</td><td>Medir tensión (voltímetro) y resistencia (óhmetro).</td><td>Roja</td></tr>
+      <tr><td class="num">mA</td><td>Medir corrientes chicas (hasta 200 mA). Tiene fusible.</td><td>Roja</td></tr>
+      <tr><td class="num">20A</td><td>Medir corrientes grandes (hasta 20 A). <strong>Sin fusible.</strong></td><td>Roja</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Sector de la llave</th><th>Sigla en inglés</th><th>Qué mide</th></tr></thead>
+    <tbody>
+      <tr><td class="num">V⎓</td><td>DCV — Direct Current Voltage</td><td>Tensión de corriente continua</td></tr>
+      <tr><td class="num">V~</td><td>ACV — Alternating Current Voltage</td><td>Tensión de corriente alterna</td></tr>
+      <tr><td class="num">A⎓</td><td>DCA — Direct Current Amperage</td><td>Intensidad de corriente continua</td></tr>
+      <tr><td class="num">A~</td><td>ACA — Alternating Current Amperage</td><td>Intensidad de corriente alterna</td></tr>
+      <tr><td class="num">Ω</td><td>—</td><td>Resistencia (y prueba de diodos / continuidad)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <strong>Cómo leer el alcance.</strong> El número de cada posición es el
+    valor que el tester <em>no llega</em> a mostrar: en <span class="formula">20 V</span>
+    el máximo es <span class="formula">19,99 V</span>, en <span class="formula">200 Ω</span>
+    es <span class="formula">199,9 Ω</span>. Es un display de «3½ dígitos»: el
+    primer dígito solo puede ser 1 o nada. Si el valor real supera el alcance,
+    aparece un <strong>1</strong> solo a la izquierda (desbordamiento).
+  </div>
+
+  <h3>Índice de pasos</h3>
+  <ul class="toc" id="indice">
+    <li><a href="#paso00"><span class="n">PASO 00</span>Encendido y recomendaciones</a></li>
+    <li><a href="#paso01"><span class="n">PASO 01</span>Tensión eléctrica · voltímetro</a></li>
+    <li><a href="#paso02"><span class="n">PASO 02</span>Intensidad de corriente · amperímetro</a></li>
+    <li><a href="#paso03"><span class="n">PASO 03</span>Causa y efecto · Ley de Ohm</a></li>
+    <li><a href="#paso04"><span class="n">PASO 04</span>El óhmetro</a></li>
+    <li><a href="#paso05"><span class="n">PASO 05</span>Resistencia de las puntas</a></li>
+    <li><a href="#paso06"><span class="n">PASO 06</span>Reóstatos y potenciómetros</a></li>
+    <li><a href="#paso07"><span class="n">PASO 07</span>Predecir la corriente con Ohm</a></li>
+    <li><a href="#paso08"><span class="n">PASO 08</span>Circuito serie: la corriente</a></li>
+    <li><a href="#paso09"><span class="n">PASO 09</span>Circuito serie: las tensiones</a></li>
+  </ul>
+</section>
+
+<!-- ================= PASO 00 ================= -->
+<section id="paso00">
+  <h2><span class="tag">PASO 00</span> Encendido y recomendaciones</h2>
+  <p class="dek">Antes de tocar un cable.</p>
+
+  <p>
+    Al encender la consola, el display muestra <strong>«PASO 88»</strong> y se
+    prenden todos los leds durante unos segundos: es una <strong>prueba de
+    funcionamiento</strong> para verificar que no haya leds ni segmentos
+    quemados. Después queda en <strong>PASO 00</strong>. En cualquier momento
+    podés volver al inicio con <strong>RESET</strong>.
+  </p>
+
+  <h3>Recomendaciones de la guía (y por qué)</h3>
+  <ul>
+    <li><strong>Hacé solo las conexiones indicadas en cada paso.</strong> Una conexión equivocada puede poner en cortocircuito la fuente o dañar la consola.</li>
+    <li><strong>Enchufá las clavijas con cuidado</strong>, bien alineadas con el orificio de la hembrilla antes de hacer fuerza.</li>
+    <li><strong>Para desconectar, no tires del cable:</strong> agarrá el capuchón plástico de la clavija. Tirar del cable lo corta por dentro.</li>
+    <li><strong>No desconectes varios cables a la vez:</strong> el esfuerzo de tracción se transmite a la placa donde están las hembrillas y la puede dañar.</li>
+    <li><strong>Cada vez que cambies de función</strong> (por ejemplo, de voltímetro a amperímetro), <strong>desconectá una punta</strong> del circuito y recién después reconectala. Así evitás que, al girar la llave, el tester quede momentáneamente conectado de forma incorrecta.</li>
+    <li><strong>Verificá que la clavija metálica esté bien roscada</strong> en el manguito plástico antes de usar un cable.</li>
+  </ul>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 01 ================= -->
+<section id="paso01">
+  <h2><span class="tag">PASO 01</span> Tensión eléctrica y el voltímetro</h2>
+  <p class="dek">La fuerza que empuja a los electrones.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Para que haya corriente eléctrica tiene que existir una <strong>fuerza
+    eléctrica</strong> que ponga en movimiento a los <strong>electrones
+    libres</strong> de los materiales conductores. Esa fuerza no sale «de los
+    pulmones de Tuercalín» sino de la <strong>TENSIÓN ELÉCTRICA</strong>, también
+    llamada <strong>DIFERENCIA DE POTENCIAL</strong>. Es la que mueve los
+    electrones y permite hacer un trabajo útil: encender una lámpara, hacer
+    girar el rotor de un motor.
+  </p>
+  <figure class="md">
+    <img src="img/guia/paso01-tension.png" alt="Tuercalín soplando a través de un cable hacia una lámpara, como analogía de la tensión que empuja electrones">
+    <figcaption>La tensión actúa como un «soplido» que empuja a los electrones por el conductor. (Texto guía, pág. 4)</figcaption>
+  </figure>
+
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>La <strong>tensión eléctrica</strong>, actuando como una <strong>fuerza electromotriz</strong>, impulsa a los electrones libres de los conductores.</li>
+      <li>Magnitud: <strong>tensión</strong> · Símbolo: <strong>U</strong> o <strong>V</strong> · Unidad: <strong>volt</strong> · Símbolo de la unidad: <strong>V</strong>.</li>
+      <li>Se mide con el <strong>voltímetro</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    El símbolo <strong>V</strong> de la magnitud viene del inglés
+    <em>voltage</em> y se puede confundir con la V de volt. Por eso la guía
+    también usa <strong>U</strong> para la tensión. «V = 12 V» se lee «la
+    tensión vale 12 volt».
+  </div>
+
+  <h3>El tester como voltímetro</h3>
+  <p>
+    Para usar el tester como voltímetro hay que mirar dos sectores de la llave:
+    <strong>V⎓ (DCV)</strong> para tensión continua —la de la batería del auto— y
+    <strong>V~ (ACV)</strong> para tensión alterna —la de la red domiciliaria o
+    la salida de un alternador antes de rectificar—.
+  </p>
+  <figure>
+    <img src="img/guia/paso01-tester.png" alt="Tester M890G señalando display, llave selectora, encendido, sectores V continua y V alterna y conjunto de conectores">
+    <figcaption>Partes del tester y sectores de tensión continua (DCV) y alterna (ACV). (Texto guía, pág. 5)</figcaption>
+  </figure>
+
+  <h3>Experiencia: medir la tensión de la batería</h3>
+  <p>Al oprimir <strong>MARCHA</strong> se prenden los leds de <strong>+</strong> y <strong>−</strong> de BATERÍA y los de <strong>COM</strong> y <strong>VΩ</strong> del tester.</p>
+  <figure class="md">
+    <img src="img/guia/paso01-circuito.png" alt="Circuito: batería con el voltímetro conectado entre sus bornes, VΩ al positivo y COM al negativo">
+    <figcaption>El voltímetro se conecta directamente sobre los bornes de la batería. (Texto guía, pág. 6)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">A</span>Selector en <strong>V⎓ / 20</strong>.</li>
+    <li><span class="l">B</span>Conectar <strong>+ BATERÍA → VΩ</strong> y <strong>− BATERÍA → COM</strong>. El display debe mostrar algo cercano a <strong>12,xx V</strong> (parte entera 12, dos decimales).</li>
+    <li><span class="l">C</span>Pasar el selector a <strong>200 V</strong>: ahora se lee <strong>12,x V</strong>.</li>
+    <li><span class="l">D</span>Pasar el selector a <strong>2 V</strong> y observar el display.</li>
+    <li><span class="l">E</span>Volver a <strong>20 V</strong>.</li>
+    <li><span class="l">F</span>Invertir las puntas: <strong>+ BATERÍA → COM</strong> y <strong>− BATERÍA → VΩ</strong>. Observar.</li>
+    <li><span class="l">G</span>Desconectar todo y apagar el tester.</li>
+  </ol>
+
+  <div class="why">
+    <p><strong>¿Cómo sé que la lectura de 12,xx V es correcta?</strong> Primero, porque es tensión <em>continua</em>: el selector está en el sector V⎓. Segundo, porque en el alcance 20 el tester puede mostrar entre 0 y 19,99 V, y 12 V cae dentro.</p>
+    <p><strong>Punto C — alcance 200 V:</strong> se lee 12,x V. Se <strong>pierde precisión</strong>: el display tiene los mismos dígitos pero ahora tiene que cubrir hasta 199,9 V, así que queda un decimal menos. Regla: <em>el mejor alcance es el más chico que sea mayor que el valor a medir</em>.</p>
+    <p><strong>Punto D — alcance 2 V:</strong> el display muestra un <strong>«1» solo a la izquierda</strong>. Es el aviso de <strong>desbordamiento</strong> (fuera de rango): en ese alcance el máximo es 1,999 V y la batería tiene 12 V. No es una lectura de 1 volt.</p>
+    <p><strong>Punto F — puntas invertidas:</strong> aparece <strong>−12,xx V</strong>. El signo menos indica que la polaridad está al revés: el borne COM quedó en el punto de mayor potencial. Al tester digital no le pasa nada; el valor es el mismo. Sirve, de hecho, para <em>descubrir</em> cuál es el positivo de una fuente desconocida.</p>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 02 ================= -->
+<section id="paso02">
+  <h2><span class="tag">PASO 02</span> Intensidad de corriente y el amperímetro</h2>
+  <p class="dek">El «caudal» de electrones.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Cuando se aplica tensión a un conductor —un alambre de cobre, o el
+    filamento de tungsteno de una lamparita— sus electrones libres se ponen en
+    movimiento: eso es la <strong>corriente eléctrica</strong>.
+  </p>
+  <p>
+    La guía usa la analogía del agua en una cañería: así como interesa saber el
+    <strong>caudal</strong> (cuántos litros pasan por segundo por una sección
+    del caño, lo que permite calcular cuánto tarda en llenarse un tanque), en
+    electricidad interesa saber cuántos electrones pasan por segundo por una
+    sección del conductor (por ejemplo, para calcular cuánto tarda en cargarse
+    un condensador). Ese «caudal de electrones» es la
+    <strong>INTENSIDAD DE CORRIENTE ELÉCTRICA</strong>.
+  </p>
+
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>La <strong>intensidad de corriente</strong> representa el caudal de electrones que circulan por segundo por el conductor.</li>
+      <li>Magnitud: <strong>intensidad de corriente</strong> · Símbolo: <strong>I</strong> · Unidad: <strong>ampere</strong> · Símbolo de la unidad: <strong>A</strong>.</li>
+      <li>Se mide con el <strong>amperímetro</strong>, que va <strong>en serie</strong>.</li>
+    </ul>
+  </div>
+
+  <figure>
+    <img src="img/guia/paso02-tester-amperimetro.png" alt="Llave selectora del tester señalando los sectores A continua (DCA) y A alterna (ACA)">
+    <figcaption>Sectores del amperímetro: A⎓ (DCA, continua) y A~ (ACA, alterna). (Texto guía, pág. 9)</figcaption>
+  </figure>
+
+  <h3>El sentido de la corriente</h3>
+  <figure class="sm">
+    <img src="img/guia/paso02-sentido.png" alt="Circuito batería-lámpara con flecha de corriente saliendo del positivo y volviendo al negativo">
+    <figcaption>Sentido convencional: del + al − por fuera de la fuente. (Texto guía, pág. 9)</figcaption>
+  </figure>
+  <p>
+    La corriente y sus efectos se conocieron <strong>antes</strong> de conocer
+    la estructura del átomo. Por eso se supuso que lo que circulaba eran
+    <strong>cargas positivas</strong> que salían del polo positivo de la fuente
+    y volvían al negativo. Esa convención se mantiene: el
+    <strong>sentido convencional</strong> de la corriente va del
+    <strong>+</strong> al <strong>−</strong> por el circuito exterior. En
+    realidad los que se mueven son los electrones, y lo hacen al revés (del −
+    al +); a eso se lo llama «corriente electrónica», pero solo se usa
+    excepcionalmente.
+  </p>
+
+  <h3>Experiencia: medir la corriente de una lámpara</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de la fuente, de la <strong>lámpara L1 de la sección 4</strong> y de <strong>COM</strong> y <strong>20 A</strong> del tester.</p>
+  <figure class="sm">
+    <img src="img/guia/paso02-circuito.png" alt="Circuito: positivo de batería al borne 20A del amperímetro, COM al borne A de la lámpara, borne B de la lámpara al negativo">
+    <figcaption>El amperímetro se intercala en uno de los cables de alimentación. (Texto guía, pág. 10)</figcaption>
+  </figure>
+  <p>
+    El amperímetro se ubica <strong>sobre uno de los conductores</strong> de
+    alimentación, de manera que toda la corriente lo atraviese. Por eso se dice
+    que <strong>el amperímetro se conecta en serie con el receptor</strong>: todo
+    el flujo que pasa por la lámpara tiene que pasar también por el instrumento.
+  </p>
+  <ol class="steps">
+    <li><span class="l">A</span>Selector en <strong>20 A⎓</strong>. <strong>Si no conocés el valor de la corriente, empezá siempre por el alcance más alto.</strong> Con un alcance chico y una corriente grande se quema el fusible de protección.</li>
+    <li><span class="l">B</span>Conectar <strong>+ BATERÍA → 20A</strong> del tester; <strong>COM → borne A</strong> de la lámpara 1; <strong>borne B</strong> de la lámpara → <strong>− BATERÍA</strong>.</li>
+    <li><span class="l">C</span>Leer la corriente.</li>
+    <li><span class="l">D</span>Desconectar todo y apagar el tester.</li>
+    <li><span class="l">E</span>Analizar el resultado.</li>
+    <li><span class="l">F</span>Pregunta: ¿qué pasaría si la punta roja se pasa al borne <strong>mA</strong> (200 mA máximo) y el selector a <strong>200 mA</strong>?</li>
+  </ol>
+
+  <div class="why">
+    <p><strong>Respuesta al punto F:</strong> una lámpara de 12 V consume normalmente bastante más de 200 mA. Si se mide en el borne mA con el selector en 200 mA, la corriente supera lo que soporta esa entrada y <strong>se quema el fusible interno</strong> del tester (en el mejor de los casos; sin fusible se daña el instrumento). Además el display mostraría desbordamiento. Por eso: primero se mide en 20 A y, si la corriente resulta chica, recién ahí se baja de escala.</p>
+  </div>
+
+  <div class="warn">
+    <strong>Protección del tester.</strong> La mayoría de los testers tienen
+    <strong>fusible en la escala de 200 mA</strong>; algunos protegen hasta 2 A.
+    En el alcance de <strong>20 A el instrumento no está protegido</strong>.
+    Nunca conectes el amperímetro en paralelo con una fuente: es un
+    cortocircuito.
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 03 ================= -->
+<section id="paso03">
+  <h2><span class="tag">PASO 03</span> Causa y efecto: la Ley de Ohm</h2>
+  <p class="dek">La tensión es la causa, la corriente es el efecto, y la resistencia es la relación entre ambas.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Todo fenómeno natural tiene una o varias <strong>causas</strong> que
+    producen uno o varios <strong>efectos</strong>. La lluvia (efecto) se
+    produce porque hay una masa de aire húmedo a cierta altura (causa).
+  </p>
+  <div class="figs">
+    <figure>
+      <img src="img/guia/paso03-causa-efecto.png" alt="Nube de aire húmedo como causa y lluvia como efecto">
+      <figcaption>Aire húmedo (causa) → lluvia (efecto). (Pág. 12)</figcaption>
+    </figure>
+    <figure>
+      <img src="img/guia/paso03-causa-efecto-circuito.png" alt="Circuito con lámpara: la tensión Vcc es la causa y la corriente I es el efecto">
+      <figcaption>En un circuito: la tensión Vcc (volt) es la causa; la corriente I (ampere) es el efecto. (Pág. 12)</figcaption>
+    </figure>
+  </div>
+  <p>
+    Si conocemos la relación <strong>causa/efecto</strong> (o su inversa,
+    efecto/causa) podemos predecir: dada una tensión, qué corriente va a
+    circular; o, si necesitamos cierta corriente, qué tensión hay que aplicar.
+  </p>
+  <p>
+    Hacia <strong>1826</strong> el físico alemán <strong>Georg Simon Ohm</strong>
+    comprobó que <strong>en muchos circuitos eléctricos la relación
+    tensión/intensidad es constante</strong>. A ese valor constante lo llamó
+    <strong>RESISTENCIA ELÉCTRICA</strong>.
+  </p>
+  <p><span class="big-formula">R = V / I</span></p>
+  <p>
+    El cociente entre la tensión aplicada y la corriente que circula da la
+    resistencia del circuito. Si V está en <strong>volt</strong> e I en
+    <strong>ampere</strong>, R queda en <strong>ohm (Ω)</strong>. Intuitivamente:
+    para la misma tensión, un componente con más resistencia deja pasar menos
+    corriente.
+  </p>
+
+  <h3>Experiencia: medir V e I y calcular R1</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de la fuente, del <strong>resistor R1 de la sección 1</strong> y de <strong>COM</strong>, <strong>20A</strong> y <strong>VΩ</strong> del tester. La experiencia tiene dos partes: primero medir la corriente, después la tensión.</p>
+
+  <h4 class="ui" style="margin:1.2rem 0 .3rem;font-size:.95rem">Parte 1 · Medir I (amperímetro en serie)</h4>
+  <figure class="sm">
+    <img src="img/guia/paso03-circuito-i.png" alt="Circuito: batería, amperímetro entre 20A y COM, resistor R1 entre A y B">
+    <figcaption>Amperímetro en serie con R1. (Pág. 13)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">A</span>Selector en <strong>20 A⎓</strong>.</li>
+    <li><span class="l">B</span>Conectar: B de R1 → − BATERÍA; A de R1 → COM del tester; 20A del tester → + BATERÍA.</li>
+    <li><span class="l">C</span>Leer I. <strong>Si es menor a 0,2 A</strong>, apagar el tester, pasar el selector a <strong>200 mA</strong> y mover la punta roja del borne 20A al borne <strong>mA</strong>: así se gana precisión. Anotar I.</li>
+  </ol>
+
+  <h4 class="ui" style="margin:1.2rem 0 .3rem;font-size:.95rem">Parte 2 · Medir V (voltímetro en paralelo)</h4>
+  <figure class="sm">
+    <img src="img/guia/paso03-circuito-v.png" alt="Circuito: batería conectada a R1, voltímetro en paralelo sobre los terminales A y B de R1">
+    <figcaption>Voltímetro en paralelo con R1. (Pág. 14)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">D</span>Sacar el tester del circuito y conectar A de R1 directo a + BATERÍA.</li>
+    <li><span class="l">E</span>Selector en <strong>20 V⎓</strong>.</li>
+    <li><span class="l">F</span>El circuito queda: batería alimentando a R1.</li>
+    <li><span class="l">G</span>Conectar B de R1 → COM y A de R1 → VΩ.</li>
+    <li><span class="l">H</span>Leer y anotar V en los terminales de R1.</li>
+    <li><span class="l">I</span>Calcular <span class="formula">R1 = V / I</span>.</li>
+    <li><span class="l">J</span>Comparar con el valor que da el instructor.</li>
+    <li><span class="l">K</span>Desconectar todo y apagar el tester.</li>
+  </ol>
+
+  <div class="why">
+    <p><strong>Ojo con las unidades.</strong> Si mediste la corriente en la escala de mA, pasala a ampere antes de dividir. Ejemplo con valores ilustrativos: V = 12,3 V e I = 56 mA = 0,056 A → R1 = 12,3 / 0,056 ≈ 220 Ω. Si dividís 12,3 / 56 te da 0,22, que serían kΩ, no Ω.</p>
+    <p><strong>¿Por qué se cambia de conexión entre una medición y otra?</strong> Porque el amperímetro va <strong>en serie</strong> (la corriente tiene que pasar por él) y el voltímetro va <strong>en paralelo</strong> (mide la diferencia entre dos puntos sin interrumpir el circuito).</p>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 04 ================= -->
+<section id="paso04">
+  <h2><span class="tag">PASO 04</span> El óhmetro</h2>
+  <p class="dek">Medir la resistencia en una sola lectura, sin cuentas.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    En el paso 03 obtuvimos la resistencia de R1 midiendo V e I y dividiendo.
+    Conocer R permite <strong>predecir</strong> cómo se va a comportar el
+    componente con cualquier tensión. Es un dato tan importante que existe un
+    instrumento que lo mide directamente: el <strong>ÓHMETRO</strong>.
+  </p>
+  <figure>
+    <img src="img/guia/paso04-tester-ohm.png" alt="Llave selectora del tester señalando el sector de óhmetro y probador de diodos">
+    <figcaption>Sector Ω: función óhmetro y probador de diodos. (Pág. 15)</figcaption>
+  </figure>
+  <p>
+    Este tester tiene alcances de <strong>200 Ω, 2 kΩ, 20 kΩ, 200 kΩ, 2 MΩ y
+    20 MΩ</strong> (la guía menciona también 200 MΩ). Hay que elegir el que dé
+    <strong>mayor precisión</strong>:
+  </p>
+  <ul>
+    <li>Un alcance <strong>demasiado chico</strong> produce <strong>rebalsamiento o desbordamiento</strong>, y el display muestra solo un <strong>«1»</strong> a la izquierda.</li>
+    <li>Un alcance <strong>demasiado grande</strong> resta precisión (se pierden decimales).</li>
+    <li>Método: empezar por un alcance chico e ir <strong>subiendo</strong> hasta que desaparezca el desbordamiento.</li>
+  </ul>
+  <figure class="sm">
+    <img src="img/guia/paso04-desborde.png" alt="Display del tester mostrando solamente un 1 a la izquierda">
+    <figcaption>Indicación de desbordamiento: un «1» solo. (Pág. 16)</figcaption>
+  </figure>
+
+  <div class="warn">
+    <strong>Advertencia:</strong> al medir la resistencia de un componente,
+    éste <strong>debe estar desconectado de la fuente de alimentación</strong>,
+    preferentemente en sus dos terminales. El óhmetro usa su propia pila para
+    medir; una tensión externa falsea la lectura y puede dañar el tester. Si
+    queda conectado a otros componentes, medís el conjunto y no solo ese.
+  </div>
+
+  <h3>Experiencia: medir R1 con el óhmetro</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds del <strong>resistor R1 de la sección 1</strong> y de <strong>COM</strong> y <strong>VΩ</strong>. Notá que <strong>no</strong> se prenden los de la batería.</p>
+  <figure class="sm">
+    <img src="img/guia/paso04-circuito.png" alt="Óhmetro conectado directamente a los terminales A y B de R1, sin fuente">
+    <figcaption>El óhmetro se conecta sobre el resistor solo. (Pág. 17)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">A</span>Selector en <strong>200 Ω</strong>.</li>
+    <li><span class="l">B</span>Conectar A de R1 → VΩ y B de R1 → COM.</li>
+    <li><span class="l">C</span>Encender y leer. Si hay desbordamiento, pasar al alcance siguiente.</li>
+    <li><span class="l">D</span>Comparar con el valor calculado en el punto I del paso 03.</li>
+    <li><span class="l">E</span>Consultar al instructor las diferencias.</li>
+    <li><span class="l">F</span>Desconectar todo y apagar el tester.</li>
+  </ol>
+
+  <div class="why">
+    <p><strong>¿Por qué el valor medido y el calculado no coinciden exactamente?</strong> Son normales pequeñas diferencias:</p>
+    <ul>
+      <li>Cada medición (V, I y R) tiene su propio <strong>error de instrumento</strong>; en el cálculo del paso 03 se combinan dos errores.</li>
+      <li>El <strong>amperímetro tiene una pequeña resistencia interna</strong> que modifica un poco la corriente del circuito.</li>
+      <li>La resistencia de los <strong>cables y contactos</strong> se suma (lo ve el paso 05).</li>
+      <li>Al circular corriente el resistor <strong>se calienta</strong> y su resistencia puede variar; el óhmetro mide con una corriente muy chica, en frío.</li>
+      <li>La <strong>tensión de la batería</strong> puede variar un poco entre una medición y la otra.</li>
+    </ul>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 05 ================= -->
+<section id="paso05">
+  <h2><span class="tag">PASO 05</span> La resistencia de las puntas de prueba</h2>
+  <p class="dek">Una buena práctica antes de medir resistencias bajas.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Como óhmetro, el tester usa su <strong>fuente interna</strong>
+    (normalmente una batería de <strong>9 V</strong>) para hacer circular una
+    corriente de prueba por el componente. La resistencia de los
+    <strong>cables</strong> y la de los <strong>contactos defectuosos</strong>
+    de los conectores <strong>se suman</strong> al valor del componente.
+  </p>
+  <p>
+    Por eso, antes de medir —sobre todo en escalas bajas— conviene comprobar el
+    estado de los cables: se <strong>unen las dos puntas</strong> y se mira qué
+    indica el tester.
+  </p>
+  <figure class="md">
+    <img src="img/guia/paso05-puntas.png" alt="Tester con las dos puntas de prueba unidas mostrando 000 en el display">
+    <figcaption>Puntas unidas: lo ideal es leer 0 Ω. (Pág. 18)</figcaption>
+  </figure>
+  <ul>
+    <li>Lo ideal es <strong>0 Ω</strong>; una lectura de <strong>décimas de ohm</strong> es razonable.</li>
+    <li>Ese valor se <strong>descuenta</strong> de lo que se mida después sobre el componente.</li>
+    <li>Si supera <strong>1 Ω</strong>, hay que revisar cables y conectores de las puntas.</li>
+    <li>Algunos testers de buena calidad tienen ajuste de cero, manual o automático.</li>
+  </ul>
+  <div class="why">
+    <p><strong>Ejemplo:</strong> con las puntas unidas leés 0,4 Ω y sobre el resistor leés 47,3 Ω. El valor real es 47,3 − 0,4 = <strong>46,9 Ω</strong>. En un resistor de 100 kΩ esos 0,4 Ω no importan; en uno de 2 Ω son un 20 % de error.</p>
+  </div>
+
+  <h3>Experiencia: medir R2, R3 y R4</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de <strong>R2, R3 y R4 de la sección 1</strong> y de <strong>COM</strong> y <strong>VΩ</strong>.</p>
+  <ol class="steps">
+    <li><span class="l">A</span>Con el mismo procedimiento del paso 04 (alcance chico, conectar, subir de escala si desborda), medir R2, R3 y R4 y anotarlos en orden. Recordá descontar el valor de las puntas.</li>
+    <li><span class="l">B</span>Informar los valores al instructor.</li>
+    <li><span class="l">C</span>Desconectar todo y apagar el tester.</li>
+  </ol>
+  <div class="note">Guardá estos valores: R2 y R3 se usan en los pasos 08 y 09.</div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 06 ================= -->
+<section id="paso06">
+  <h2><span class="tag">PASO 06</span> Resistores variables: reóstato y potenciómetro</h2>
+  <p class="dek">Cuando la resistencia se tiene que poder ajustar.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Muchas aplicaciones necesitan un resistor cuyo valor se pueda
+    <strong>variar a voluntad</strong> (un control de volumen, un sensor de
+    posición de mariposa, un nivel de combustible). Se construyen distinto de
+    los resistores fijos: tienen un <strong>cuerpo</strong> resistivo y un
+    <strong>cursor</strong> que se desliza sobre él.
+  </p>
+  <div class="figs">
+    <figure>
+      <img src="img/guia/paso06-simbolo.png" alt="Símbolo del resistor variable con dos terminales, indicando cursor y cuerpo">
+      <figcaption>Resistor variable de 2 terminales: <strong>reóstato</strong>. (Pág. 20)</figcaption>
+    </figure>
+    <figure>
+      <img src="img/guia/paso06-tres-terminales.png" alt="Símbolo del resistor variable con tres terminales: dos extremos y el cursor">
+      <figcaption>Resistor variable de 3 terminales: <strong>potenciómetro</strong>. (Pág. 20)</figcaption>
+    </figure>
+  </div>
+  <ul>
+    <li>Con <strong>2 terminales</strong> (un extremo y el cursor) se llama <strong>REÓSTATO</strong>. Se usa típicamente para regular corriente.</li>
+    <li>Con <strong>3 terminales</strong> (los dos extremos A y B, más el cursor C) se llama <strong>POTENCIÓMETRO</strong>. Se usa típicamente para regular o tomar una fracción de tensión.</li>
+    <li>Un potenciómetro se puede usar como reóstato usando solo un extremo y el cursor; por eso se fabrican con 3 terminales, son más versátiles.</li>
+  </ul>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Entre terminales</th><th>Qué se mide</th><th>¿Cambia al mover el cursor?</th></tr></thead>
+    <tbody>
+      <tr><td class="num">A – B</td><td>Resistencia total o <strong>nominal</strong> (el valor que da el fabricante)</td><td>No, es fija</td></tr>
+      <tr><td class="num">A – C</td><td>Tramo entre un extremo y el cursor</td><td>Sí, de ≈ 0 al valor nominal</td></tr>
+      <tr><td class="num">C – B</td><td>El tramo complementario</td><td>Sí, en sentido opuesto</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Siempre se cumple <span class="formula">(A–C) + (C–B) = (A–B)</span>: lo que un tramo gana, el otro lo pierde.</p>
+
+  <p>
+    En la consola hay dos potenciómetros en la <strong>sección 2</strong>:
+    <strong>POTENCIÓMETRO 1</strong>, <strong>deslizante</strong> (lineal), y
+    <strong>POTENCIÓMETRO 2</strong>, <strong>giratorio</strong> (rotativo).
+  </p>
+
+  <h3>Experiencia: los potenciómetros como reóstatos</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de <strong>A</strong> y <strong>C</strong> de ambos potenciómetros y de <strong>COM</strong> y <strong>VΩ</strong>.</p>
+  <ol class="steps">
+    <li><span class="l">A</span>Conectar A y C del POTENCIÓMETRO 1 a VΩ y COM, respectivamente.</li>
+    <li><span class="l">B</span>Tester como óhmetro en la <strong>escala más alta</strong> (no se conoce el valor) y encenderlo.</li>
+    <li><span class="l">C</span>Leer la resistencia, ajustando la escala, con el cursor en el <strong>límite izquierdo</strong>, en el <strong>límite derecho</strong> y en <strong>posiciones intermedias</strong>.</li>
+    <li><span class="l">D</span>Conectar A y C del POTENCIÓMETRO 2 a VΩ y COM.</li>
+    <li><span class="l">E</span>Repetir con el cursor en el límite de giro izquierdo, derecho e intermedio.</li>
+    <li><span class="l">F</span>Consultar los valores con el instructor.</li>
+    <li><span class="l">G</span>Desconectar todo y apagar el tester.</li>
+  </ol>
+  <div class="why">
+    <p><strong>Qué deberías observar:</strong> en un extremo del recorrido la resistencia A–C es prácticamente <strong>0 Ω</strong> (el cursor está sobre A) y en el otro es igual a la <strong>resistencia nominal</strong> (el cursor está en B). En las posiciones intermedias toma valores intermedios, que crecen a medida que el cursor se aleja de A. Como el rango es amplio, puede hacer falta cambiar de escala durante la medición.</p>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 07 ================= -->
+<section id="paso07">
+  <h2><span class="tag">PASO 07</span> Predecir la corriente con la Ley de Ohm</h2>
+  <p class="dek">Calcular primero, medir después y comparar.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Conociendo la resistencia de un componente podemos <strong>predecir</strong>
+    qué corriente va a circular cuando le apliquemos una tensión. Partiendo de
+    la relación del paso 03 y <strong>despejando</strong> (pasaje de términos):
+  </p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Ley de Ohm</th><th>Para calcular</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td class="num">R = V / I</td><td>la resistencia</td><td class="num">12 V / 0,1 A = 120 Ω</td></tr>
+      <tr><td class="num">I = V / R</td><td>la corriente</td><td class="num">12 V / 120 Ω = 0,1 A</td></tr>
+      <tr><td class="num">V = R · I</td><td>la tensión</td><td class="num">120 Ω · 0,1 A = 12 V</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Si el despeje no te sale, el <a href="index.html#teoria">triángulo de la Ley de Ohm</a> del manual lo resuelve tapando la letra que buscás.</p>
+
+  <h3>Experiencia: R1 de la sección 3</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de A y B de <strong>R1 de la sección 3</strong>, de + y − BATERÍA y de COM y VΩ.</p>
+  <ol class="steps">
+    <li><span class="l">A</span>Medir la resistencia de R1 (sección 3) con el óhmetro. Anotar.</li>
+    <li><span class="l">B</span>Medir V<sub>BATERÍA</sub> con el voltímetro y <strong>calcular</strong> <span class="formula">I = V<sub>BATERÍA</sub> / R1</span>, cuidando las unidades.</li>
+    <li><span class="l">C</span>Armar el circuito con el tester como amperímetro en serie (<strong>cambiar la punta roja al borne mA</strong>) y medir la corriente.</li>
+    <li><span class="l">D</span>Desconectar todo y apagar el tester.</li>
+    <li><span class="l">E</span>Comparar el valor calculado (B) con el medido (C).</li>
+    <li><span class="l">F</span>Informar el resultado al instructor.</li>
+  </ol>
+  <figure class="md">
+    <img src="img/guia/paso07-circuito.png" alt="Circuito: batería, R1 entre A y B, amperímetro entre mA y COM en serie volviendo al negativo">
+    <figcaption>R1 en serie con el amperímetro (borne mA). (Pág. 23)</figcaption>
+  </figure>
+  <div class="why">
+    <p><strong>Atajo de unidades:</strong> volt dividido kiloohm da miliampere. Ejemplo ilustrativo: V<sub>BATERÍA</sub> = 12,4 V y R1 = 1 kΩ → I = 12,4 V / 1 kΩ = <strong>12,4 mA</strong> (= 0,0124 A).</p>
+    <p><strong>Resultado esperado:</strong> el valor medido debe quedar <strong>muy cerca</strong> del calculado. Esa coincidencia es la demostración práctica de que la Ley de Ohm sirve para predecir. Las pequeñas diferencias vienen de la tolerancia de las mediciones, la resistencia interna del amperímetro y la leve caída de tensión de la batería al entregar corriente.</p>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 08 ================= -->
+<section id="paso08">
+  <h2><span class="tag">PASO 08</span> Circuito serie: la corriente es la misma</h2>
+  <p class="dek">Dos componentes en una misma rama.</p>
+
+  <h3>Teoría: un ejemplo del auto</h3>
+  <p>
+    Es muy común conectar dos elementos <strong>uno a continuación del
+    otro</strong> en una misma rama. El ejemplo de la guía es el circuito de
+    <strong>ajuste de velocidad del motor del soplador</strong> de la
+    ventilación forzada (el forzador de la calefacción/aire del auto):
+  </p>
+  <figure class="md">
+    <img src="img/guia/paso08-soplador.png" alt="Circuito del soplador: fusible, resistores R1, R2 y R3 en cadena, llave de 5 posiciones (0 a 4) y motor; en violeta el recorrido de la corriente en la posición 3">
+    <figcaption>Ajuste de velocidad del soplador. En violeta, el camino de la corriente para la posición 3 de la llave. (Pág. 24)</figcaption>
+  </figure>
+  <p>
+    La llave elige cuántos resistores quedan <strong>en serie</strong> con el
+    motor. Según el esquema: en la posición <strong>4</strong> el motor va
+    directo a la alimentación (máxima velocidad); en la <strong>3</strong> se
+    intercala R1; en la <strong>2</strong>, R1 + R2; en la <strong>1</strong>,
+    R1 + R2 + R3 (mínima velocidad); la <strong>0</strong> es apagado. Más
+    resistencia en serie → menos corriente → el motor gira más despacio.
+  </p>
+  <figure class="md">
+    <img src="img/guia/paso08-equivalente.png" alt="Circuito equivalente: Vcc, fusible, resistor R1 y motor en serie, con la corriente I">
+    <figcaption>Circuito equivalente para la posición marcada: R1 y el motor en serie. (Pág. 24)</figcaption>
+  </figure>
+
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>En un <strong>circuito serie</strong> los componentes están conectados en una misma rama, uno a continuación del otro.</li>
+      <li>La <strong>corriente que los recorre es la misma en todos ellos</strong>: no hay otro camino por donde se pueda ir.</li>
+      <li>La resistencia total es la suma: <span class="formula">R<sub>total</sub> = R1 + R2</span>, y la corriente es <span class="formula">I = V / (R1 + R2)</span>.</li>
+    </ul>
+  </div>
+
+  <h3>Experiencia: medir la corriente en tres puntos</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de A y B de <strong>R2 y R3 de la sección 1</strong> y de COM y <strong>mA</strong>.</p>
+  <figure class="md">
+    <img src="img/guia/paso08-serie.png" alt="Circuito serie: batería, R2 entre A y B, R3 entre A y B, retorno al negativo">
+    <figcaption>R2 y R3 en serie con la batería. (Pág. 25)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">A</span>Armar el circuito serie de la figura.</li>
+    <li><span class="l">B</span>Selector en <strong>200 mA⎓</strong>.</li>
+    <li><span class="l">C</span><strong>Punto 1 — antes de R2:</strong> levantar la conexión de A de R2; conectar + BATERÍA → mA y COM → A de R2.</li>
+    <li><span class="l">D</span>Encender, leer I (cambiar de rango si hace falta) y anotar.</li>
+    <li><span class="l">E</span><strong>Punto 2 — entre R2 y R3:</strong> restablecer + BATERÍA con A de R2; abrir la unión entre R2 y R3 y conectar B de R2 → mA y A de R3 → COM.</li>
+    <li><span class="l">F</span>Leer y anotar como en D.</li>
+    <li><span class="l">G</span><strong>Punto 3 — después de R3:</strong> restablecer la unión B de R2 – A de R3; levantar la conexión de B de R3 y conectar B de R3 → mA y COM → − BATERÍA.</li>
+    <li><span class="l">H</span>Leer y anotar como en D.</li>
+    <li><span class="l">I</span>Desconectar todo y apagar el tester.</li>
+    <li><span class="l">J</span>Comparar D, F y H y justificar.</li>
+  </ol>
+  <div class="why">
+    <p><strong>Justificación de J:</strong> las tres lecturas dan <strong>el mismo valor</strong> (salvo diferencias mínimas del instrumento). En un circuito serie la corriente no «se gasta» al pasar por los resistores: los electrones que entran por un extremo de la rama son los mismos que salen por el otro. Lo que sí cambia de un punto a otro es la <em>tensión</em>, que es el tema del paso 09.</p>
+    <p>Fijate que en cada caso hay que <strong>abrir</strong> el circuito en un punto e intercalar el amperímetro ahí: es lo que significa «conectar en serie».</p>
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<!-- ================= PASO 09 ================= -->
+<section id="paso09">
+  <h2><span class="tag">PASO 09</span> Circuito serie: las tensiones se reparten</h2>
+  <p class="dek">La segunda regla de Kirchhoff y por qué el soplador gira más lento.</p>
+
+  <h3>Teoría</h3>
+  <p>
+    Volvemos al circuito simplificado del soplador: un resistor R1 en serie con
+    el motor. ¿Para qué se pone ese resistor? Para verlo, se
+    <strong>reemplaza el motor por un resistor</strong> de valor parecido a la
+    resistencia del motor: <strong>R2 de la sección 1</strong> hace de «motor».
+  </p>
+
+  <h3>Experiencia: medir tensiones en el circuito serie</h3>
+  <p>Con <strong>MARCHA</strong> se prenden los leds de A y B de <strong>R1 y R2 de la sección 1</strong>, COM y VΩ del tester y + y − BATERÍA.</p>
+  <figure class="md">
+    <img src="img/guia/paso09-serie.png" alt="Circuito serie: batería, R1 entre A y B, R2 entre A y B, retorno al negativo">
+    <figcaption>R1 en serie con R2 (que reemplaza al motor). (Pág. 28)</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><span class="l">A</span>Armar el circuito. R2 representa al motor.</li>
+    <li><span class="l">B</span>Selector en <strong>20 V⎓</strong>: se mide tensión continua.</li>
+    <li><span class="l">C</span>Puntas en + y − BATERÍA → anotar <strong>V<sub>BATERÍA</sub></strong>.</li>
+    <li><span class="l">D</span>Puntas en A y B de R1 → anotar <strong>V<sub>R1</sub></strong>.</li>
+    <li><span class="l">E</span>Puntas en A y B de R2 → anotar <strong>V<sub>R2</sub></strong>.</li>
+    <li><span class="l">F</span>Desconectar todo y apagar el tester.</li>
+    <li><span class="l">G</span>Reemplazar los valores en <span class="formula">V<sub>BATERÍA</sub> = V<sub>R1</sub> + V<sub>R2</sub></span>.</li>
+    <li><span class="l">H</span>Verificar que se cumple. Si no, consultar al instructor.</li>
+  </ol>
+  <p>A diferencia del paso 08, acá <strong>no hay que abrir el circuito</strong>: el voltímetro se apoya en paralelo sobre cada componente.</p>
+
+  <div class="key">
+    <h4>2ª regla de Kirchhoff (ley de las tensiones)</h4>
+    <ul>
+      <li>«En un circuito serie, <strong>la suma de las tensiones aplicadas a cada componente es igual a la tensión aplicada en los extremos de la rama</strong>.»</li>
+      <li><span class="formula">V<sub>BATERÍA</sub> = V<sub>R1</sub> + V<sub>R2</sub></span></li>
+      <li>Cada resistor se lleva una parte proporcional a su resistencia: <span class="formula">V<sub>R1</sub> = I · R1</span>, <span class="formula">V<sub>R2</sub> = I · R2</span>. El de mayor resistencia recibe más tensión.</li>
+    </ul>
+  </div>
+
+  <div class="why">
+    <p><strong>Ejemplo con valores ilustrativos:</strong> V<sub>BATERÍA</sub> = 12 V, R1 = 100 Ω, R2 = 200 Ω.</p>
+    <p>R<sub>total</sub> = 300 Ω → I = 12 / 300 = 0,04 A = 40 mA (la misma en R1 y R2, como vimos en el paso 08).</p>
+    <p>V<sub>R1</sub> = 0,04 · 100 = <strong>4 V</strong> · V<sub>R2</sub> = 0,04 · 200 = <strong>8 V</strong> · Suma: 4 + 8 = <strong>12 V</strong> ✓</p>
+    <p>En la práctica la suma de las lecturas puede diferir en alguna centésima por redondeo y precisión del tester; eso es normal.</p>
+  </div>
+
+  <h3>Conclusión: para qué sirve R1 en el soplador</h3>
+  <p>
+    Como la tensión de la batería se <strong>reparte</strong> entre R1 y el
+    motor, el motor recibe solo <strong>una fracción</strong> de la tensión.
+    Con menos tensión gira más despacio y sopla menos. Eligiendo distintos
+    valores de resistencia en serie (las posiciones de la llave del paso 08) se
+    obtienen <strong>distintas velocidades del motor</strong>.
+  </p>
+  <div class="note">
+    <strong>Aplicación al diagnóstico:</strong> si el forzador funciona solo en
+    la velocidad máxima y no en las demás, la sospecha recae sobre el conjunto
+    de resistores (la «resistencia del forzador»): en máxima el motor va
+    directo y no pasa por ellos. Un resistor cortado deja sin corriente a todas
+    las posiciones que lo usan.
+  </div>
+  <p><a class="to-top" href="#indice">↑ Volver al índice</a></p>
+</section>
+
+<hr>
+
+<!-- ================= RESUMEN ================= -->
+<section id="tabla-resumen">
+  <h2>Resumen rápido de los pasos</h2>
+  <p class="dek">Qué se mide, cómo se conecta el tester y qué te tiene que quedar.</p>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Paso</th><th>Tema</th><th>Selector</th><th>Bornes</th><th>Conexión</th><th>Idea clave</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="num">00</td><td>Encendido</td><td>—</td><td>—</td><td>—</td><td>PASO 88 = prueba de leds; RESET vuelve al inicio; cuidar clavijas y cables.</td></tr>
+      <tr><td class="num">01</td><td>Tensión</td><td class="num">V⎓ 20</td><td class="num">VΩ · COM</td><td>Paralelo</td><td>Elegir el menor alcance que no desborde; «1» = fuera de rango; signo − = polaridad invertida.</td></tr>
+      <tr><td class="num">02</td><td>Corriente</td><td class="num">A⎓ 20</td><td class="num">20A · COM</td><td>Serie</td><td>Empezar siempre por el alcance más alto; la escala de 20 A no tiene fusible.</td></tr>
+      <tr><td class="num">03</td><td>Ley de Ohm</td><td class="num">A⎓ 20 / 200m · V⎓ 20</td><td class="num">20A/mA · VΩ · COM</td><td>Serie y paralelo</td><td><span class="formula">R = V / I</span> — la tensión es la causa, la corriente el efecto.</td></tr>
+      <tr><td class="num">04</td><td>Óhmetro</td><td class="num">Ω 200 ↑</td><td class="num">VΩ · COM</td><td>Componente sin tensión</td><td>Subir de alcance hasta que no desborde; medir siempre sin alimentación.</td></tr>
+      <tr><td class="num">05</td><td>Puntas</td><td class="num">Ω 200</td><td class="num">VΩ · COM</td><td>Puntas unidas</td><td>Descontar la resistencia de las puntas; si supera 1 Ω, revisar cables.</td></tr>
+      <tr><td class="num">06</td><td>Potenciómetros</td><td class="num">Ω máx ↓</td><td class="num">VΩ · COM</td><td>A y C</td><td>Reóstato = 2 terminales; potenciómetro = 3; A–C varía de 0 al nominal.</td></tr>
+      <tr><td class="num">07</td><td>Predecir I</td><td class="num">Ω · V⎓ · mA</td><td class="num">VΩ / mA · COM</td><td>Serie</td><td><span class="formula">I = V / R</span>: el valor calculado coincide con el medido.</td></tr>
+      <tr><td class="num">08</td><td>Serie: corriente</td><td class="num">A⎓ 200m</td><td class="num">mA · COM</td><td>Serie, en 3 puntos</td><td>La corriente es la misma en todo el circuito serie.</td></tr>
+      <tr><td class="num">09</td><td>Serie: tensión</td><td class="num">V⎓ 20</td><td class="num">VΩ · COM</td><td>Paralelo a cada R</td><td><span class="formula">V<sub>BAT</sub> = V<sub>R1</sub> + V<sub>R2</sub></span> (2ª regla de Kirchhoff).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Reglas de oro del tester</h3>
+  <ul>
+    <li><strong>Voltímetro en paralelo</strong>, <strong>amperímetro en serie</strong>, <strong>óhmetro sin tensión</strong>.</li>
+    <li>Punta negra siempre en <strong>COM</strong>; la roja cambia de borne según la función (VΩ, mA o 20A).</li>
+    <li>Si no conocés el valor, empezá por el <strong>alcance más alto</strong> (en corriente es obligatorio para no quemar el fusible).</li>
+    <li>Para cambiar de función, <strong>desconectá una punta</strong> primero.</li>
+    <li>Antes de dividir o multiplicar, pasá todo a <strong>V, A y Ω</strong>. Repasá la <a href="index.html#prefijos">tabla de prefijos</a> si hace falta.</li>
+  </ul>
+</section>
+
+<hr>
+
+<!-- ================= AUTOEVALUACIÓN ================= -->
+<section id="autoevaluacion">
+  <h2>Autoevaluación</h2>
+  <p class="dek">Pensá la respuesta y después abrí cada pregunta.</p>
+
+  <details>
+    <summary>1. Con el selector en V⎓ 2 y la batería de 12 V, el display muestra «1». ¿Qué significa?</summary>
+    <div class="ans"><p>Desbordamiento: el valor (12 V) supera el máximo del alcance (1,999 V). No es una lectura de 1 V. Hay que subir al alcance de 20 V.</p></div>
+  </details>
+  <details>
+    <summary>2. ¿Por qué en 20 V se lee 12,xx V y en 200 V solo 12,x V?</summary>
+    <div class="ans"><p>Porque el display tiene una cantidad fija de dígitos. En 200 V tiene que poder mostrar hasta 199,9, así que queda un solo decimal: se pierde precisión.</p></div>
+  </details>
+  <details>
+    <summary>3. ¿Qué indica el signo «−» delante de la lectura de tensión?</summary>
+    <div class="ans"><p>Que las puntas están invertidas: el borne COM está en el punto de mayor potencial. El valor absoluto es correcto.</p></div>
+  </details>
+  <details>
+    <summary>4. ¿Por qué se empieza a medir corriente en la escala de 20 A?</summary>
+    <div class="ans"><p>Porque no se conoce el valor. Si la corriente fuera mayor que la escala elegida (por ejemplo, 200 mA), se quemaría el fusible del tester. Después, si la corriente es menor a 0,2 A, se baja a 200 mA para ganar precisión.</p></div>
+  </details>
+  <details>
+    <summary>5. ¿Cuál es el sentido convencional de la corriente y por qué se usa?</summary>
+    <div class="ans"><p>Del borne positivo al negativo por el circuito exterior. Se adoptó antes de conocer el átomo, suponiendo que circulaban cargas positivas, y se mantuvo por convención. Los electrones en realidad se mueven al revés.</p></div>
+  </details>
+  <details>
+    <summary>6. Medís V = 6 V e I = 30 mA sobre un resistor. ¿Cuánto vale R?</summary>
+    <div class="ans"><p>30 mA = 0,03 A → R = 6 / 0,03 = <strong>200 Ω</strong>.</p></div>
+  </details>
+  <details>
+    <summary>7. ¿Por qué hay que desconectar un componente de la fuente antes de medir su resistencia?</summary>
+    <div class="ans"><p>Porque el óhmetro mide inyectando una corriente con su propia pila interna. Una tensión externa falsea la medición y puede dañar el instrumento. Además, si el componente sigue conectado a otros, se mide el conjunto.</p></div>
+  </details>
+  <details>
+    <summary>8. Con las puntas unidas leés 0,3 Ω y sobre un resistor 22,5 Ω. ¿Cuál es su valor?</summary>
+    <div class="ans"><p>22,5 − 0,3 = <strong>22,2 Ω</strong>. Si con las puntas unidas leyeras más de 1 Ω, habría que revisar cables y conectores.</p></div>
+  </details>
+  <details>
+    <summary>9. ¿Qué diferencia hay entre un reóstato y un potenciómetro?</summary>
+    <div class="ans"><p>El reóstato tiene 2 terminales (un extremo y el cursor) y se usa para variar una resistencia o regular corriente. El potenciómetro tiene 3 (los dos extremos y el cursor) y se usa para tomar una fracción de tensión. Un potenciómetro usado con solo A y C funciona como reóstato.</p></div>
+  </details>
+  <details>
+    <summary>10. Una batería de 12,5 V alimenta un resistor de 2,5 kΩ. ¿Qué corriente circula?</summary>
+    <div class="ans"><p>I = 12,5 V / 2,5 kΩ = <strong>5 mA</strong> (= 0,005 A).</p></div>
+  </details>
+  <details>
+    <summary>11. En el paso 08, ¿por qué las tres lecturas de corriente son iguales?</summary>
+    <div class="ans"><p>Porque en un circuito serie hay un solo camino: toda la corriente que pasa por R2 tiene que pasar por R3 y volver a la batería. La corriente es la misma en cualquier punto de la rama.</p></div>
+  </details>
+  <details>
+    <summary>12. En un circuito serie V<sub>BATERÍA</sub> = 12 V y V<sub>R1</sub> = 4,5 V. ¿Cuánto vale V<sub>R2</sub>?</summary>
+    <div class="ans"><p>Por la 2ª regla de Kirchhoff: V<sub>R2</sub> = 12 − 4,5 = <strong>7,5 V</strong>.</p></div>
+  </details>
+  <details>
+    <summary>13. ¿Para qué se conecta un resistor en serie con el motor del soplador?</summary>
+    <div class="ans"><p>Para que se reparta la tensión: el resistor se queda con una parte y el motor recibe solo una fracción de la tensión de la batería, entonces gira más despacio. Con distintos valores de resistencia se obtienen distintas velocidades.</p></div>
+  </details>
+
+  <a class="back" href="index.html">← Volver al manual de Ley de Ohm</a>
+</section>
+
+</div>
+</main>
+
+<footer>
+  Resumen de los pasos 00 a 09 del «Texto guía para uso del alumno» — Consola didáctica para mediciones eléctricas CDE-1. Las figuras son del texto guía original.
+</footer>
+
+</body>
+</html>
