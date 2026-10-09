@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicios combinados</title>
+<meta name="description" content="46 ejercicios autocorregidos que combinan Ley de Ohm y leyes de Kirchhoff: serie, paralelo, mixtos, divisores y casos del automotor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --panel:#151A20;
+  --panel-2:#1E262F;
+  --paper:#E9EDEA;
+  --sheet:#FBFCFB;
+  --grid:#D3DCD6;
+  --ink:#1B2127;
+  --ink-soft:#4C585F;
+  --rule:#C9D2CC;
+  --lcd:#E8A33D;
+  --probe:#1F5F8B;
+  --ok:#2E7D4F;
+  --no:#B8332A;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+h1,h2,h3,h4,nav,button,select,input,label,th,figcaption,.ui{font-family:"IBM Plex Sans",system-ui,sans-serif}
+code,kbd,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------- barra ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--panel);color:#DDE4E8;border-bottom:1px solid #000}
+.topbar .in{max-width:1080px;margin:0 auto;padding:.55rem 1.2rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
+.topbar strong{font-weight:600;font-size:.95rem;letter-spacing:.01em;font-family:"IBM Plex Sans",sans-serif}
+.topbar a{color:#9FB2BD;text-decoration:none;font-size:.88rem;font-family:"IBM Plex Sans",sans-serif}
+.topbar a:hover,.topbar a:focus-visible{color:var(--lcd)}
+.topbar .score{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--lcd)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--panel);color:#E6EDF1;border-bottom:4px solid #0A0D10}
+.hero .in{max-width:1080px;margin:0 auto;padding:2.6rem 1.2rem 2.2rem;display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:center}
+.hero h1{font-size:2.45rem;line-height:1.08;margin:0 0 .6rem;font-weight:700;letter-spacing:-.02em}
+.hero p{margin:0;color:#A9BAC4;font-size:1rem;max-width:42ch}
+.laws{display:grid;gap:.7rem}
+.law{background:var(--panel-2);border:1px solid #303C46;border-radius:6px;padding:.9rem 1.1rem}
+.law .t{font-family:"IBM Plex Sans",sans-serif;font-size:.8rem;color:#7E919D;margin:0 0 .2rem}
+.law .f{font-family:"IBM Plex Mono",monospace;color:var(--lcd);font-size:1.15rem;font-weight:500}
+.law .d{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;color:#A9BAC4;margin-top:.2rem}
+
+/* ---------- botones ---------- */
+button{cursor:pointer;font-size:.86rem;font-weight:500;border-radius:4px;padding:.45rem .85rem;border:1px solid transparent;transition:background .12s ease}
+.btn{background:var(--probe);color:#fff}
+.btn:hover{background:#17496b}
+:focus-visible{outline:2px solid var(--probe);outline-offset:2px}
+
+/* ---------- contenido ---------- */
+main{max-width:1080px;margin:0 auto;padding:0 1.2rem 5rem}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-top:none;padding:2.4rem 3rem 3rem}
+section{scroll-margin-top:60px}
+h2{font-size:1.62rem;letter-spacing:-.015em;margin:2.8rem 0 .2rem;font-weight:600}
+section:first-child h2{margin-top:0}
+h2+.dek{margin:.1rem 0 1.2rem;color:var(--ink-soft);font-style:italic}
+h3{font-size:1.06rem;margin:1.9rem 0 .5rem;font-weight:600;color:#2B333A}
+p,li{max-width:70ch}
+.lead{font-size:1.06rem}
+strong{font-weight:600}
+hr{border:none;border-top:1px solid var(--rule);margin:2.6rem 0}
+a{color:var(--probe)}
+
+.table-wrap{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:1.1rem 0;font-size:.93rem;font-family:"IBM Plex Sans",sans-serif}
+th{text-align:left;font-weight:600;font-size:.82rem;color:var(--ink-soft);border-bottom:2px solid var(--ink);padding:.4rem .6rem}
+td{padding:.4rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:hover{background:#F2F5F3}
+td.num,th.num{font-family:"IBM Plex Mono",monospace}
+
+.formula{display:inline-block;background:#EEF2F0;border:1px solid var(--rule);border-radius:3px;padding:.08rem .38rem;font-family:"IBM Plex Mono",monospace;font-size:.95em}
+.big-formula{font-family:"IBM Plex Mono",monospace;font-size:1.15rem;font-weight:600;background:#EEF2F0;border:1px solid var(--rule);border-radius:4px;padding:.6rem 1rem;display:inline-block;margin:.4rem 0}
+.note{border-left:3px solid var(--lcd);background:#FCF6EA;padding:.7rem 1rem;margin:1.2rem 0;max-width:70ch;font-size:.96rem}
+.key{border:1px solid var(--rule);border-left:4px solid var(--ok);background:#F0F8F3;padding:.8rem 1rem;margin:1.4rem 0;max-width:70ch}
+.key h4{margin:0 0 .35rem;font-size:.92rem;color:var(--ok)}
+.key ul{margin:0;padding-left:1.2rem}
+.why{background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;margin:1rem 0;max-width:70ch;font-size:.96rem}
+.why p{margin:.3rem 0}
+
+figure{margin:1.4rem 0;max-width:70ch}
+figure svg{display:block;width:100%;max-width:440px;height:auto;background:#fff;border:1px solid var(--rule);border-radius:4px}
+figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:.4rem}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:72ch}
+.figs figure{margin:.6rem 0}
+svg text{font-family:"IBM Plex Sans",sans-serif;font-size:13px;fill:var(--ink)}
+svg .wire{stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+svg .comp{stroke:var(--ink);stroke-width:2.5;fill:#fff}
+svg .cur{stroke:var(--probe);stroke-width:2.5;fill:none}
+svg .cur-t{fill:var(--probe);font-weight:600}
+svg .volt{fill:#B35C00;font-weight:600}
+svg .soft{fill:var(--ink-soft);font-size:12px}
+
+/* ---------- ejercicios ---------- */
+.ex-bar{position:sticky;top:41px;z-index:30;background:var(--sheet);border-bottom:1px solid var(--rule);padding:.6rem 0;margin-bottom:1.2rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.progress{flex:1;min-width:120px;height:7px;background:#E2E8E4;border-radius:4px;overflow:hidden;max-width:260px}
+.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s ease}
+.ex-bar .count{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--ink-soft)}
+.btn-dark{background:var(--panel);color:#E6EDF1}
+.btn-dark:hover{background:#2A343D}
+.btn-line{background:transparent;color:var(--ink-soft);border-color:var(--rule)}
+.btn-line:hover{color:var(--ink);border-color:#9AA7A0}
+
+.grp{font-size:1.06rem;margin:2.2rem 0 1rem;font-weight:600;font-family:"IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:.6rem}
+.bands{display:inline-flex;gap:3px;height:1.05rem;align-items:stretch}
+.bands i{width:5px;border-radius:1px;display:block}
+
+.ex{border-bottom:1px solid var(--rule);padding:1rem 0 1rem 3rem;position:relative}
+.ex .n{position:absolute;left:0;top:1rem;width:2.1rem;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:.92rem;color:var(--ink-soft);border-right:3px solid var(--band,#999);padding-right:.45rem;line-height:1.5}
+.ex .q{margin:0 0 .7rem}
+.ex .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.ex input[type=text]{width:8.5rem;padding:.4rem .55rem;border:1px solid #A9B5AE;border-radius:4px;font-family:"IBM Plex Mono",monospace;font-size:.95rem;background:#fff}
+.ex input:focus-visible{outline:2px solid var(--probe);outline-offset:1px}
+.ex .unit{font-family:"IBM Plex Mono",monospace;font-size:.95rem;color:var(--ink-soft);min-width:2.4rem}
+.ex.ok input[type=text]{border-color:var(--ok);background:#F0F8F3}
+.ex.no input[type=text]{border-color:var(--no);background:#FDF2F1}
+.led{width:.62rem;height:.62rem;border-radius:50%;background:#CDD6D0;flex:none;box-shadow:inset 0 0 2px rgba(0,0,0,.3)}
+.ex.ok .led{background:var(--ok);box-shadow:0 0 6px rgba(46,125,79,.75)}
+.ex.no .led{background:var(--no);box-shadow:0 0 6px rgba(184,51,42,.7)}
+.verdict{font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;color:var(--ink-soft)}
+.ex.ok .verdict{color:var(--ok)}
+.ex.no .verdict{color:var(--no)}
+.sol{display:none;margin:.85rem 0 .2rem;background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;font-size:.96rem;max-width:70ch}
+.sol.open{display:block}
+.sol p{margin:.3rem 0}
+.sol .res{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.link-btn{background:none;border:none;color:var(--probe);padding:.2rem 0;font-size:.85rem;text-decoration:underline;text-underline-offset:2px}
+
+footer{max-width:1080px;margin:0 auto;padding:1.4rem 1.2rem 3rem;font-size:.85rem;color:var(--ink-soft);font-family:"IBM Plex Sans",sans-serif}
+
+@media (max-width:860px){
+  .hero .in{grid-template-columns:1fr;gap:1.6rem;padding:2rem 1.2rem}
+  .hero h1{font-size:2rem}
+  .sheet{padding:1.6rem 1rem 2.4rem}
+  body{font-size:16px}
+  main{padding:0 .5rem 4rem}
+  .topbar .in{gap:.9rem}
+  .ex{padding-left:2.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <strong>Ohm + Kirchhoff</strong>
+    <a href="index.html">Inicio</a>
+    <a href="kirchhoff.html">Kirchhoff</a>
+    <a href="#repaso">Repaso</a>
+    <a href="#metodo">Método</a>
+    <a href="#ejercicios">Ejercicios</a>
+    <span class="score" id="score">0 / 46</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="in">
+    <div>
+      <h1>Ejercicios combinados</h1>
+      <p>46 problemas donde hay que usar la Ley de Ohm y las dos leyes de Kirchhoff a la vez: circuitos serie, paralelo y mixtos, divisores de tensión y casos reales del auto.</p>
+    </div>
+    <div class="laws">
+      <div class="law">
+        <p class="t">Ley de Ohm</p>
+        <div class="f">V = I × R</div>
+        <div class="d">Lo que pasa en cada componente.</div>
+      </div>
+      <div class="law">
+        <p class="t">1ª ley de Kirchhoff · nodos</p>
+        <div class="f">Σ I entran = Σ I salen</div>
+        <div class="d">Cómo se reparte la corriente.</div>
+      </div>
+      <div class="law">
+        <p class="t">2ª ley de Kirchhoff · mallas</p>
+        <div class="f">Σ V fuentes = Σ V caídas</div>
+        <div class="d">Cómo se reparte la tensión.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="sheet">
+
+<section id="repaso">
+  <h2>Repaso de fórmulas</h2>
+  <p class="dek">Todo sale de Ohm y Kirchhoff; estas son las versiones listas para usar.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Serie</th><th>Paralelo</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Corriente</strong></td><td>La misma en todos: <span class="formula">I = I₁ = I₂</span></td><td>Se suma: <span class="formula">I = I₁ + I₂ + …</span></td></tr>
+      <tr><td><strong>Tensión</strong></td><td>Se suma: <span class="formula">V = V₁ + V₂ + …</span></td><td>La misma en todos: <span class="formula">V = V₁ = V₂</span></td></tr>
+      <tr><td><strong>Resistencia equivalente</strong></td><td><span class="formula">R = R₁ + R₂ + …</span><br>Siempre mayor que la mayor.</td><td><span class="formula">1/R = 1/R₁ + 1/R₂ + …</span><br>Siempre menor que la menor.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Atajos para paralelo</h3>
+  <ul>
+    <li><strong>Dos resistencias:</strong> <span class="formula">R = (R₁ × R₂) ÷ (R₁ + R₂)</span>, «producto sobre suma».</li>
+    <li><strong>n resistencias iguales:</strong> <span class="formula">R = R₁ ÷ n</span>. Dos de 10 kΩ en paralelo dan 5 kΩ.</li>
+  </ul>
+  <h3>Divisores</h3>
+  <ul>
+    <li><strong>Divisor de tensión</strong> (dos en serie): <span class="formula">V₂ = V × R₂ ÷ (R₁ + R₂)</span>.</li>
+    <li><strong>Divisor de corriente</strong> (dos en paralelo): <span class="formula">I₂ = I × R₁ ÷ (R₁ + R₂)</span>. Ojo: arriba va la <em>otra</em> resistencia.</li>
+  </ul>
+  <div class="note">Atajo de unidades: <strong>V ÷ kΩ = mA</strong> y <strong>mA × kΩ = V</strong>. Si mezclás prefijos distintos, pasá todo a V, A y Ω (ver la <a href="index.html#prefijos">tabla de prefijos</a>).</div>
+</section>
+
+<hr>
+
+<section id="metodo">
+  <h2>Método para circuitos mixtos</h2>
+  <p class="dek">Reducir, calcular, volver a expandir y comprobar.</p>
+  <ol>
+    <li><strong>Reducí</strong> el circuito: reemplazá cada grupo serie o paralelo por su resistencia equivalente, hasta que quede una sola.</li>
+    <li><strong>Calculá la corriente total</strong> con Ohm: <span class="formula">I = V ÷ R<sub>total</sub></span>.</li>
+    <li><strong>Volvé hacia atrás:</strong> con Ohm calculá la tensión de cada tramo; con la 2ª ley, lo que queda para el resto; con Ohm otra vez, la corriente de cada rama.</li>
+    <li><strong>Comprobá</strong> con la 1ª ley (las corrientes de cada nodo cierran) y con la 2ª (las tensiones de cada malla suman la de la fuente).</li>
+  </ol>
+  <p>Los ejercicios 21 a 28 usan estos dos circuitos:</p>
+  <div class="figs">
+    <figure>
+      <svg viewBox="0 0 320 200" role="img" aria-label="Circuito 1: fuente de 24 V, R1 de 4 ohm en serie con el paralelo de R2 de 12 ohm y R3 de 6 ohm">
+        <path class="wire" d="M40,94 V40 H100"/>
+        <path class="wire" d="M160,40 H280 V75"/>
+        <path class="wire" d="M200,40 V75"/>
+        <path class="wire" d="M200,125 V165"/>
+        <path class="wire" d="M280,125 V165 H40 V108"/>
+        <line x1="24" y1="94" x2="56" y2="94" stroke="#1B2127" stroke-width="2.5"/>
+        <line x1="32" y1="108" x2="48" y2="108" stroke="#1B2127" stroke-width="5"/>
+        <text x="12" y="90">+</text>
+        <text class="volt" x="52" y="132">24 V</text>
+        <rect class="comp" x="100" y="31" width="60" height="18"/>
+        <text x="106" y="24">R₁ = 4 Ω</text>
+        <rect class="comp" x="191" y="75" width="18" height="50"/>
+        <text x="150" y="104">R₂</text>
+        <text class="soft" x="140" y="120">12 Ω</text>
+        <rect class="comp" x="271" y="75" width="18" height="50"/>
+        <text x="232" y="104">R₃</text>
+        <text class="soft" x="232" y="120">6 Ω</text>
+        <circle cx="200" cy="40" r="4.5" fill="#1B2127"/>
+        <circle cx="200" cy="165" r="4.5" fill="#1B2127"/>
+        <text class="soft" x="70" y="190">R₁ en serie con (R₂ ∥ R₃)</text>
+      </svg>
+      <figcaption>Circuito 1 · ejercicios 21 a 25.</figcaption>
+    </figure>
+    <figure>
+      <svg viewBox="0 0 320 200" role="img" aria-label="Circuito 2: fuente de 15 V con dos ramas en paralelo; una rama con R1 de 100 ohm y R2 de 200 ohm en serie, la otra con R3 de 300 ohm">
+        <path class="wire" d="M40,94 V30 H270 V75"/>
+        <path class="wire" d="M180,30 V45"/>
+        <path class="wire" d="M180,85 V105"/>
+        <path class="wire" d="M180,145 V170"/>
+        <path class="wire" d="M270,125 V170 H40 V108"/>
+        <line x1="24" y1="94" x2="56" y2="94" stroke="#1B2127" stroke-width="2.5"/>
+        <line x1="32" y1="108" x2="48" y2="108" stroke="#1B2127" stroke-width="5"/>
+        <text x="12" y="90">+</text>
+        <text class="volt" x="52" y="132">15 V</text>
+        <rect class="comp" x="171" y="45" width="18" height="40"/>
+        <text x="106" y="70">R₁ 100 Ω</text>
+        <rect class="comp" x="171" y="105" width="18" height="40"/>
+        <text x="106" y="130">R₂ 200 Ω</text>
+        <rect class="comp" x="261" y="75" width="18" height="50"/>
+        <text x="212" y="104">R₃</text>
+        <text class="soft" x="204" y="120">300 Ω</text>
+        <circle cx="180" cy="30" r="4.5" fill="#1B2127"/>
+        <circle cx="180" cy="170" r="4.5" fill="#1B2127"/>
+        <text class="soft" x="80" y="193">(R₁ + R₂) en paralelo con R₃</text>
+      </svg>
+      <figcaption>Circuito 2 · ejercicios 26 a 28.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<hr>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p class="dek">Escribí el resultado en la unidad que pide cada consigna y comprobá.</p>
+  <div class="ex-bar">
+    <div class="progress"><i id="bar"></i></div>
+    <span class="count" id="count">0 correctos de 46</span>
+    <button class="btn-dark" id="checkAll">Comprobar todo</button>
+    <button class="btn-line" id="resetAll">Borrar respuestas</button>
+  </div>
+  <div id="exList"></div>
+  <p style="margin-top:2rem">¿Te trabaste con algún concepto? Repasá la <a href="kirchhoff.html">teoría de Kirchhoff</a> o el <a href="index.html#teoria">manual de Ley de Ohm</a>.</p>
+</section>
+
+</div>
+</main>
+
+<footer>Se aceptan coma o punto decimal. Tus respuestas quedan guardadas en este navegador.</footer>
+
+<script>
+window.PRACTICA = {
+key: "ohm-kirchhoff-combinados-v1",
+groups: [
+  { id:"A", title:"Grupo A — circuitos serie", bands:["#7B3F00","#C0392B","#D35400"], color:"#7B3F00" },
+  { id:"B", title:"Grupo B — circuitos paralelo", bands:["#1F5F8B","#2E7D4F","#C9A227"], color:"#1F5F8B" },
+  { id:"C", title:"Grupo C — circuitos mixtos (serie-paralelo)", bands:["#2E7D4F","#1F5F8B","#B35C00"], color:"#2E7D4F" },
+  { id:"D", title:"Grupo D — divisores de tensión", bands:["#B35C00","#C9A227","#7B3F00"], color:"#B35C00" },
+  { id:"E", title:"Grupo E — aplicados al automotor", bands:["#C9A227","#7B3F00","#1F5F8B"], color:"#C9A227" }
+],
+ex: [
+{g:"A",n:1,q:"Tres resistencias de 120 Ω, 330 Ω y 550 Ω se conectan en serie. ¿Cuál es la resistencia equivalente, en kΩ?",u:"kΩ",a:1,
+ s:"En serie se suman: 120 + 330 + 550 = 1 000 Ω = <span class='res'>1 kΩ</span>"},
+{g:"A",n:2,q:"La serie del ejercicio anterior (120 Ω, 330 Ω y 550 Ω) se conecta a 12 V. ¿Qué corriente circula, en mA?",u:"mA",a:12,
+ s:"I = 12 V ÷ 1 kΩ = <span class='res'>12 mA</span> (V ÷ kΩ da mA)."},
+{g:"A",n:3,q:"En ese mismo circuito (12 V, 12 mA), ¿qué tensión cae sobre la resistencia de 330 Ω?",u:"V",a:3.96,
+ s:"12 mA = 0,012 A.<br>V = 0,012 × 330 = <span class='res'>3,96 V</span><br>Comprobación (2ª ley): 0,012 × 120 = 1,44 V; 0,012 × 550 = 6,6 V; 1,44 + 3,96 + 6,6 = 12 V ✓"},
+{g:"A",n:4,q:"Una resistencia de 47 Ω y otra de 33 Ω en serie se conectan a 10 V. ¿Corriente, en mA?",u:"mA",a:125,
+ s:"R = 47 + 33 = 80 Ω.<br>I = 10 ÷ 80 = 0,125 A = <span class='res'>125 mA</span>"},
+{g:"A",n:5,q:"Una fuente de 18 V alimenta R1 = 1,5 kΩ y R2 = 4,5 kΩ en serie. ¿Qué tensión hay sobre R1?",u:"V",a:4.5,
+ s:"R = 1,5 + 4,5 = 6 kΩ → I = 18 ÷ 6 = 3 mA.<br>V₁ = 3 mA × 1,5 kΩ = <span class='res'>4,5 V</span>"},
+{g:"A",n:6,q:"Tres resistencias en serie se alimentan con 12 V y circulan 20 mA. Dos de ellas son de 150 Ω y 250 Ω. ¿Cuánto vale la tercera, en Ω?",u:"Ω",a:200,
+ s:"Resistencia total (Ohm): 12 ÷ 0,02 = 600 Ω.<br>R₃ = 600 − 150 − 250 = <span class='res'>200 Ω</span>"},
+{g:"A",n:7,q:"Una fuente de 10 V alimenta R1 = 2 kΩ en serie con R2. Sobre R1 se miden 4 V. ¿Cuánto vale R2, en kΩ?",u:"kΩ",a:3,
+ s:"I = 4 V ÷ 2 kΩ = 2 mA.<br>2ª ley: V₂ = 10 − 4 = 6 V.<br>R₂ = 6 V ÷ 2 mA = <span class='res'>3 kΩ</span>"},
+{g:"A",n:8,q:"Dos resistencias en serie se conectan a 12 V. R1 vale el triple que R2. ¿Qué tensión hay sobre R1?",u:"V",a:9,
+ s:"La tensión se reparte en proporción a la resistencia. R1 tiene 3 partes de 4 en total.<br>V₁ = 12 × 3 ÷ 4 = <span class='res'>9 V</span> (y V₂ = 3 V)."},
+{g:"A",n:9,q:"Un LED necesita 10 mA y sobre él caen 2 V. Se alimenta desde 12 V con una resistencia en serie. ¿De cuánto tiene que ser, en kΩ?",u:"kΩ",a:1,
+ s:"2ª ley: la resistencia se queda con 12 − 2 = 10 V.<br>R = 10 V ÷ 10 mA = <span class='res'>1 kΩ</span>"},
+{g:"A",n:10,q:"Dos LEDs rojos en serie (2 V cada uno) se alimentan desde 12 V con una resistencia en serie, a 20 mA. ¿De cuánto tiene que ser la resistencia, en Ω?",u:"Ω",a:400,
+ s:"Los LEDs se llevan 2 + 2 = 4 V. A la resistencia le quedan 12 − 4 = 8 V.<br>R = 8 ÷ 0,02 = <span class='res'>400 Ω</span>"},
+
+{g:"B",n:11,q:"¿Cuál es la resistencia equivalente de 6 Ω y 3 Ω en paralelo?",u:"Ω",a:2,
+ s:"Producto sobre suma: (6 × 3) ÷ (6 + 3) = 18 ÷ 9 = <span class='res'>2 Ω</span><br>Es menor que la menor (3 Ω), como siempre en paralelo."},
+{g:"B",n:12,q:"¿Cuál es la resistencia equivalente de 12 Ω, 12 Ω y 6 Ω en paralelo?",u:"Ω",a:3,
+ s:"Las dos de 12 Ω en paralelo dan 12 ÷ 2 = 6 Ω.<br>Ese 6 Ω en paralelo con el otro de 6 Ω: 6 ÷ 2 = <span class='res'>3 Ω</span>"},
+{g:"B",n:13,q:"Dos resistencias de 10 kΩ se conectan en paralelo. ¿Resistencia equivalente, en kΩ?",u:"kΩ",a:5,
+ s:"Iguales en paralelo: R ÷ n = 10 ÷ 2 = <span class='res'>5 kΩ</span>"},
+{g:"B",n:14,q:"¿Cuál es la resistencia equivalente de 100 Ω y 150 Ω en paralelo?",u:"Ω",a:60,
+ s:"(100 × 150) ÷ (100 + 150) = 15 000 ÷ 250 = <span class='res'>60 Ω</span>"},
+{g:"B",n:15,q:"Se aplican 12 V a 60 Ω y 30 Ω en paralelo. ¿Qué corriente total entrega la fuente?",u:"A",a:0.6,
+ s:"Por Ohm en cada rama: 12 ÷ 60 = 0,2 A y 12 ÷ 30 = 0,4 A.<br>1ª ley: I = 0,2 + 0,4 = <span class='res'>0,6 A</span><br>Otra forma: R<sub>eq</sub> = (60 × 30) ÷ 90 = 20 Ω → 12 ÷ 20 = 0,6 A."},
+{g:"B",n:16,q:"En el paralelo anterior (12 V sobre 60 Ω y 30 Ω), ¿qué corriente pasa por la de 60 Ω, en mA?",u:"mA",a:200,
+ s:"En paralelo la de 60 Ω tiene los 12 V completos.<br>I = 12 ÷ 60 = 0,2 A = <span class='res'>200 mA</span>"},
+{g:"B",n:17,q:"Una corriente de 900 mA entra a un paralelo de 20 Ω y 40 Ω. ¿Cuánta corriente pasa por la de 40 Ω, en mA?",u:"mA",a:300,
+ s:"R<sub>eq</sub> = (20 × 40) ÷ 60 = 13,33 Ω. Tensión del paralelo: 0,9 × 13,33 = 12 V.<br>I₄₀ = 12 ÷ 40 = 0,3 A = <span class='res'>300 mA</span><br>Con el divisor de corriente: 900 × 20 ÷ (20 + 40) = 300 mA. La de mayor resistencia lleva menos corriente."},
+{g:"B",n:18,q:"Tres resistencias iguales en paralelo consumen en total 1,2 A. ¿Qué corriente pasa por cada una, en mA?",u:"mA",a:400,
+ s:"Iguales y con la misma tensión: se reparten la corriente en partes iguales.<br>1 200 mA ÷ 3 = <span class='res'>400 mA</span>"},
+{g:"B",n:19,q:"Se aplican 24 V a tres ramas en paralelo de 8 Ω, 12 Ω y 24 Ω. ¿Corriente total?",u:"A",a:6,
+ s:"24 ÷ 8 = 3 A · 24 ÷ 12 = 2 A · 24 ÷ 24 = 1 A<br>I = 3 + 2 + 1 = <span class='res'>6 A</span>"},
+{g:"B",n:20,q:"¿Cuál es la resistencia equivalente de 1 kΩ y 4 kΩ en paralelo, en Ω?",u:"Ω",a:800,
+ s:"(1 × 4) ÷ (1 + 4) = 0,8 kΩ = <span class='res'>800 Ω</span>"},
+
+{g:"C",n:21,q:"<strong>Circuito 1:</strong> R1 = 4 Ω en serie con el paralelo de R2 = 12 Ω y R3 = 6 Ω. ¿Cuál es la resistencia equivalente total?",u:"Ω",a:8,
+ s:"Paralelo: (12 × 6) ÷ 18 = 4 Ω.<br>Serie con R1: 4 + 4 = <span class='res'>8 Ω</span>"},
+{g:"C",n:22,q:"<strong>Circuito 1</strong> alimentado con 24 V. ¿Qué corriente entrega la fuente?",u:"A",a:3,
+ s:"I = 24 ÷ 8 = <span class='res'>3 A</span>"},
+{g:"C",n:23,q:"<strong>Circuito 1</strong> con 24 V. ¿Qué tensión hay sobre el paralelo de R2 y R3?",u:"V",a:12,
+ s:"V<sub>paralelo</sub> = 3 A × 4 Ω = <span class='res'>12 V</span><br>O con la 2ª ley: V₁ = 3 × 4 = 12 V, entonces al paralelo le quedan 24 − 12 = 12 V."},
+{g:"C",n:24,q:"<strong>Circuito 1</strong> con 24 V. ¿Qué corriente pasa por R3 (6 Ω)?",u:"A",a:2,
+ s:"R3 tiene la tensión del paralelo, 12 V.<br>I₃ = 12 ÷ 6 = <span class='res'>2 A</span><br>Por R2: 12 ÷ 12 = 1 A. 1ª ley: 2 + 1 = 3 A = I total ✓"},
+{g:"C",n:25,q:"<strong>Circuito 1</strong> con 24 V. ¿Qué tensión cae sobre R1?",u:"V",a:12,
+ s:"Por R1 pasa la corriente total.<br>V₁ = 3 × 4 = <span class='res'>12 V</span>"},
+{g:"C",n:26,q:"<strong>Circuito 2:</strong> R1 = 100 Ω en serie con R2 = 200 Ω, y esa rama en paralelo con R3 = 300 Ω. ¿Resistencia equivalente?",u:"Ω",a:150,
+ s:"Rama serie: 100 + 200 = 300 Ω.<br>En paralelo con R3 = 300 Ω: dos iguales → 300 ÷ 2 = <span class='res'>150 Ω</span>"},
+{g:"C",n:27,q:"<strong>Circuito 2</strong> alimentado con 15 V. ¿Qué corriente entrega la fuente, en mA?",u:"mA",a:100,
+ s:"I = 15 ÷ 150 = 0,1 A = <span class='res'>100 mA</span>"},
+{g:"C",n:28,q:"<strong>Circuito 2</strong> con 15 V. ¿Qué tensión hay sobre R2?",u:"V",a:10,
+ s:"Las dos ramas tienen los 15 V. Por la rama de R1 y R2: I = 15 ÷ 300 = 0,05 A.<br>V₂ = 0,05 × 200 = <span class='res'>10 V</span> (y V₁ = 5 V; 5 + 10 = 15 ✓)."},
+{g:"C",n:29,q:"Una fuente de 10 V alimenta, en serie: R1 = 1 kΩ, luego un paralelo de dos resistencias de 2 kΩ, y luego R4 = 500 Ω. ¿Qué corriente entrega la fuente, en mA?",u:"mA",a:4,
+ s:"Paralelo de dos de 2 kΩ: 1 kΩ.<br>Total: 1 + 1 + 0,5 = 2,5 kΩ.<br>I = 10 ÷ 2,5 = <span class='res'>4 mA</span>"},
+{g:"C",n:30,q:"En el circuito anterior, ¿qué tensión hay sobre el paralelo de las dos de 2 kΩ?",u:"V",a:4,
+ s:"V = 4 mA × 1 kΩ = <span class='res'>4 V</span><br>Comprobación (2ª ley): V₁ = 4 V, V₄ = 4 mA × 0,5 kΩ = 2 V; 4 + 4 + 2 = 10 V ✓. Por cada resistencia de 2 kΩ pasan 2 mA."},
+
+{g:"D",n:31,q:"Un divisor de tensión tiene R1 = 10 kΩ arriba y R2 = 5 kΩ abajo, alimentado con 12 V. ¿Qué tensión hay sobre R2?",u:"V",a:4,
+ s:"V₂ = 12 × 5 ÷ (10 + 5) = <span class='res'>4 V</span><br>Paso a paso: I = 12 ÷ 15 kΩ = 0,8 mA; V₂ = 0,8 mA × 5 kΩ = 4 V."},
+{g:"D",n:32,q:"Un divisor con dos resistencias iguales se alimenta con 5 V. ¿Qué tensión hay en el punto medio?",u:"V",a:2.5,
+ s:"Iguales en serie se reparten mitad y mitad: <span class='res'>2,5 V</span>"},
+{g:"D",n:33,q:"Querés obtener 3 V a partir de 9 V con un divisor. La resistencia de abajo es de 1 kΩ. ¿De cuánto tiene que ser la de arriba, en kΩ?",u:"kΩ",a:2,
+ s:"Corriente por la de abajo: 3 V ÷ 1 kΩ = 3 mA.<br>2ª ley: a la de arriba le quedan 9 − 3 = 6 V.<br>R = 6 V ÷ 3 mA = <span class='res'>2 kΩ</span>"},
+{g:"D",n:34,q:"Un potenciómetro de 10 kΩ está alimentado con 5 V entre sus extremos. El cursor está en un punto en el que entre el cursor y masa hay 3 kΩ. ¿Qué tensión hay en el cursor?",u:"V",a:1.5,
+ s:"El potenciómetro es un divisor: 3 kΩ abajo y 7 kΩ arriba.<br>V = 5 × 3 ÷ 10 = <span class='res'>1,5 V</span><br>Así funciona el sensor de posición de mariposa (TPS): la ECU lee la tensión del cursor."},
+{g:"D",n:35,q:"Un divisor de 2,2 kΩ arriba y 3,3 kΩ abajo se alimenta con 12 V. ¿Qué tensión hay sobre la de 3,3 kΩ?",u:"V",a:7.2,
+ s:"V = 12 × 3,3 ÷ (2,2 + 3,3) = 12 × 3,3 ÷ 5,5 = <span class='res'>7,2 V</span>"},
+{g:"D",n:36,q:"Un divisor de dos resistencias de 10 kΩ está alimentado con 12 V. Sobre la de abajo se conecta una carga de 10 kΩ. ¿Qué tensión queda en la salida?",u:"V",a:4,
+ s:"La carga queda en paralelo con la de abajo: 10 kΩ ∥ 10 kΩ = 5 kΩ.<br>Ahora el divisor es 10 kΩ arriba y 5 kΩ abajo: V = 12 × 5 ÷ 15 = <span class='res'>4 V</span><br>Sin carga daba 6 V. Conectar una carga a un divisor le baja la tensión: por eso los divisores solo se usan para señales que consumen muy poca corriente."},
+
+{g:"E",n:37,q:"Un forzador tiene dos resistencias de velocidades, R1 = 0,5 Ω y R2 = 1 Ω, y un motor de 1,5 Ω. En velocidad 2 el motor queda en serie con R1 y R2, a 12 V. ¿Qué corriente circula?",u:"A",a:4,
+ s:"R total = 0,5 + 1 + 1,5 = 3 Ω.<br>I = 12 ÷ 3 = <span class='res'>4 A</span>"},
+{g:"E",n:38,q:"En velocidad 2 del forzador anterior (4 A), ¿qué tensión le llega al motor?",u:"V",a:6,
+ s:"V<sub>motor</sub> = 4 × 1,5 = <span class='res'>6 V</span><br>Las resistencias se llevan 4 × 1,5 = 6 V entre las dos (2ª ley: 6 + 6 = 12 ✓)."},
+{g:"E",n:39,q:"En velocidad 3 queda solo R1 = 0,5 Ω en serie con el motor de 1,5 Ω, a 12 V. ¿Qué tensión le llega al motor?",u:"V",a:9,
+ s:"R total = 0,5 + 1,5 = 2 Ω → I = 12 ÷ 2 = 6 A.<br>V<sub>motor</sub> = 6 × 1,5 = <span class='res'>9 V</span><br>Más tensión que en velocidad 2, entonces gira más rápido. En velocidad máxima el motor va directo a los 12 V."},
+{g:"E",n:40,q:"Los dos faros son lámparas de 2,4 Ω cada una, en paralelo, alimentadas con 12 V. ¿Qué corriente pasa por el fusible común?",u:"A",a:10,
+ s:"Cada faro: 12 ÷ 2,4 = 5 A.<br>1ª ley: I = 5 + 5 = <span class='res'>10 A</span>"},
+{g:"E",n:41,q:"Una bomba de combustible de 2,2 Ω se alimenta con 12,5 V, pero tiene un conector sulfatado de 0,3 Ω en serie. ¿Qué corriente circula?",u:"A",a:5,
+ s:"R total = 2,2 + 0,3 = 2,5 Ω.<br>I = 12,5 ÷ 2,5 = <span class='res'>5 A</span>"},
+{g:"E",n:42,q:"En el caso anterior (bomba de 2,2 Ω, conector de 0,3 Ω, 5 A), ¿qué tensión le llega realmente a la bomba?",u:"V",a:11,
+ s:"V<sub>bomba</sub> = 5 × 2,2 = <span class='res'>11 V</span><br>El conector se come 5 × 0,3 = 1,5 V (12,5 − 11). La bomba gira más lenta y puede faltar presión de combustible."},
+{g:"E",n:43,q:"La ECU alimenta un sensor de temperatura (NTC) con 5 V a través de una resistencia interna de 2 kΩ. Con el motor frío la NTC vale 8 kΩ. ¿Qué tensión lee la ECU sobre el sensor?",u:"V",a:4,
+ s:"Divisor de tensión: V = 5 × 8 ÷ (2 + 8) = <span class='res'>4 V</span><br>Cuando el motor calienta, la NTC baja su resistencia y la tensión baja. Con la NTC en 2 kΩ, por ejemplo, la ECU leería 2,5 V."},
+{g:"E",n:44,q:"Seis lámparas de 0,4 A cada una están en paralelo en el circuito de posición y patente. ¿Qué corriente pasa por su fusible?",u:"A",a:2.4,
+ s:"1ª ley: I = 6 × 0,4 = <span class='res'>2,4 A</span><br>Un fusible de 3 A alcanza, pero con poco margen: agregarle consumos no es buena idea."},
+{g:"E",n:45,q:"Durante el arranque la batería mide 12,4 V y sobre los bornes del motor de arranque se miden 10,6 V. En el cable positivo caen 0,8 V. ¿Cuánto cae en el lado de masa?",u:"V",a:1,
+ s:"2ª ley en la malla del arranque: 12,4 = 0,8 + 10,6 + V<sub>masa</sub><br>V<sub>masa</sub> = 12,4 − 11,4 = <span class='res'>1 V</span><br>Es demasiado. Hay que revisar la malla de masa motor-chasis y el borne negativo."},
+{g:"E",n:46,q:"Un inyector de 16 Ω se alimenta con 12 V a través de una resistencia limitadora de 4 Ω en serie. ¿Qué corriente circula por el inyector, en mA?",u:"mA",a:600,
+ s:"R total = 16 + 4 = 20 Ω.<br>I = 12 ÷ 20 = 0,6 A = <span class='res'>600 mA</span>"}
+]
+};
+</script>
+<script src="practica.js"></script>
+</body>
+</html>
