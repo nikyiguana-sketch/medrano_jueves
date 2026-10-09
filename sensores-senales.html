@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensores y señales</title>
+<meta name="description" content="Llave Hall, valor medio, PWM y sensor inductivo, con 20 ejercicios autocorregidos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --panel:#151A20;
+  --panel-2:#1E262F;
+  --paper:#E9EDEA;
+  --sheet:#FBFCFB;
+  --grid:#D3DCD6;
+  --ink:#1B2127;
+  --ink-soft:#4C585F;
+  --rule:#C9D2CC;
+  --lcd:#E8A33D;
+  --probe:#1F5F8B;
+  --ok:#2E7D4F;
+  --no:#B8332A;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+h1,h2,h3,h4,nav,button,select,input,label,th,figcaption,.ui{font-family:"IBM Plex Sans",system-ui,sans-serif}
+code,kbd,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------- barra ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--panel);color:#DDE4E8;border-bottom:1px solid #000}
+.topbar .in{max-width:1080px;margin:0 auto;padding:.55rem 1.2rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
+.topbar strong{font-weight:600;font-size:.95rem;letter-spacing:.01em;font-family:"IBM Plex Sans",sans-serif}
+.topbar a{color:#9FB2BD;text-decoration:none;font-size:.88rem;font-family:"IBM Plex Sans",sans-serif}
+.topbar a:hover,.topbar a:focus-visible{color:var(--lcd)}
+.topbar .score{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--lcd)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--panel);color:#E6EDF1;border-bottom:4px solid #0A0D10}
+.hero .in{max-width:1080px;margin:0 auto;padding:2.6rem 1.2rem 2.2rem;display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:center}
+.hero h1{font-size:2.45rem;line-height:1.08;margin:0 0 .6rem;font-weight:700;letter-spacing:-.02em}
+.hero p{margin:0;color:#A9BAC4;font-size:1rem;max-width:42ch}
+.laws{display:grid;gap:.7rem}
+.law{background:var(--panel-2);border:1px solid #303C46;border-radius:6px;padding:.9rem 1.1rem}
+.law .t{font-family:"IBM Plex Sans",sans-serif;font-size:.8rem;color:#7E919D;margin:0 0 .2rem}
+.law .f{font-family:"IBM Plex Mono",monospace;color:var(--lcd);font-size:1.15rem;font-weight:500}
+.law .d{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;color:#A9BAC4;margin-top:.2rem}
+
+/* ---------- botones ---------- */
+button{cursor:pointer;font-size:.86rem;font-weight:500;border-radius:4px;padding:.45rem .85rem;border:1px solid transparent;transition:background .12s ease}
+.btn{background:var(--probe);color:#fff}
+.btn:hover{background:#17496b}
+:focus-visible{outline:2px solid var(--probe);outline-offset:2px}
+
+/* ---------- contenido ---------- */
+main{max-width:1080px;margin:0 auto;padding:0 1.2rem 5rem}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-top:none;padding:2.4rem 3rem 3rem}
+section{scroll-margin-top:60px}
+h2{font-size:1.62rem;letter-spacing:-.015em;margin:2.8rem 0 .2rem;font-weight:600}
+section:first-child h2{margin-top:0}
+h2+.dek{margin:.1rem 0 1.2rem;color:var(--ink-soft);font-style:italic}
+h3{font-size:1.06rem;margin:1.9rem 0 .5rem;font-weight:600;color:#2B333A}
+p,li{max-width:70ch}
+.lead{font-size:1.06rem}
+strong{font-weight:600}
+hr{border:none;border-top:1px solid var(--rule);margin:2.6rem 0}
+a{color:var(--probe)}
+
+.table-wrap{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:1.1rem 0;font-size:.93rem;font-family:"IBM Plex Sans",sans-serif}
+th{text-align:left;font-weight:600;font-size:.82rem;color:var(--ink-soft);border-bottom:2px solid var(--ink);padding:.4rem .6rem}
+td{padding:.4rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:hover{background:#F2F5F3}
+td.num,th.num{font-family:"IBM Plex Mono",monospace}
+
+.formula{display:inline-block;background:#EEF2F0;border:1px solid var(--rule);border-radius:3px;padding:.08rem .38rem;font-family:"IBM Plex Mono",monospace;font-size:.95em}
+.big-formula{font-family:"IBM Plex Mono",monospace;font-size:1.15rem;font-weight:600;background:#EEF2F0;border:1px solid var(--rule);border-radius:4px;padding:.6rem 1rem;display:inline-block;margin:.4rem 0}
+.note{border-left:3px solid var(--lcd);background:#FCF6EA;padding:.7rem 1rem;margin:1.2rem 0;max-width:70ch;font-size:.96rem}
+.key{border:1px solid var(--rule);border-left:4px solid var(--ok);background:#F0F8F3;padding:.8rem 1rem;margin:1.4rem 0;max-width:70ch}
+.key h4{margin:0 0 .35rem;font-size:.92rem;color:var(--ok)}
+.key ul{margin:0;padding-left:1.2rem}
+.why{background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;margin:1rem 0;max-width:70ch;font-size:.96rem}
+.why p{margin:.3rem 0}
+
+figure{margin:1.4rem 0;max-width:70ch}
+figure svg{display:block;width:100%;max-width:440px;height:auto;background:#fff;border:1px solid var(--rule);border-radius:4px}
+figure img{display:block;max-width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:4px;padding:.5rem}
+figure.sm img{max-width:340px}
+figure.md img{max-width:460px}
+.cmp td:first-child{font-weight:600}
+.next{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:2.4rem;font-family:"IBM Plex Sans",sans-serif;font-size:.92rem}
+.next a{text-decoration:none;border:1px solid var(--rule);border-radius:4px;padding:.55rem .9rem;background:#fff}
+.next a:hover{border-color:var(--probe)}
+figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:.4rem}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:72ch}
+.figs figure{margin:.6rem 0}
+svg text{font-family:"IBM Plex Sans",sans-serif;font-size:13px;fill:var(--ink)}
+svg .wire{stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+svg .comp{stroke:var(--ink);stroke-width:2.5;fill:#fff}
+svg .cur{stroke:var(--probe);stroke-width:2.5;fill:none}
+svg .cur-t{fill:var(--probe);font-weight:600}
+svg .volt{fill:#B35C00;font-weight:600}
+svg .soft{fill:var(--ink-soft);font-size:12px}
+
+/* ---------- ejercicios ---------- */
+.ex-bar{position:sticky;top:41px;z-index:30;background:var(--sheet);border-bottom:1px solid var(--rule);padding:.6rem 0;margin-bottom:1.2rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.progress{flex:1;min-width:120px;height:7px;background:#E2E8E4;border-radius:4px;overflow:hidden;max-width:260px}
+.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s ease}
+.ex-bar .count{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--ink-soft)}
+.btn-dark{background:var(--panel);color:#E6EDF1}
+.btn-dark:hover{background:#2A343D}
+.btn-line{background:transparent;color:var(--ink-soft);border-color:var(--rule)}
+.btn-line:hover{color:var(--ink);border-color:#9AA7A0}
+
+.grp{font-size:1.06rem;margin:2.2rem 0 1rem;font-weight:600;font-family:"IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:.6rem}
+.bands{display:inline-flex;gap:3px;height:1.05rem;align-items:stretch}
+.bands i{width:5px;border-radius:1px;display:block}
+
+.ex{border-bottom:1px solid var(--rule);padding:1rem 0 1rem 3rem;position:relative}
+.ex .n{position:absolute;left:0;top:1rem;width:2.1rem;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:.92rem;color:var(--ink-soft);border-right:3px solid var(--band,#999);padding-right:.45rem;line-height:1.5}
+.ex .q{margin:0 0 .7rem}
+.ex .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.ex input[type=text]{width:8.5rem;padding:.4rem .55rem;border:1px solid #A9B5AE;border-radius:4px;font-family:"IBM Plex Mono",monospace;font-size:.95rem;background:#fff}
+.ex input:focus-visible{outline:2px solid var(--probe);outline-offset:1px}
+.ex .unit{font-family:"IBM Plex Mono",monospace;font-size:.95rem;color:var(--ink-soft);min-width:2.4rem}
+.ex.ok input[type=text]{border-color:var(--ok);background:#F0F8F3}
+.ex.no input[type=text]{border-color:var(--no);background:#FDF2F1}
+.led{width:.62rem;height:.62rem;border-radius:50%;background:#CDD6D0;flex:none;box-shadow:inset 0 0 2px rgba(0,0,0,.3)}
+.ex.ok .led{background:var(--ok);box-shadow:0 0 6px rgba(46,125,79,.75)}
+.ex.no .led{background:var(--no);box-shadow:0 0 6px rgba(184,51,42,.7)}
+.verdict{font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;color:var(--ink-soft)}
+.ex.ok .verdict{color:var(--ok)}
+.ex.no .verdict{color:var(--no)}
+.sol{display:none;margin:.85rem 0 .2rem;background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;font-size:.96rem;max-width:70ch}
+.sol.open{display:block}
+.sol p{margin:.3rem 0}
+.sol .res{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.link-btn{background:none;border:none;color:var(--probe);padding:.2rem 0;font-size:.85rem;text-decoration:underline;text-underline-offset:2px}
+
+footer{max-width:1080px;margin:0 auto;padding:1.4rem 1.2rem 3rem;font-size:.85rem;color:var(--ink-soft);font-family:"IBM Plex Sans",sans-serif}
+
+@media (max-width:860px){
+  .hero .in{grid-template-columns:1fr;gap:1.6rem;padding:2rem 1.2rem}
+  .hero h1{font-size:2rem}
+  .sheet{padding:1.6rem 1rem 2.4rem}
+  body{font-size:16px}
+  main{padding:0 .5rem 4rem}
+  .topbar .in{gap:.9rem}
+  .ex{padding-left:2.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <strong>Sensores y señales</strong>
+    <a href="index.html">Inicio</a>
+    <a href="#sensores">Sensores</a>
+    <a href="#hall">Llave Hall</a>
+    <a href="#valor-medio">Valor medio</a>
+    <a href="#pwm">PWM</a>
+    <a href="#inductivo">Inductivo</a>
+    <a href="#ejercicios">Ejercicios</a>
+    <span class="score" id="score">0 / 20</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="in">
+    <div>
+      <h1>Sensores y señales</h1>
+      <p>Cómo la llave Hall y el sensor inductivo convierten el giro de una pieza en una señal eléctrica, qué marca el tester cuando la tensión no es constante, y cómo la ECU controla un actuador variando el ancho de los pulsos (PWM).</p>
+    </div>
+    <div class="laws">
+      <div class="law">
+        <p class="t">Valor medio de una onda cuadrada</p>
+        <div class="f">V<sub>medio</sub> = V<sub>alto</sub> × ciclo de trabajo</div>
+        <div class="d">Ciclo de trabajo = tiempo en alto ÷ período.</div>
+      </div>
+      <div class="law">
+        <p class="t">Frecuencia</p>
+        <div class="f">f = 1 ÷ T</div>
+        <div class="d">Pulsos por segundo, en hertz (Hz).</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="sheet">
+
+<section id="sensores">
+  <h2>¿Qué es un sensor?</h2>
+  <p class="dek">El que le cuenta a la computadora qué está pasando.</p>
+  <p class="lead">Los <strong>sensores</strong> son dispositivos que <strong>generan información eléctrica</strong> (una tensión o una corriente) <strong>a partir de magnitudes físicas o químicas</strong>: temperatura, presión, humedad, posición, velocidad.</p>
+  <p>Gran parte del avance de la electrónica en el auto se debe a la evolución de los sensores. La computadora (ECU o módulo de control) no puede «sentir» la temperatura del motor ni ver la posición del árbol de levas: solo puede medir tensiones. Cada sensor traduce lo que pasa en el motor a una tensión que la ECU sabe leer.</p>
+  <p>Ya viste dos: el <a href="divisores-termistores.html#potenciometro">potenciómetro</a> (posición) y el <a href="divisores-termistores.html#termistores">NTC</a> (temperatura). En esta página, dos sensores que detectan <strong>giro y posición</strong>: la llave Hall y el sensor inductivo.</p>
+</section>
+
+<hr>
+
+<section id="hall">
+  <h2>La llave Hall</h2>
+  <p class="dek">Un interruptor que se cierra con un imán.</p>
+  <p>La <strong>llave Hall</strong> es un dispositivo electrónico que reacciona al <strong>magnetismo</strong>. Cuando recibe un flujo magnético de cierta intensidad y orientación, <strong>conmuta su salida</strong>: pasa de estar <strong>abierta</strong> (desconectada) a estar <strong>conectada a masa</strong>.</p>
+  <p>Se usa para detectar la posición de piezas que giran. En el auto, para saber la posición del <strong>árbol de levas</strong> o, en los encendidos con distribuidor, la posición del <strong>rotor del distribuidor</strong> para definir el momento de la chispa.</p>
+
+  <h3>Cómo se arma</h3>
+  <p>Frente a la llave Hall hay un <strong>imán</strong>. Entre los dos gira un <strong>rotor</strong> de hierro con <strong>ventanas</strong>. La salida de la llave se conecta al + a través de un resistor <strong>R</strong> (en la ECU, este resistor suele estar adentro).</p>
+  <div class="figs">
+    <figure>
+      <img src="img/guia/paso21-hall-cortado.png" alt="Llave Hall con el imán tapado por el hierro del rotor; la salida está conectada al positivo a través de R">
+      <figcaption><strong>Flujo cortado:</strong> el hierro del rotor tapa el imán. La llave queda abierta y la salida está <strong>alta</strong>. (Pág. 53)</figcaption>
+    </figure>
+    <figure>
+      <img src="img/guia/paso21-hall-ventana.png" alt="Llave Hall con una ventana del rotor frente al imán; la salida queda conectada a masa">
+      <figcaption><strong>Ventana:</strong> el flujo del imán llega al sensor. La llave conecta la salida a masa y queda <strong>baja</strong>. (Pág. 53)</figcaption>
+    </figure>
+  </div>
+
+  <h3>¿Por qué alta y por qué baja? (con Ohm y Kirchhoff)</h3>
+  <div class="why">
+    <p><strong>Llave abierta (flujo cortado):</strong> no hay camino a masa, así que por R <strong>no circula corriente</strong>. Si I = 0, la caída en R es V = I × R = 0 V. Toda la tensión llega a la salida: <strong>salida ≈ tensión de batería</strong>.</p>
+    <p><strong>Llave cerrada (ventana):</strong> la salida queda unida a masa, o sea <strong>0 V</strong>. Ahora toda la tensión de la batería cae sobre R (2ª regla de Kirchhoff), y por R circula una corriente I = V ÷ R.</p>
+  </div>
+
+  <h3>La señal que sale</h3>
+  <p>A medida que el rotor gira, se alternan hierro y ventanas, y la salida pasa de alta a baja una y otra vez. El resultado es una sucesión de pulsos: una <strong>onda cuadrada</strong>.</p>
+  <figure>
+    <img src="img/guia/paso21-onda.png" alt="Onda cuadrada: tramos altos cuando el flujo está cortado y tramos bajos cuando el flujo llega al sensor">
+    <figcaption>Tensión de salida de la llave Hall mientras gira el rotor. (Texto guía, pág. 54)</figcaption>
+  </figure>
+  <p>El módulo de encendido o la ECU toma esa señal y, por la posición de los pulsos, determina el instante exacto de la chispa. Por la cantidad de pulsos por segundo sabe además a qué velocidad gira el rotor.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Flujo cortado → llave abierta → salida <strong>alta</strong> (≈ batería).</li>
+      <li>Flujo llega al sensor → llave a masa → salida <strong>baja</strong> (0 V).</li>
+      <li>Con el rotor girando, la salida es una <strong>onda cuadrada</strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="valor-medio">
+  <h2>Tensiones que cambian y el valor medio</h2>
+  <p class="dek">Qué marca el tester cuando la tensión no es constante.</p>
+  <p>No todas las tensiones continuas son iguales. La guía distingue tres:</p>
+  <figure class="sm">
+    <img src="img/guia/paso22-formas.png" alt="Tres gráficos de tensión en el tiempo: una línea recta, una línea ondulada y una onda cuadrada">
+    <figcaption>Arriba, continua pura; al medio, continua variable; abajo, continua variable con forma de onda cuadrada. (Texto guía, pág. 56)</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Continua pura:</strong> siempre el mismo valor, como la de una batería.</li>
+    <li><strong>Continua variable:</strong> siempre positiva, pero sube y baja.</li>
+    <li><strong>Continua variable con forma de onda cuadrada:</strong> salta entre dos valores, como la salida de la llave Hall.</li>
+  </ul>
+  <p>En los tres casos el tester muestra un solo número, sin distinguir la forma de la tensión: el <strong>valor medio</strong>, o sea el promedio de la tensión a lo largo del tiempo.</p>
+
+  <h3>Valor medio de una onda cuadrada</h3>
+  <p>Para una onda que salta entre 0 V y un valor alto, el promedio depende de <strong>qué fracción del tiempo</strong> está arriba. Hacen falta tres conceptos:</p>
+  <ul>
+    <li><strong>Período (T):</strong> lo que tarda un ciclo completo (un tramo alto más un tramo bajo). Se mide en segundos o milisegundos (ms).</li>
+    <li><strong>Ciclo de trabajo:</strong> qué parte del período está en alto. Se expresa en %: <span class="formula">ciclo = t<sub>alto</sub> ÷ T × 100</span>.</li>
+    <li><strong>Frecuencia (f):</strong> cuántos ciclos hay por segundo. Se mide en hertz (Hz): <span class="formula">f = 1 ÷ T</span>.</li>
+  </ul>
+  <p class="big-formula">V<sub>medio</sub> = V<sub>alto</sub> × ciclo de trabajo</p>
+  <div class="why">
+    <p><strong>Ejemplo:</strong> una onda que salta entre 0 y 12 V, con un período de 10 ms, de los cuales 4 ms está en alto.</p>
+    <p>Ciclo de trabajo = 4 ÷ 10 = 0,4 → 40 %.</p>
+    <p>V<sub>medio</sub> = 12 × 0,4 = <strong>4,8 V</strong>. Eso es lo que marca el tester.</p>
+    <p>Frecuencia: T = 10 ms = 0,01 s → f = 1 ÷ 0,01 = <strong>100 Hz</strong>.</p>
+  </div>
+  <p>Por eso, si se mide con el tester la salida de la llave Hall con el rotor girando, no aparece ni 12 V ni 0 V, sino un valor <strong>intermedio</strong>. Si la salida está la mitad del tiempo alta y la mitad baja, el tester marca la mitad de la tensión de batería.</p>
+
+  <h3>El osciloscopio</h3>
+  <p>El tester solo da el promedio. Para <strong>ver la forma</strong> de la tensión se usa el <strong>osciloscopio</strong>: dibuja en su pantalla un trazo que sigue las variaciones de la tensión en el tiempo. Con él se ve si los pulsos de un sensor tienen la altura, la forma y la frecuencia correctas, algo que el tester no puede mostrar.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Con una tensión que cambia, el tester marca el <strong>valor medio</strong>.</li>
+      <li>En una onda cuadrada de 0 a V<sub>alto</sub>: <strong>V<sub>medio</sub> = V<sub>alto</sub> × ciclo de trabajo</strong>.</li>
+      <li>El <strong>osciloscopio</strong> permite «ver» la forma de onda que entregan los sensores y así saber si es correcta.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="pwm">
+  <h2>Control por PWM</h2>
+  <p class="dek">Modulación por ancho de pulso: controlar con el promedio.</p>
+  <p>Muchos <strong>actuadores</strong> —motores, electroválvulas, electroimanes— responden al <strong>valor medio</strong> de la tensión que reciben. No necesitan una continua pura: se los puede alimentar con pulsos, y se comportan como si recibieran el promedio.</p>
+  <p>La ECU aprovecha esto. En vez de generar una tensión de, por ejemplo, 4,8 V (algo complicado), conecta y desconecta la batería muy rápido, siempre a la misma frecuencia, y cambia <strong>cuánto tiempo deja conectado en cada ciclo</strong>. Eso es <strong>PWM</strong> (<em>Pulse Width Modulation</em>, modulación por ancho de pulso).</p>
+  <figure>
+    <svg viewBox="0 0 440 210" role="img" aria-label="Dos señales PWM de 12 V con la misma frecuencia: arriba con ciclo de trabajo del 25 por ciento y valor medio de 3 V; abajo con ciclo del 75 por ciento y valor medio de 9 V">
+      <text class="soft" x="10" y="18">Ciclo 25 % → valor medio 3 V</text>
+      <path class="wire" d="M20,90 V40 H60 V90 H180 V40 H220 V90 H340 V40 H380 V90 H420"/>
+      <line x1="20" y1="77.5" x2="420" y2="77.5" stroke="#B35C00" stroke-width="2" stroke-dasharray="6 4"/>
+      <text class="volt" x="384" y="72">3 V</text>
+      <text class="soft" x="10" y="122">Ciclo 75 % → valor medio 9 V</text>
+      <path class="wire" d="M20,195 V145 H140 V195 H180 V145 H300 V195 H340 V145 H420"/>
+      <line x1="20" y1="157.5" x2="420" y2="157.5" stroke="#B35C00" stroke-width="2" stroke-dasharray="6 4"/>
+      <text class="volt" x="146" y="172">9 V</text>
+    </svg>
+    <figcaption>Misma frecuencia, distinto ancho de pulso. En línea punteada, el valor medio que «siente» el actuador y que marca el tester.</figcaption>
+  </figure>
+  <p>Ejemplo en el auto: algunas <strong>válvulas de ralentí</strong> abren más o menos un paso de aire para mantener estable el régimen del motor. La ECU las controla con PWM: si necesita más aire, aumenta el ancho de los pulsos, sube el valor medio, y la válvula abre más.</p>
+  <div class="why">
+    <p><strong>Ejemplo:</strong> con 12 V, si la ECU necesita 7,2 V de valor medio, el ciclo de trabajo tiene que ser 7,2 ÷ 12 = 0,6 → <strong>60 %</strong>.</p>
+  </div>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>En PWM la frecuencia es fija; lo que cambia es el <strong>ancho del pulso</strong> (el ciclo de trabajo).</li>
+      <li>Más ancho de pulso → más valor medio → el actuador hace más fuerza o abre más.</li>
+      <li>El control por ancho de pulso es muy adecuado para el procesamiento <strong>digital</strong> de los módulos de control: solo tienen que prender y apagar.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="inductivo">
+  <h2>El sensor inductivo</h2>
+  <p class="dek">Un imán, una bobina y una rueda dentada.</p>
+  <p>Junto con los termistores, es uno de los sensores más antiguos del auto. También se lo llama <strong>captor inductivo</strong>. Es muy robusto porque está formado solamente por una <strong>bobina</strong> y un <strong>imán permanente</strong>, sin electrónica.</p>
+  <figure class="md">
+    <img src="img/guia/paso26-inductivo.png" alt="Corte de un sensor inductivo mostrando cable de conexión, imán permanente, bobina y rueda generadora de impulsos">
+    <figcaption>Sensor inductivo frente a la rueda generadora de impulsos. (Texto guía, pág. 64)</figcaption>
+  </figure>
+  <p>Frente al sensor gira una <strong>rueda dentada</strong> de hierro, la «rueda generadora de impulsos» o rueda fónica. Cada vez que pasa un diente, cambia el campo magnético que atraviesa la bobina, y por <strong>inducción electromagnética</strong> la bobina genera una tensión. No necesita alimentación: el sensor genera su propia tensión.</p>
+
+  <h3>Qué señal entrega</h3>
+  <ul>
+    <li>Es una tensión <strong>alterna</strong>: tiene semiciclos positivos y semiciclos negativos. Por eso se mide con el tester en el sector <strong>V~</strong>, no en V⎓.</li>
+    <li>Su <strong>frecuencia</strong> depende de la velocidad de la rueda: cuanto más rápido gira, más dientes pasan por segundo y más ciclos por segundo hay. La ECU usa la frecuencia para saber a qué velocidad gira la rueda.</li>
+    <li>Su <strong>amplitud</strong> (la altura de la onda) <strong>también aumenta</strong> con la velocidad. A muy pocas vueltas la señal es tan chica que casi no se puede leer.</li>
+  </ul>
+  <div class="why">
+    <p><strong>Cómo calcular la frecuencia:</strong> cada diente que pasa produce un ciclo. Entonces:</p>
+    <p class="big-formula">f = cantidad de dientes × vueltas por segundo</p>
+    <p>Y vueltas por segundo = rpm ÷ 60.</p>
+    <p><strong>Ejemplo:</strong> una rueda de 60 dientes girando a 600 rpm da 600 ÷ 60 = 10 vueltas por segundo → f = 60 × 10 = <strong>600 Hz</strong>.</p>
+    <p>Lo mismo vale para la llave Hall: cada ventana del rotor produce un pulso.</p>
+  </div>
+  <p>Se usa, por ejemplo, como sensor de <strong>rpm y posición del cigüeñal</strong> y como sensor de <strong>velocidad de rueda en el ABS</strong>. Igual que con la llave Hall, la mejor forma de revisarlo es con el osciloscopio.</p>
+
+  <h3>Llave Hall y sensor inductivo, comparados</h3>
+  <div class="table-wrap">
+  <table class="cmp">
+    <thead><tr><th></th><th>Llave Hall</th><th>Sensor inductivo</th></tr></thead>
+    <tbody>
+      <tr><td>Partes</td><td>Llave electrónica, imán, rotor con ventanas</td><td>Bobina, imán, rueda dentada</td></tr>
+      <tr><td>Necesita alimentación</td><td>Sí (y un resistor R a positivo)</td><td>No, genera su propia tensión</td></tr>
+      <tr><td>Señal</td><td>Onda cuadrada, siempre positiva (continua pulsante)</td><td>Tensión alterna (+ y −)</td></tr>
+      <tr><td>Altura de la señal</td><td>Fija: de 0 V a la tensión de alimentación</td><td>Aumenta con la velocidad</td></tr>
+      <tr><td>Frecuencia</td><td colspan="2">En los dos aumenta con la velocidad de giro</td></tr>
+      <tr><td>Con el tester se mide en</td><td>V⎓ (marca el valor medio)</td><td>V~</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="next">
+    <a href="divisores-termistores.html">← Divisores de tensión y termistores</a>
+    <a href="ejercicios-combinados.html">Ejercicios combinados →</a>
+  </div>
+</section>
+
+<hr>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p class="dek">Escribí el resultado en la unidad que pide cada consigna y comprobá.</p>
+  <div class="ex-bar">
+    <div class="progress"><i id="bar"></i></div>
+    <span class="count" id="count">0 correctos de 20</span>
+    <button class="btn-dark" id="checkAll">Comprobar todo</button>
+    <button class="btn-line" id="resetAll">Borrar respuestas</button>
+  </div>
+  <div id="exList"></div>
+</section>
+
+</div>
+</main>
+
+<footer>Se aceptan coma o punto decimal. Tus respuestas quedan guardadas en este navegador. Figuras del «Texto guía para uso del alumno» de la consola CDE-1, salvo el gráfico de PWM.</footer>
+
+<script>
+window.PRACTICA = {
+key: "sensores-senales-v1",
+groups: [
+  { id:"A", title:"Grupo A — llave Hall", bands:["#2E7D4F","#1F5F8B","#C9A227"], color:"#2E7D4F" },
+  { id:"B", title:"Grupo B — valor medio, período y frecuencia", bands:["#B35C00","#C9A227","#7B3F00"], color:"#B35C00" },
+  { id:"C", title:"Grupo C — PWM", bands:["#1F5F8B","#B35C00","#2E7D4F"], color:"#1F5F8B" },
+  { id:"D", title:"Grupo D — frecuencia y velocidad de giro", bands:["#C0392B","#7B3F00","#C9A227"], color:"#C0392B" }
+],
+ex: [
+{g:"A",n:1,q:"Una llave Hall tiene su salida conectada a 12 V a través de un resistor R. El hierro del rotor corta el flujo del imán. ¿Qué tensión hay en la salida?",u:"V",a:12,
+ s:"Con el flujo cortado la llave queda abierta: por R no circula corriente, así que en R no cae tensión (V = 0 × R = 0).<br>Salida = <span class='res'>12 V</span>"},
+{g:"A",n:2,q:"El mismo circuito, pero ahora una ventana del rotor deja pasar el flujo hasta el sensor. ¿Qué tensión hay en la salida?",u:"V",a:0,
+ s:"El flujo llega al sensor: la llave conecta la salida a masa.<br>Salida = <span class='res'>0 V</span>"},
+{g:"A",n:3,q:"En ese momento (salida a masa), R vale 1 kΩ y la alimentación es de 12 V. ¿Qué corriente pasa por R, en mA?",u:"mA",a:12,
+ s:"Toda la tensión cae sobre R (2ª regla de Kirchhoff).<br>I = 12 V ÷ 1 kΩ = <span class='res'>12 mA</span>"},
+{g:"A",n:4,q:"Con el flujo cortado (llave abierta), ¿qué tensión cae sobre el resistor R?",u:"V",a:0,
+ s:"No circula corriente, así que V = I × R = 0 × R = <span class='res'>0 V</span>"},
+{g:"A",n:5,q:"Una llave Hall alimentada a través de R desde 5 V entrega una onda cuadrada. ¿Cuánto vale la tensión en el tramo alto?",u:"V",a:5,
+ s:"En el tramo alto la llave está abierta: la salida toma la tensión de alimentación.<br><span class='res'>5 V</span>"},
+
+{g:"B",n:6,q:"Una onda cuadrada salta entre 0 y 12 V y pasa la mitad del tiempo arriba. ¿Qué marca el tester?",u:"V",a:6,
+ s:"Ciclo de trabajo 50 %.<br>V<sub>medio</sub> = 12 × 0,5 = <span class='res'>6 V</span>"},
+{g:"B",n:7,q:"Una onda de 0 a 12 V está en alto el 25 % del tiempo. ¿Cuál es su valor medio?",u:"V",a:3,
+ s:"V<sub>medio</sub> = 12 × 0,25 = <span class='res'>3 V</span>"},
+{g:"B",n:8,q:"Una onda de 0 a 12 V tiene un período de 10 ms y está 4 ms en alto. ¿Cuál es su valor medio?",u:"V",a:4.8,
+ s:"Ciclo de trabajo = 4 ÷ 10 = 0,4 (40 %).<br>V<sub>medio</sub> = 12 × 0,4 = <span class='res'>4,8 V</span>"},
+{g:"B",n:9,q:"El tester marca 9 V en una señal cuadrada que salta entre 0 y 12 V. ¿Cuál es el ciclo de trabajo?",u:"%",a:75,
+ s:"Ciclo = V<sub>medio</sub> ÷ V<sub>alto</sub> = 9 ÷ 12 = 0,75 → <span class='res'>75 %</span>"},
+{g:"B",n:10,q:"Una señal tiene un período de 20 ms. ¿Cuál es su frecuencia?",u:"Hz",a:50,
+ s:"20 ms = 0,02 s.<br>f = 1 ÷ 0,02 = <span class='res'>50 Hz</span>"},
+{g:"B",n:11,q:"Una señal tiene una frecuencia de 100 Hz. ¿Cuánto dura cada período, en ms?",u:"ms",a:10,
+ s:"T = 1 ÷ f = 1 ÷ 100 = 0,01 s = <span class='res'>10 ms</span>"},
+
+{g:"C",n:12,q:"La ECU alimenta una electroválvula con PWM de 12 V y ciclo de trabajo del 40 %. ¿Qué valor medio recibe?",u:"V",a:4.8,
+ s:"V<sub>medio</sub> = 12 × 0,4 = <span class='res'>4,8 V</span>"},
+{g:"C",n:13,q:"Una válvula de ralentí necesita 7,2 V de valor medio y la batería tiene 12 V. ¿Qué ciclo de trabajo tiene que usar la ECU?",u:"%",a:60,
+ s:"Ciclo = 7,2 ÷ 12 = 0,6 → <span class='res'>60 %</span>"},
+{g:"C",n:14,q:"Con el motor en marcha el alternador mantiene 14 V. Una válvula recibe PWM con ciclo del 50 %. ¿Qué valor medio recibe?",u:"V",a:7,
+ s:"V<sub>medio</sub> = 14 × 0,5 = <span class='res'>7 V</span>"},
+{g:"C",n:15,q:"Una señal PWM está 2 ms en alto en cada período de 8 ms. ¿Cuál es el ciclo de trabajo?",u:"%",a:25,
+ s:"Ciclo = 2 ÷ 8 = 0,25 → <span class='res'>25 %</span>"},
+
+{g:"D",n:16,q:"Una rueda fónica de 60 dientes gira a 1 vuelta por segundo frente a un sensor inductivo. ¿Qué frecuencia tiene la señal?",u:"Hz",a:60,
+ s:"Cada diente produce un ciclo.<br>f = 60 × 1 = <span class='res'>60 Hz</span>"},
+{g:"D",n:17,q:"La misma rueda de 60 dientes gira a 600 rpm. ¿Qué frecuencia tiene la señal?",u:"Hz",a:600,
+ s:"600 rpm ÷ 60 = 10 vueltas por segundo.<br>f = 60 × 10 = <span class='res'>600 Hz</span>"},
+{g:"D",n:18,q:"Un sensor inductivo frente a una rueda de 36 dientes entrega una señal de 1 800 Hz. ¿A cuántas rpm gira la rueda?",u:"rpm",a:3000,
+ s:"Vueltas por segundo = 1 800 ÷ 36 = 50.<br>rpm = 50 × 60 = <span class='res'>3000 rpm</span>"},
+{g:"D",n:19,q:"Un rotor con 4 ventanas gira frente a una llave Hall a 3 000 rpm. ¿Cuántos pulsos por segundo (Hz) entrega la llave?",u:"Hz",a:200,
+ s:"3 000 rpm ÷ 60 = 50 vueltas por segundo.<br>Cada ventana da un pulso: f = 4 × 50 = <span class='res'>200 Hz</span>"},
+{g:"D",n:20,q:"El sensor de ABS de una rueda tiene 48 dientes y entrega 960 Hz. ¿A cuántas rpm gira la rueda?",u:"rpm",a:1200,
+ s:"Vueltas por segundo = 960 ÷ 48 = 20.<br>rpm = 20 × 60 = <span class='res'>1200 rpm</span>"}
+]
+};
+</script>
+<script src="practica.js"></script>
+</body>
+</html>

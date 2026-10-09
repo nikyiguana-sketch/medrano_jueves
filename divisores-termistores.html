@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divisores y termistores</title>
+<meta name="description" content="Divisor de tensión, potenciómetro, componentes no lineales y termistores NTC y PTC, con 22 ejercicios autocorregidos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --panel:#151A20;
+  --panel-2:#1E262F;
+  --paper:#E9EDEA;
+  --sheet:#FBFCFB;
+  --grid:#D3DCD6;
+  --ink:#1B2127;
+  --ink-soft:#4C585F;
+  --rule:#C9D2CC;
+  --lcd:#E8A33D;
+  --probe:#1F5F8B;
+  --ok:#2E7D4F;
+  --no:#B8332A;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+h1,h2,h3,h4,nav,button,select,input,label,th,figcaption,.ui{font-family:"IBM Plex Sans",system-ui,sans-serif}
+code,kbd,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------- barra ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--panel);color:#DDE4E8;border-bottom:1px solid #000}
+.topbar .in{max-width:1080px;margin:0 auto;padding:.55rem 1.2rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
+.topbar strong{font-weight:600;font-size:.95rem;letter-spacing:.01em;font-family:"IBM Plex Sans",sans-serif}
+.topbar a{color:#9FB2BD;text-decoration:none;font-size:.88rem;font-family:"IBM Plex Sans",sans-serif}
+.topbar a:hover,.topbar a:focus-visible{color:var(--lcd)}
+.topbar .score{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--lcd)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--panel);color:#E6EDF1;border-bottom:4px solid #0A0D10}
+.hero .in{max-width:1080px;margin:0 auto;padding:2.6rem 1.2rem 2.2rem;display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:center}
+.hero h1{font-size:2.45rem;line-height:1.08;margin:0 0 .6rem;font-weight:700;letter-spacing:-.02em}
+.hero p{margin:0;color:#A9BAC4;font-size:1rem;max-width:42ch}
+.laws{display:grid;gap:.7rem}
+.law{background:var(--panel-2);border:1px solid #303C46;border-radius:6px;padding:.9rem 1.1rem}
+.law .t{font-family:"IBM Plex Sans",sans-serif;font-size:.8rem;color:#7E919D;margin:0 0 .2rem}
+.law .f{font-family:"IBM Plex Mono",monospace;color:var(--lcd);font-size:1.15rem;font-weight:500}
+.law .d{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;color:#A9BAC4;margin-top:.2rem}
+
+/* ---------- botones ---------- */
+button{cursor:pointer;font-size:.86rem;font-weight:500;border-radius:4px;padding:.45rem .85rem;border:1px solid transparent;transition:background .12s ease}
+.btn{background:var(--probe);color:#fff}
+.btn:hover{background:#17496b}
+:focus-visible{outline:2px solid var(--probe);outline-offset:2px}
+
+/* ---------- contenido ---------- */
+main{max-width:1080px;margin:0 auto;padding:0 1.2rem 5rem}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-top:none;padding:2.4rem 3rem 3rem}
+section{scroll-margin-top:60px}
+h2{font-size:1.62rem;letter-spacing:-.015em;margin:2.8rem 0 .2rem;font-weight:600}
+section:first-child h2{margin-top:0}
+h2+.dek{margin:.1rem 0 1.2rem;color:var(--ink-soft);font-style:italic}
+h3{font-size:1.06rem;margin:1.9rem 0 .5rem;font-weight:600;color:#2B333A}
+p,li{max-width:70ch}
+.lead{font-size:1.06rem}
+strong{font-weight:600}
+hr{border:none;border-top:1px solid var(--rule);margin:2.6rem 0}
+a{color:var(--probe)}
+
+.table-wrap{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:1.1rem 0;font-size:.93rem;font-family:"IBM Plex Sans",sans-serif}
+th{text-align:left;font-weight:600;font-size:.82rem;color:var(--ink-soft);border-bottom:2px solid var(--ink);padding:.4rem .6rem}
+td{padding:.4rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:hover{background:#F2F5F3}
+td.num,th.num{font-family:"IBM Plex Mono",monospace}
+
+.formula{display:inline-block;background:#EEF2F0;border:1px solid var(--rule);border-radius:3px;padding:.08rem .38rem;font-family:"IBM Plex Mono",monospace;font-size:.95em}
+.big-formula{font-family:"IBM Plex Mono",monospace;font-size:1.15rem;font-weight:600;background:#EEF2F0;border:1px solid var(--rule);border-radius:4px;padding:.6rem 1rem;display:inline-block;margin:.4rem 0}
+.note{border-left:3px solid var(--lcd);background:#FCF6EA;padding:.7rem 1rem;margin:1.2rem 0;max-width:70ch;font-size:.96rem}
+.key{border:1px solid var(--rule);border-left:4px solid var(--ok);background:#F0F8F3;padding:.8rem 1rem;margin:1.4rem 0;max-width:70ch}
+.key h4{margin:0 0 .35rem;font-size:.92rem;color:var(--ok)}
+.key ul{margin:0;padding-left:1.2rem}
+.why{background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;margin:1rem 0;max-width:70ch;font-size:.96rem}
+.why p{margin:.3rem 0}
+
+figure{margin:1.4rem 0;max-width:70ch}
+figure svg{display:block;width:100%;max-width:440px;height:auto;background:#fff;border:1px solid var(--rule);border-radius:4px}
+figure img{display:block;max-width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:4px;padding:.5rem}
+figure.sm img{max-width:340px}
+figure.md img{max-width:460px}
+.cmp td:first-child{font-weight:600}
+.next{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:2.4rem;font-family:"IBM Plex Sans",sans-serif;font-size:.92rem}
+.next a{text-decoration:none;border:1px solid var(--rule);border-radius:4px;padding:.55rem .9rem;background:#fff}
+.next a:hover{border-color:var(--probe)}
+figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:.4rem}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:72ch}
+.figs figure{margin:.6rem 0}
+svg text{font-family:"IBM Plex Sans",sans-serif;font-size:13px;fill:var(--ink)}
+svg .wire{stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+svg .comp{stroke:var(--ink);stroke-width:2.5;fill:#fff}
+svg .cur{stroke:var(--probe);stroke-width:2.5;fill:none}
+svg .cur-t{fill:var(--probe);font-weight:600}
+svg .volt{fill:#B35C00;font-weight:600}
+svg .soft{fill:var(--ink-soft);font-size:12px}
+
+/* ---------- ejercicios ---------- */
+.ex-bar{position:sticky;top:41px;z-index:30;background:var(--sheet);border-bottom:1px solid var(--rule);padding:.6rem 0;margin-bottom:1.2rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.progress{flex:1;min-width:120px;height:7px;background:#E2E8E4;border-radius:4px;overflow:hidden;max-width:260px}
+.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s ease}
+.ex-bar .count{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--ink-soft)}
+.btn-dark{background:var(--panel);color:#E6EDF1}
+.btn-dark:hover{background:#2A343D}
+.btn-line{background:transparent;color:var(--ink-soft);border-color:var(--rule)}
+.btn-line:hover{color:var(--ink);border-color:#9AA7A0}
+
+.grp{font-size:1.06rem;margin:2.2rem 0 1rem;font-weight:600;font-family:"IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:.6rem}
+.bands{display:inline-flex;gap:3px;height:1.05rem;align-items:stretch}
+.bands i{width:5px;border-radius:1px;display:block}
+
+.ex{border-bottom:1px solid var(--rule);padding:1rem 0 1rem 3rem;position:relative}
+.ex .n{position:absolute;left:0;top:1rem;width:2.1rem;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:.92rem;color:var(--ink-soft);border-right:3px solid var(--band,#999);padding-right:.45rem;line-height:1.5}
+.ex .q{margin:0 0 .7rem}
+.ex .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.ex input[type=text]{width:8.5rem;padding:.4rem .55rem;border:1px solid #A9B5AE;border-radius:4px;font-family:"IBM Plex Mono",monospace;font-size:.95rem;background:#fff}
+.ex input:focus-visible{outline:2px solid var(--probe);outline-offset:1px}
+.ex .unit{font-family:"IBM Plex Mono",monospace;font-size:.95rem;color:var(--ink-soft);min-width:2.4rem}
+.ex.ok input[type=text]{border-color:var(--ok);background:#F0F8F3}
+.ex.no input[type=text]{border-color:var(--no);background:#FDF2F1}
+.led{width:.62rem;height:.62rem;border-radius:50%;background:#CDD6D0;flex:none;box-shadow:inset 0 0 2px rgba(0,0,0,.3)}
+.ex.ok .led{background:var(--ok);box-shadow:0 0 6px rgba(46,125,79,.75)}
+.ex.no .led{background:var(--no);box-shadow:0 0 6px rgba(184,51,42,.7)}
+.verdict{font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;color:var(--ink-soft)}
+.ex.ok .verdict{color:var(--ok)}
+.ex.no .verdict{color:var(--no)}
+.sol{display:none;margin:.85rem 0 .2rem;background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;font-size:.96rem;max-width:70ch}
+.sol.open{display:block}
+.sol p{margin:.3rem 0}
+.sol .res{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.link-btn{background:none;border:none;color:var(--probe);padding:.2rem 0;font-size:.85rem;text-decoration:underline;text-underline-offset:2px}
+
+footer{max-width:1080px;margin:0 auto;padding:1.4rem 1.2rem 3rem;font-size:.85rem;color:var(--ink-soft);font-family:"IBM Plex Sans",sans-serif}
+
+@media (max-width:860px){
+  .hero .in{grid-template-columns:1fr;gap:1.6rem;padding:2rem 1.2rem}
+  .hero h1{font-size:2rem}
+  .sheet{padding:1.6rem 1rem 2.4rem}
+  body{font-size:16px}
+  main{padding:0 .5rem 4rem}
+  .topbar .in{gap:.9rem}
+  .ex{padding-left:2.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <strong>Divisores y termistores</strong>
+    <a href="index.html">Inicio</a>
+    <a href="#masa">Masa</a>
+    <a href="#divisor">Divisor</a>
+    <a href="#potenciometro">Potenciómetro</a>
+    <a href="#no-lineales">No lineales</a>
+    <a href="#termistores">NTC y PTC</a>
+    <a href="#ejercicios">Ejercicios</a>
+    <span class="score" id="score">0 / 22</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="in">
+    <div>
+      <h1>Divisores de tensión y termistores</h1>
+      <p>Cómo obtener una tensión más chica que la de la batería, cómo hacerla ajustable con un potenciómetro, y cómo un termistor convierte la temperatura del motor en una tensión que la computadora puede leer.</p>
+    </div>
+    <div class="laws">
+      <div class="law">
+        <p class="t">Divisor de tensión</p>
+        <div class="f">V<sub>X</sub> = V<sub>BAT</sub> × R2 ÷ (R1 + R2)</div>
+        <div class="d">La tensión en el punto medio de dos resistores en serie.</div>
+      </div>
+      <div class="law">
+        <p class="t">Termistores</p>
+        <div class="f">NTC: más calor → menos Ω</div>
+        <div class="d">PTC: más calor → más Ω</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="sheet">
+
+<section id="masa">
+  <h2>Antes de empezar: la masa es 0 V</h2>
+  <p class="dek">Contra qué se miden las tensiones.</p>
+  <p class="lead">Una tensión es siempre una <strong>diferencia</strong> entre dos puntos. Para no tener que decir cada vez «entre qué y qué», se elige un punto de referencia que vale <strong>0 V</strong>.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Normalmente, a no ser que se indique lo contrario, el <strong>terminal negativo (−) de la batería</strong> y toda la línea conectada a él se consideran de <strong>potencial cero (0 V)</strong>.</li>
+      <li>A esa línea se la llama <strong>masa</strong> o <strong>chasis</strong>. En el auto, el chasis está conectado al negativo de la batería.</li>
+    </ul>
+  </div>
+  <p>Entonces, cuando se dice «en el punto X hay 4 V», se entiende «entre el punto X y masa hay 4 V».</p>
+</section>
+
+<hr>
+
+<section id="divisor">
+  <h2>El divisor de tensión</h2>
+  <p class="dek">Dos resistores en serie para obtener una tensión más chica.</p>
+  <p class="lead">Es muy común, sobre todo en electrónica, necesitar una tensión <strong>más chica</strong> que la de la batería. Una forma simple de conseguirla es el <strong>divisor de tensión resistivo</strong>: dos resistores en serie conectados a la batería.</p>
+  <figure class="md">
+    <img src="img/guia/paso14-divisor.png" alt="Divisor de tensión: batería con R1 y R2 en serie; el punto medio X; V batería medida en los extremos y Vx entre X y masa">
+    <figcaption>Divisor de tensión. Respecto de masa hay dos tensiones: V<sub>BATERÍA</sub> arriba y V<sub>X</sub> en el punto medio. (Texto guía, pág. 39)</figcaption>
+  </figure>
+
+  <h3>Cómo funciona</h3>
+  <p>No es nada nuevo: es un <a href="kirchhoff.html#segunda">circuito serie</a>. Por la 2ª regla de Kirchhoff, la tensión de la batería se reparte entre R1 y R2. La tensión V<sub>X</sub> en el punto medio es justamente la parte que le toca a R2 (la de abajo, la que va a masa).</p>
+  <p>Como la tensión se reparte en proporción a las resistencias:</p>
+  <p class="big-formula">V<sub>X</sub> = V<sub>BATERÍA</sub> × R2 ÷ (R1 + R2)</p>
+  <p>La guía lo escribe de otra forma, que dice lo mismo: <span class="formula">(R1 + R2) ÷ R2 = V<sub>BATERÍA</sub> ÷ V<sub>X</sub></span>. La resistencia total es a la de abajo lo que la tensión total es a la del punto medio.</p>
+
+  <div class="why">
+    <p><strong>Ejemplo:</strong> batería de 12 V, R1 = 10 kΩ arriba y R2 = 5 kΩ abajo.</p>
+    <p>V<sub>X</sub> = 12 × 5 ÷ (10 + 5) = 12 × 5 ÷ 15 = <strong>4 V</strong></p>
+    <p>Paso a paso con Ohm: la corriente es 12 V ÷ 15 kΩ = 0,8 mA; sobre R2 caen 0,8 mA × 5 kΩ = 4 V; sobre R1, 0,8 mA × 10 kΩ = 8 V. Y 4 + 8 = 12 ✓</p>
+  </div>
+
+  <h3>Tres casos que conviene tener a mano</h3>
+  <ul>
+    <li><strong>R1 = R2:</strong> V<sub>X</sub> es exactamente la mitad de la batería.</li>
+    <li><strong>R2 mucho más grande que R1:</strong> V<sub>X</sub> queda cerca de la tensión de la batería.</li>
+    <li><strong>R2 mucho más chica que R1:</strong> V<sub>X</sub> queda cerca de 0 V.</li>
+  </ul>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Mediante un divisor de tensión, adecuando los valores de los resistores, se pueden obtener <strong>distintos valores de tensión menores a los de la fuente</strong>.</li>
+      <li>La tensión en el punto medio siempre está entre 0 V y la tensión de la batería.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="potenciometro">
+  <h2>El divisor ajustable: el potenciómetro</h2>
+  <p class="dek">Una tensión que se puede variar en forma continua.</p>
+  <p>Si se necesita una tensión menor a la de la batería pero que se pueda <strong>ajustar</strong>, se usa un <strong>potenciómetro</strong>. Sus extremos A y B se conectan a la batería y la tensión se toma del <strong>cursor C</strong>.</p>
+  <figure class="md">
+    <img src="img/guia/paso15-potenciometro.png" alt="Potenciómetro POT1 con sus extremos A y B conectados a la batería; un voltímetro mide la tensión entre el cursor C y el negativo">
+    <figcaption>Potenciómetro como divisor de tensión. El voltímetro muestra la tensión del cursor C respecto de masa. (Texto guía, pág. 41)</figcaption>
+  </figure>
+  <p>Un potenciómetro es, en realidad, un divisor de tensión cuyos dos resistores son los dos tramos del cuerpo resistivo, a cada lado del cursor. Al mover el cursor, un tramo crece y el otro se achica, y la tensión del cursor cambia:</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Posición del cursor</th><th>Tensión en el cursor</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>En el extremo conectado a masa (−)</td><td class="num">0 V</td><td>El cursor toca directamente la masa.</td></tr>
+      <tr><td>En el punto medio</td><td class="num">la mitad de V<sub>BAT</sub></td><td>Los dos tramos son iguales: R1 = R2.</td></tr>
+      <tr><td>En el extremo conectado al +</td><td class="num">V<sub>BAT</sub> completa</td><td>El cursor toca directamente el positivo.</td></tr>
+      <tr><td>En cualquier otro punto</td><td>un valor intermedio</td><td>Proporcional a la resistencia entre cursor y masa.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="why">
+    <p><strong>Ejemplo:</strong> potenciómetro de 10 kΩ alimentado con 5 V. El cursor está en un punto donde entre el cursor y masa hay 3 kΩ.</p>
+    <p>V = 5 × 3 ÷ 10 = <strong>1,5 V</strong>. El cursor está al 30 % del recorrido y la tensión es el 30 % de 5 V.</p>
+  </div>
+  <p><strong>En el auto:</strong> así funciona el <strong>sensor de posición de mariposa (TPS)</strong> o el del pedal del acelerador. El eje mueve el cursor de un potenciómetro alimentado con 5 V, y la computadora lee la tensión del cursor para saber cuánto está abierto.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Mediante un divisor de tensión potenciométrico se pueden obtener <strong>en forma continua</strong> distintos valores de tensión, desde 0 V hasta la tensión de la fuente.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="no-lineales">
+  <h2>Componentes lineales y no lineales</h2>
+  <p class="dek">No todo cumple la Ley de Ohm.</p>
+  <p class="lead">Los resistores comunes tienen un valor <strong>prácticamente constante</strong>: con cualquier tensión y corriente, la relación V ÷ I da siempre lo mismo. Son componentes que <strong>cumplen estrictamente la Ley de Ohm</strong>; se los llama <strong>lineales</strong>.</p>
+  <p>Otros componentes, por distintas razones, <strong>no</strong> la cumplen: su resistencia cambia según cómo se los use. Son los <strong>componentes no lineales</strong>. El ejemplo más simple es una <strong>lamparita</strong>.</p>
+  <figure class="md">
+    <img src="img/guia/paso16-lampara.png" alt="Batería alimentando una lámpara L1 a través de un resistor R1 o R2 en serie">
+    <figcaption>Lámpara L1 alimentada a través de un resistor en serie. Cambiando el resistor cambia la tensión que recibe la lámpara. (Texto guía, pág. 43)</figcaption>
+  </figure>
+  <p>Si se calcula la resistencia de la lámpara (V ÷ I) con distintas tensiones, y después se la mide apagada con el óhmetro, se obtienen <strong>valores distintos</strong>:</p>
+  <ul>
+    <li>Con poca tensión el filamento está tibio y su resistencia es más baja.</li>
+    <li>Con toda la tensión el filamento está al rojo blanco y su resistencia es mucho más alta.</li>
+    <li>Apagada y fría, el óhmetro marca la resistencia más baja de todas.</li>
+  </ul>
+  <p><strong>¿Por qué?</strong> Porque la resistencia del metal del filamento (tungsteno) <strong>aumenta con la temperatura</strong>, y la temperatura del filamento depende de cuánta corriente pasa. En frío, una lámpara de 12 V puede tener una resistencia diez veces menor que encendida. Por eso en el instante de encenderla circula un pico de corriente mucho mayor que el normal, y por eso las lámparas suelen quemarse justo al prenderlas.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>En los componentes no lineales <strong>no se puede aplicar la Ley de Ohm</strong> de la forma habitual, porque el valor de R no es constante.</li>
+      <li>El cálculo V ÷ I da la resistencia <em>en ese momento</em>, con esa tensión, y no sirve para predecir qué pasa con otra tensión.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="termistores">
+  <h2>Termistores: NTC y PTC</h2>
+  <p class="dek">Resistores que cambian con la temperatura, a propósito.</p>
+  <p class="lead">Hay componentes no lineales que se fabrican <strong>justamente para aprovechar</strong> que su resistencia cambia. Los <strong>termistores</strong> (o termistancias) son resistores cuya resistencia depende de la temperatura. Se usan en aparatos domésticos, en la industria y en el automotor.</p>
+
+  <h3>NTC: coeficiente de temperatura negativo</h3>
+  <p><strong>NTC</strong> viene del inglés <em>Negative Temperature Coefficient</em>. «Negativo» significa que va al revés: <strong>cuando la temperatura sube, la resistencia baja</strong>, y cuando se enfría, la resistencia vuelve a subir.</p>
+  <p>Por ejemplo, un NTC típico de auto puede tener unos 2 500 Ω a 20 °C y apenas unos 300 Ω a 80 °C. Ese cambio tan grande lo vuelve ideal para medir temperatura.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>NTC: <strong>más temperatura → menos resistencia</strong>.</li>
+      <li>Los termistores NTC son sumamente adecuados para ser empleados como <strong>sensores térmicos</strong>: temperatura del refrigerante, del aire de admisión, del aceite.</li>
+    </ul>
+  </div>
+
+  <h3>El NTC dentro de un divisor de tensión</h3>
+  <p>La computadora del auto (ECU) no mide resistencias: mide <strong>tensiones</strong>. Para «leer» la temperatura, el NTC se conecta en serie con un resistor fijo formando un <strong>divisor de tensión</strong>. La tensión en el punto medio depende de la resistencia del NTC, que a su vez depende de la temperatura. Así, la temperatura se transforma en tensión.</p>
+  <p>Según de qué lado se ponga el NTC, la tensión sube o baja con el calor:</p>
+  <div class="figs">
+    <figure>
+      <img src="img/guia/paso18-ntc-arriba.png" alt="Divisor con el NTC arriba, conectado al positivo, y R1 abajo, a masa; el voltímetro mide la tensión sobre R1">
+      <figcaption><strong>NTC arriba (hacia el +)</strong>, R1 abajo. Al calentarse, la tensión sobre R1 <strong>sube</strong>. (Pág. 47)</figcaption>
+    </figure>
+    <figure>
+      <img src="img/guia/paso19-ntc-abajo.png" alt="Divisor con R1 arriba, conectado al positivo, y el NTC abajo, a masa; el voltímetro mide la tensión sobre el NTC">
+      <figcaption><strong>NTC abajo (hacia masa)</strong>, R1 arriba. Al calentarse, la tensión sobre el NTC <strong>baja</strong>. (Pág. 49)</figcaption>
+    </figure>
+  </div>
+  <div class="why">
+    <p><strong>NTC arriba:</strong> al calentarse, su resistencia baja; entonces se queda con menos tensión y le deja <strong>más</strong> a R1. La tensión medida sube.</p>
+    <p><strong>NTC abajo:</strong> al calentarse, su resistencia baja; entonces se queda con <strong>menos</strong> tensión. Como se mide sobre él, la tensión medida baja.</p>
+    <p>En la mayoría de los autos el sensor de temperatura está conectado como en el segundo caso: la ECU lo alimenta con 5 V a través de un resistor interno, y la tensión del sensor baja a medida que el motor calienta.</p>
+  </div>
+  <div class="why">
+    <p><strong>Ejemplo:</strong> 5 V, resistor fijo de 1 kΩ arriba y NTC abajo.</p>
+    <p>Motor frío, NTC = 4 kΩ → V = 5 × 4 ÷ (1 + 4) = <strong>4 V</strong>.</p>
+    <p>Motor caliente, NTC = 250 Ω → V = 5 × 250 ÷ 1 250 = <strong>1 V</strong>.</p>
+  </div>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>Los termistores NTC asociados a resistores fijos generan una <strong>tensión variable que depende de la temperatura</strong> del NTC.</li>
+      <li>Según cómo se conecten el NTC y el resistor, la tensión <strong>sube o baja</strong> al aumentar la temperatura.</li>
+    </ul>
+  </div>
+
+  <h3>PTC: coeficiente de temperatura positivo</h3>
+  <p>Eligiendo otra mezcla de óxidos al fabricarlos se obtienen termistores <strong>PTC</strong> (<em>Positive Temperature Coefficient</em>): <strong>cuando la temperatura sube, la resistencia sube</strong>, y suele hacerlo de golpe al pasar cierta temperatura.</p>
+  <p>Esa propiedad los hace útiles como <strong>protectores térmicos</strong>. Se conecta el PTC en serie con un motor o una electroválvula. Mientras todo funciona bien, el PTC está frío, tiene poca resistencia y deja pasar la corriente normal. Si el motor se traba o se recalienta, el PTC se calienta, su resistencia sube mucho, y la corriente baja casi a cero: el circuito queda protegido sin que se queme nada. Al enfriarse, vuelve a funcionar solo.</p>
+  <div class="key">
+    <h4>Para recordar</h4>
+    <ul>
+      <li>PTC: <strong>más temperatura → más resistencia</strong>.</li>
+      <li>Los termistores PTC son sumamente adecuados para ser empleados como <strong>protectores térmicos</strong> de motores, electroválvulas, etc.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+  <table class="cmp">
+    <thead><tr><th></th><th>NTC</th><th>PTC</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre</td><td>Negative Temperature Coefficient</td><td>Positive Temperature Coefficient</td></tr>
+      <tr><td>Al calentarse</td><td>La resistencia <strong>baja</strong></td><td>La resistencia <strong>sube</strong></td></tr>
+      <tr><td>Uso típico</td><td>Sensor de temperatura</td><td>Protector térmico</td></tr>
+      <tr><td>En el auto</td><td>Temperatura de refrigerante, aire, aceite</td><td>Protección de motores (levantavidrios, limpiaparabrisas) y electroválvulas</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="next">
+    <a href="kirchhoff.html">← Serie, paralelo y Kirchhoff</a>
+    <a href="sensores-senales.html">Siguiente: sensores y señales →</a>
+  </div>
+</section>
+
+<hr>
+
+<section id="ejercicios">
+  <h2>Ejercicios</h2>
+  <p class="dek">Escribí el resultado en la unidad que pide cada consigna y comprobá.</p>
+  <div class="ex-bar">
+    <div class="progress"><i id="bar"></i></div>
+    <span class="count" id="count">0 correctos de 22</span>
+    <button class="btn-dark" id="checkAll">Comprobar todo</button>
+    <button class="btn-line" id="resetAll">Borrar respuestas</button>
+  </div>
+  <div id="exList"></div>
+</section>
+
+</div>
+</main>
+
+<footer>Se aceptan coma o punto decimal. Tus respuestas quedan guardadas en este navegador. Figuras del «Texto guía para uso del alumno» de la consola CDE-1.</footer>
+
+<script>
+window.PRACTICA = {
+key: "divisores-termistores-v1",
+groups: [
+  { id:"A", title:"Grupo A — divisor de tensión", bands:["#B35C00","#C9A227","#7B3F00"], color:"#B35C00" },
+  { id:"B", title:"Grupo B — potenciómetro", bands:["#1F5F8B","#C9A227","#2E7D4F"], color:"#1F5F8B" },
+  { id:"C", title:"Grupo C — componentes no lineales", bands:["#C0392B","#7B3F00","#C9A227"], color:"#C0392B" },
+  { id:"D", title:"Grupo D — termistores NTC y PTC", bands:["#2E7D4F","#1F5F8B","#B35C00"], color:"#2E7D4F" }
+],
+ex: [
+{g:"A",n:1,q:"Un divisor tiene R1 = 10 kΩ arriba y R2 = 5 kΩ abajo, conectado a 12 V. ¿Qué tensión hay en el punto medio X?",u:"V",a:4,
+ s:"V<sub>X</sub> = 12 × 5 ÷ (10 + 5) = 12 × 5 ÷ 15 = <span class='res'>4 V</span>"},
+{g:"A",n:2,q:"Un divisor con dos resistores iguales se conecta a 5 V. ¿Qué tensión hay en el punto medio?",u:"V",a:2.5,
+ s:"Iguales: la tensión se reparte mitad y mitad.<br>V<sub>X</sub> = 5 ÷ 2 = <span class='res'>2,5 V</span>"},
+{g:"A",n:3,q:"Un divisor de 2,2 kΩ arriba y 3,3 kΩ abajo se conecta a 12 V. ¿Qué tensión hay en el punto medio?",u:"V",a:7.2,
+ s:"V<sub>X</sub> = 12 × 3,3 ÷ (2,2 + 3,3) = 12 × 3,3 ÷ 5,5 = <span class='res'>7,2 V</span>"},
+{g:"A",n:4,q:"Un divisor de R1 = 8 kΩ arriba y R2 = 2 kΩ abajo se conecta a 10 V. ¿Qué tensión queda sobre R1?",u:"V",a:8,
+ s:"Primero el punto medio: V<sub>X</sub> = 10 × 2 ÷ 10 = 2 V (sobre R2).<br>2ª regla de Kirchhoff: sobre R1 queda 10 − 2 = <span class='res'>8 V</span>"},
+{g:"A",n:5,q:"Con la relación de la guía, (R3 + R4) ÷ R4 = V<sub>BATERÍA</sub> ÷ V<sub>X</sub>: R3 = 1 kΩ arriba, R4 = 3 kΩ abajo y la batería tiene 12 V. ¿Cuánto vale V<sub>X</sub>?",u:"V",a:9,
+ s:"(1 + 3) ÷ 3 = 12 ÷ V<sub>X</sub> → 4 ÷ 3 = 12 ÷ V<sub>X</sub><br>V<sub>X</sub> = 12 × 3 ÷ 4 = <span class='res'>9 V</span>"},
+{g:"A",n:6,q:"Querés obtener 3 V a partir de 9 V con un divisor. El resistor de abajo es de 1 kΩ. ¿De cuánto tiene que ser el de arriba, en kΩ?",u:"kΩ",a:2,
+ s:"Corriente por el de abajo: 3 V ÷ 1 kΩ = 3 mA (la misma en el de arriba, porque están en serie).<br>Al de arriba le quedan 9 − 3 = 6 V.<br>R = 6 V ÷ 3 mA = <span class='res'>2 kΩ</span>"},
+
+{g:"B",n:7,q:"Un potenciómetro está conectado a 12 V. El cursor está en el extremo que va a masa. ¿Qué tensión hay en el cursor?",u:"V",a:0,
+ s:"El cursor toca directamente la masa, que es 0 V.<br>V = <span class='res'>0 V</span>"},
+{g:"B",n:8,q:"El mismo potenciómetro (12 V), con el cursor en el extremo que va al positivo. ¿Qué tensión hay en el cursor?",u:"V",a:12,
+ s:"El cursor toca directamente el positivo.<br>V = <span class='res'>12 V</span>"},
+{g:"B",n:9,q:"El mismo potenciómetro (12 V), con el cursor justo en el medio del recorrido. ¿Qué tensión hay en el cursor?",u:"V",a:6,
+ s:"Los dos tramos son iguales, así que es un divisor de resistores iguales.<br>V = 12 ÷ 2 = <span class='res'>6 V</span>"},
+{g:"B",n:10,q:"Un potenciómetro de 10 kΩ está alimentado con 5 V. Entre el cursor y masa hay 3 kΩ. ¿Qué tensión hay en el cursor?",u:"V",a:1.5,
+ s:"V = 5 × 3 ÷ 10 = <span class='res'>1,5 V</span>"},
+{g:"B",n:11,q:"Un sensor de mariposa (TPS) es un potenciómetro alimentado con 5 V. La ECU lee 4 V en el cursor. ¿En qué porcentaje del recorrido está el cursor, medido desde masa?",u:"%",a:80,
+ s:"La tensión del cursor es proporcional a su posición.<br>4 ÷ 5 = 0,8 → <span class='res'>80 %</span>. La mariposa está casi toda abierta."},
+
+{g:"C",n:12,q:"Una lámpara encendida con 12 V consume 0,5 A. ¿Cuál es su resistencia en ese momento?",u:"Ω",a:24,
+ s:"R = V ÷ I = 12 ÷ 0,5 = <span class='res'>24 Ω</span>"},
+{g:"C",n:13,q:"La misma lámpara, alimentada con 6 V, consume 0,3 A. ¿Cuál es su resistencia ahora?",u:"Ω",a:20,
+ s:"R = 6 ÷ 0,3 = <span class='res'>20 Ω</span><br>No dio 24 Ω: con menos tensión el filamento está menos caliente y tiene menos resistencia. Es un componente no lineal."},
+{g:"C",n:14,q:"Apagada y fría, el óhmetro marca 2 Ω en esa lámpara. ¿Qué corriente circula en el instante de encenderla con 12 V, antes de que el filamento se caliente?",u:"A",a:6,
+ s:"En ese instante el filamento todavía está frío: I = 12 ÷ 2 = <span class='res'>6 A</span><br>Es 12 veces la corriente normal (0,5 A). Por eso las lámparas suelen quemarse al encenderlas."},
+
+{g:"D",n:15,q:"Un divisor tiene un resistor fijo de 1 kΩ arriba y un NTC abajo, alimentado con 5 V. Con el motor frío el NTC vale 4 kΩ. ¿Qué tensión hay sobre el NTC?",u:"V",a:4,
+ s:"V = 5 × 4 ÷ (1 + 4) = <span class='res'>4 V</span>"},
+{g:"D",n:16,q:"En el mismo divisor (1 kΩ arriba, NTC abajo, 5 V), con el motor caliente el NTC vale 250 Ω. ¿Qué tensión hay sobre el NTC?",u:"V",a:1,
+ s:"V = 5 × 250 ÷ (1 000 + 250) = 1 250 ÷ 1 250 = <span class='res'>1 V</span><br>Con el NTC abajo, la tensión baja al calentarse."},
+{g:"D",n:17,q:"Ahora el NTC está arriba y un resistor fijo R1 = 2 kΩ abajo, a 12 V. En frío el NTC vale 6 kΩ. ¿Qué tensión hay sobre R1?",u:"V",a:3,
+ s:"V<sub>R1</sub> = 12 × 2 ÷ (6 + 2) = <span class='res'>3 V</span>"},
+{g:"D",n:18,q:"El mismo circuito (NTC arriba, R1 = 2 kΩ abajo, 12 V), con el NTC caliente en 2 kΩ. ¿Qué tensión hay sobre R1?",u:"V",a:6,
+ s:"V<sub>R1</sub> = 12 × 2 ÷ (2 + 2) = <span class='res'>6 V</span><br>Con el NTC arriba, la tensión medida sube al calentarse (de 3 V a 6 V)."},
+{g:"D",n:19,q:"La ECU alimenta un sensor NTC con 5 V a través de un resistor interno de 3 kΩ. En el sensor se miden 2 V. ¿Cuánto vale el NTC, en kΩ?",u:"kΩ",a:2,
+ s:"Sobre el resistor interno quedan 5 − 2 = 3 V → I = 3 V ÷ 3 kΩ = 1 mA.<br>La misma corriente pasa por el NTC: R = 2 V ÷ 1 mA = <span class='res'>2 kΩ</span>"},
+{g:"D",n:20,q:"Un NTC mide 2 500 Ω con el motor a 20 °C. Al llegar a 80 °C su resistencia pasa a ser la octava parte. ¿Cuánto vale ahora?",u:"Ω",a:312.5,
+ s:"NTC: más temperatura → menos resistencia.<br>R = 2 500 ÷ 8 = <span class='res'>312,5 Ω</span>"},
+{g:"D",n:21,q:"Un PTC de 20 Ω (frío) protege una electroválvula de 40 Ω, en serie, a 12 V. ¿Qué corriente circula normalmente, en mA?",u:"mA",a:200,
+ s:"En serie: R = 20 + 40 = 60 Ω.<br>I = 12 ÷ 60 = 0,2 A = <span class='res'>200 mA</span>"},
+{g:"D",n:22,q:"La electroválvula se traba, se recalienta y el PTC sube a 1 160 Ω. ¿Qué corriente circula ahora, en mA?",u:"mA",a:10,
+ s:"R = 1 160 + 40 = 1 200 Ω.<br>I = 12 ÷ 1 200 = 0,01 A = <span class='res'>10 mA</span><br>La corriente bajó 20 veces: el PTC protegió la electroválvula."}
+]
+};
+</script>
+<script src="practica.js"></script>
+</body>
+</html>
