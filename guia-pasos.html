@@ -549,25 +549,35 @@ footer{
     gap:.9rem;
   }
 }
+
+/* ---------- navegación común ---------- */
+.topbar .in{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;gap:1.1rem}
+.topbar .brand{color:#DDE4E8;font-weight:600;font-size:.95rem;font-family:"IBM Plex Sans",sans-serif;text-decoration:none;flex:none}
+.topbar a{flex:none}
+.topbar a[aria-current="page"]{color:var(--lcd);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.topbar .score{flex:none;padding-left:.6rem}
+.onpage{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center;margin:0 0 2rem;padding:0 0 1rem;border-bottom:1px solid var(--rule);font-family:"IBM Plex Sans",sans-serif;font-size:.86rem}
+.onpage span{color:var(--ink-soft);margin-right:.2rem}
+.onpage a{text-decoration:none;border:1px solid var(--rule);border-radius:999px;padding:.15rem .7rem;background:#fff;color:var(--ink)}
+.onpage a:hover,.onpage a:focus-visible{border-color:var(--probe);color:var(--probe)}
+.onpage + section h2,.onpage + section > h2:first-child{margin-top:0}
 </style>
 </head>
 
 <body id="arriba">
 
-<div class="topbar">
+<nav class="topbar" aria-label="Secciones del sitio">
   <div class="in">
-    <strong>Ley de Ohm</strong>
-    <a href="index.html">Inicio</a>
-    <a href="cuestionarios.html">Cuestionarios</a>
-    <a href="kirchhoff.html">Kirchhoff</a>
+    <a class="brand" href="index.html">⌂ Mediciones eléctricas</a>
+    <a href="ley-de-ohm.html">Ley de Ohm</a>
+    <a href="guia-pasos.html" aria-current="page">Guía 00–09</a>
+    <a href="kirchhoff.html">Serie y paralelo</a>
     <a href="divisores-termistores.html">Divisores y termistores</a>
     <a href="sensores-senales.html">Sensores y señales</a>
-    <a href="ejercicios-combinados.html">Ejercicios combinados</a>
-    <a href="#indice">Pasos</a>
-    <a href="#tabla-resumen">Resumen</a>
-    <a href="#autoevaluacion">Autoevaluación</a>
+    <a href="ejercicios-combinados.html">Combinados</a>
+    <a href="cuestionarios.html">Cuestionarios</a>
   </div>
-</div>
+</nav>
 
 <header class="hero">
   <div class="in">
@@ -587,6 +597,7 @@ footer{
 
 <main>
 <div class="sheet">
+<nav class="onpage" aria-label="En esta página"><span>En esta página:</span><a href="#indice">Pasos</a><a href="#tabla-resumen">Resumen</a><a href="#autoevaluacion">Autoevaluación</a></nav>
 
 <!-- ================= INTRO ================= -->
 <section id="intro">
@@ -1127,7 +1138,7 @@ footer{
     </tbody>
   </table>
   </div>
-  <p>Si el despeje no te sale, el <a href="index.html#teoria">triángulo de la Ley de Ohm</a> del manual lo resuelve tapando la letra que buscás.</p>
+  <p>Si el despeje no te sale, el <a href="ley-de-ohm.html#teoria">triángulo de la Ley de Ohm</a> del manual lo resuelve tapando la letra que buscás.</p>
 
   <h3>Experiencia: R1 de la sección 3</h3>
   <p>Con <strong>MARCHA</strong> se prenden los leds de A y B de <strong>R1 de la sección 3</strong>, de + y − BATERÍA y de COM y VΩ.</p>
@@ -1310,7 +1321,7 @@ footer{
     <li>Punta negra siempre en <strong>COM</strong>; la roja cambia de borne según la función (VΩ, mA o 20A).</li>
     <li>Si no conocés el valor, empezá por el <strong>alcance más alto</strong> (en corriente es obligatorio para no quemar el fusible).</li>
     <li>Para cambiar de función, <strong>desconectá una punta</strong> primero.</li>
-    <li>Antes de dividir o multiplicar, pasá todo a <strong>V, A y Ω</strong>. Repasá la <a href="index.html#prefijos">tabla de prefijos</a> si hace falta.</li>
+    <li>Antes de dividir o multiplicar, pasá todo a <strong>V, A y Ω</strong>. Repasá la <a href="ley-de-ohm.html#prefijos">tabla de prefijos</a> si hace falta.</li>
   </ul>
 </section>
 
@@ -1374,7 +1385,7 @@ footer{
     <div class="ans"><p>Para que se reparta la tensión: el resistor se queda con una parte y el motor recibe solo una fracción de la tensión de la batería, entonces gira más despacio. Con distintos valores de resistencia se obtienen distintas velocidades.</p></div>
   </details>
 
-  <a class="back" href="index.html">← Volver al manual de Ley de Ohm</a>
+  <a class="back" href="ley-de-ohm.html">← Volver al manual de Ley de Ohm</a>
 </section>
 
 </div>

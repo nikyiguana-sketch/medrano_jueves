@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ley de Ohm — manual y práctica</title>
-<meta name="description" content="Manual de Ley de Ohm con conversión de unidades y 30 ejercicios autocorregidos.">
+<title>Mediciones eléctricas</title>
+<meta name="description" content="Menú de teoría y ejercicios de electricidad del automotor: Ley de Ohm, texto guía de la consola CDE-1, Kirchhoff, divisores, termistores, sensores y cuestionarios.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -21,350 +21,179 @@
   --lcd:#E8A33D;
   --probe:#1F5F8B;
   --ok:#2E7D4F;
-  --no:#B8332A;
-  --b1:#7B3F00;
-  --b2:#C0392B;
-  --b3:#D35400;
-  --b4:#C9A227;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{
   margin:0;
   font-family:"IBM Plex Serif",Georgia,serif;
   font-size:17px;
-  line-height:1.65;
+  line-height:1.6;
   color:var(--ink);
   background-color:var(--paper);
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:26px 26px;
 }
-h1,h2,h3,h4,nav,button,select,input,label,th,.ui{font-family:"IBM Plex Sans",system-ui,sans-serif}
-code,kbd,.mono,.lcd{font-family:"IBM Plex Mono",ui-monospace,monospace}
+h1,h2,h3,.ui{font-family:"IBM Plex Sans",system-ui,sans-serif}
+:focus-visible{outline:2px solid var(--probe);outline-offset:2px}
 
 /* ---------- barra ---------- */
 .topbar{position:sticky;top:0;z-index:40;background:var(--panel);color:#DDE4E8;border-bottom:1px solid #000}
-.topbar .in{max-width:1080px;margin:0 auto;padding:.55rem 1.2rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
-.topbar strong{font-weight:600;font-size:.95rem;letter-spacing:.01em}
-.topbar a{color:#9FB2BD;text-decoration:none;font-size:.88rem}
+.topbar .in{max-width:1080px;margin:0 auto;padding:.55rem 1.2rem;display:flex;gap:1.4rem;align-items:center}
+.topbar a{color:#9FB2BD;text-decoration:none;font-size:.88rem;font-family:"IBM Plex Sans",sans-serif}
 .topbar a:hover,.topbar a:focus-visible{color:var(--lcd)}
-.topbar .score{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--lcd)}
 
 /* ---------- hero ---------- */
 .hero{background:var(--panel);color:#E6EDF1;border-bottom:4px solid #0A0D10}
-.hero .in{max-width:1080px;margin:0 auto;padding:2.6rem 1.2rem 2.2rem;display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:center}
-.hero h1{font-size:2.45rem;line-height:1.08;margin:0 0 .6rem;font-weight:700;letter-spacing:-.02em}
-.hero p{margin:0;color:#A9BAC4;font-size:1rem;max-width:34ch}
-.calc{background:var(--panel-2);border:1px solid #303C46;border-radius:6px;padding:1.1rem 1.15rem 1.25rem}
-.calc h2{margin:0 0 .15rem;font-size:.92rem;font-weight:600;color:#C7D4DC}
-.calc .hint{margin:0 0 .85rem;font-size:.78rem;color:#7E919D;font-family:"IBM Plex Sans",sans-serif}
-.field{display:grid;grid-template-columns:2.2rem 1fr 5.4rem;gap:.5rem;align-items:center;margin-bottom:.5rem}
-.field label{font-size:.95rem;font-weight:600;color:#9FB2BD}
-.field input,.field select{background:#0E1317;border:1px solid #39454F;color:#E9F1F5;border-radius:4px;padding:.42rem .5rem;font-size:.95rem;width:100%;font-family:"IBM Plex Mono",monospace}
-.field input:focus-visible,.field select:focus-visible{outline:2px solid var(--lcd);outline-offset:1px}
-.calc-actions{display:flex;gap:.5rem;margin-top:.8rem}
-.readout{margin-top:.85rem;background:#0A0E11;border:1px solid #2A343D;border-radius:4px;padding:.6rem .75rem;min-height:2.9rem;display:flex;align-items:center}
-.lcd{color:var(--lcd);font-size:1.2rem;font-weight:500}
-.lcd.off{color:#4A5761;font-size:.85rem}
+.hero .in{max-width:1080px;margin:0 auto;padding:2.6rem 1.2rem 2.4rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
+.hero .kicker{font-family:"IBM Plex Mono",monospace;color:var(--lcd);font-size:.85rem;margin-bottom:.5rem}
+.hero h1{font-size:2.45rem;line-height:1.08;margin:0 0 .7rem;font-weight:700;letter-spacing:-.02em}
+.hero p{margin:0;color:#A9BAC4;max-width:54ch}
+.hero img{width:190px;border-radius:6px;background:#fff;padding:.4rem}
 
-/* ---------- botones ---------- */
-button{cursor:pointer;font-size:.86rem;font-weight:500;border-radius:4px;padding:.45rem .85rem;border:1px solid transparent;transition:background .12s ease}
-.btn{background:var(--probe);color:#fff}
-.btn:hover{background:#17496b}
-.btn-ghost{background:transparent;color:#9FB2BD;border-color:#3C4852}
-.btn-ghost:hover{color:#E6EDF1;border-color:#66757F}
-:focus-visible{outline:2px solid var(--probe);outline-offset:2px}
-
-/* ---------- contenido ---------- */
+/* ---------- menú ---------- */
 main{max-width:1080px;margin:0 auto;padding:0 1.2rem 5rem}
-.sheet{background:var(--sheet);border:1px solid var(--rule);border-top:none;padding:2.4rem 3rem 3rem}
-section{scroll-margin-top:60px}
-h2{font-size:1.62rem;letter-spacing:-.015em;margin:2.8rem 0 .2rem;font-weight:600}
-section:first-child h2{margin-top:0}
-h2+.dek{margin:.1rem 0 1.2rem;color:var(--ink-soft);font-style:italic}
-h3{font-size:1.06rem;margin:1.9rem 0 .5rem;font-weight:600;color:#2B333A}
-p,li{max-width:70ch}
-.lead{font-size:1.06rem}
-strong{font-weight:600}
-hr{border:none;border-top:1px solid var(--rule);margin:2.6rem 0}
-a{color:var(--probe)}
-
-table{border-collapse:collapse;width:100%;max-width:72ch;margin:1.1rem 0;font-size:.93rem;font-family:"IBM Plex Sans",sans-serif}
-th{text-align:left;font-weight:600;font-size:.82rem;color:var(--ink-soft);border-bottom:2px solid var(--ink);padding:.4rem .6rem}
-td{padding:.4rem .6rem;border-bottom:1px solid var(--rule)}
-tbody tr:hover{background:#F2F5F3}
-td.num,th.num{font-family:"IBM Plex Mono",monospace}
-
-.formula{display:inline-block;background:#EEF2F0;border:1px solid var(--rule);border-radius:3px;padding:.08rem .38rem;font-family:"IBM Plex Mono",monospace;font-size:.95em}
-pre{background:var(--panel);color:#CBD6DD;padding:1rem 1.1rem;border-radius:5px;overflow-x:auto;font-size:.88rem;line-height:1.5;max-width:72ch}
-.note{border-left:3px solid var(--lcd);background:#FCF6EA;padding:.7rem 1rem;margin:1.2rem 0;max-width:70ch;font-size:.96rem}
-
-/* ---------- ejercicios ---------- */
-.ex-bar{position:sticky;top:41px;z-index:30;background:var(--sheet);border-bottom:1px solid var(--rule);padding:.6rem 0;margin-bottom:1.2rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
-.progress{flex:1;min-width:120px;height:7px;background:#E2E8E4;border-radius:4px;overflow:hidden;max-width:260px}
-.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s ease}
-.ex-bar .count{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--ink-soft)}
-.btn-dark{background:var(--panel);color:#E6EDF1}
-.btn-dark:hover{background:#2A343D}
-.btn-line{background:transparent;color:var(--ink-soft);border-color:var(--rule)}
-.btn-line:hover{color:var(--ink);border-color:#9AA7A0}
-
-.grp{font-size:1.06rem;margin:2.2rem 0 1rem;font-weight:600;font-family:"IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:.6rem}
-.bands{display:inline-flex;gap:3px;height:1.05rem;align-items:stretch}
-.bands i{width:5px;border-radius:1px;display:block}
-
-.ex{border-bottom:1px solid var(--rule);padding:1rem 0 1rem 3rem;position:relative}
-.ex .n{position:absolute;left:0;top:1rem;width:2.1rem;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:.92rem;color:var(--ink-soft);border-right:3px solid var(--band,#999);padding-right:.45rem;line-height:1.5}
-.ex .q{margin:0 0 .7rem}
-.ex .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-.ex input[type=text]{width:8.5rem;padding:.4rem .55rem;border:1px solid #A9B5AE;border-radius:4px;font-family:"IBM Plex Mono",monospace;font-size:.95rem;background:#fff}
-.ex input:focus-visible{outline:2px solid var(--probe);outline-offset:1px}
-.ex .unit{font-family:"IBM Plex Mono",monospace;font-size:.95rem;color:var(--ink-soft);min-width:2.4rem}
-.ex.ok input[type=text]{border-color:var(--ok);background:#F0F8F3}
-.ex.no input[type=text]{border-color:var(--no);background:#FDF2F1}
-.led{width:.62rem;height:.62rem;border-radius:50%;background:#CDD6D0;flex:none;box-shadow:inset 0 0 2px rgba(0,0,0,.3)}
-.ex.ok .led{background:var(--ok);box-shadow:0 0 6px rgba(46,125,79,.75)}
-.ex.no .led{background:var(--no);box-shadow:0 0 6px rgba(184,51,42,.7)}
-.verdict{font-family:"IBM Plex Sans",sans-serif;font-size:.85rem;color:var(--ink-soft)}
-.ex.ok .verdict{color:var(--ok)}
-.ex.no .verdict{color:var(--no)}
-.sol{display:none;margin:.85rem 0 .2rem;background:#F1F4F2;border-left:3px solid var(--probe);padding:.7rem 1rem;font-size:.96rem;max-width:70ch}
-.sol.open{display:block}
-.sol p{margin:.3rem 0}
-.sol .res{font-family:"IBM Plex Mono",monospace;font-weight:600}
-.link-btn{background:none;border:none;color:var(--probe);padding:.2rem 0;font-size:.85rem;text-decoration:underline;text-underline-offset:2px}
-
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-top:none;padding:2.2rem 2.6rem 2.8rem}
+h2{font-size:1.25rem;margin:2.4rem 0 .3rem;font-weight:600}
+h2:first-child{margin-top:0}
+.dek{margin:0 0 1rem;color:var(--ink-soft);font-style:italic}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;list-style:none;margin:0;padding:0}
+.card{display:flex;flex-direction:column;height:100%;border:1px solid var(--rule);border-left:5px solid var(--c,var(--probe));border-radius:6px;background:#fff;padding:1rem 1.1rem 1rem;text-decoration:none;color:var(--ink);transition:border-color .12s ease,transform .12s ease}
+.card:hover,.card:focus-visible{border-color:var(--c,var(--probe));transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+.card .n{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-soft)}
+.card h3{margin:.15rem 0 .4rem;font-size:1.12rem;color:var(--ink)}
+.card p{margin:0 0 .8rem;font-size:.95rem;color:#38434A}
+.card .meta{margin-top:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;font-family:"IBM Plex Sans",sans-serif;font-size:.8rem;color:var(--ink-soft)}
+.tag{border:1px solid var(--rule);border-radius:999px;padding:.05rem .55rem;background:#F4F7F5}
+.prog{display:flex;align-items:center;gap:.45rem;flex:1;min-width:140px}
+.prog .bar{flex:1;height:6px;background:#E2E8E4;border-radius:3px;overflow:hidden;max-width:120px}
+.prog .bar i{display:block;height:100%;width:0;background:var(--ok)}
+.prog .txt{font-family:"IBM Plex Mono",monospace;font-size:.78rem}
+.note{margin-top:2.2rem;border-left:3px solid var(--lcd);background:#FCF6EA;padding:.7rem 1rem;font-size:.95rem;max-width:72ch}
 footer{max-width:1080px;margin:0 auto;padding:1.4rem 1.2rem 3rem;font-size:.85rem;color:var(--ink-soft);font-family:"IBM Plex Sans",sans-serif}
 
 @media (max-width:860px){
-  .hero .in{grid-template-columns:1fr;gap:1.6rem;padding:2rem 1.2rem}
+  .hero .in{grid-template-columns:1fr;padding:2rem 1.2rem}
+  .hero img{width:140px}
   .hero h1{font-size:2rem}
-  .sheet{padding:1.6rem 1.2rem 2.4rem}
+  .sheet{padding:1.6rem 1rem 2.4rem}
+  main{padding:0 .5rem 4rem}
   body{font-size:16px}
-  main{padding:0 .7rem 4rem}
   .topbar .in{gap:.9rem}
 }
+
+/* ---------- navegación común ---------- */
+.topbar .in{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;gap:1.1rem}
+.topbar .brand{color:#DDE4E8;font-weight:600;font-size:.95rem;font-family:"IBM Plex Sans",sans-serif;text-decoration:none;flex:none}
+.topbar a{flex:none}
+.topbar a[aria-current="page"]{color:var(--lcd);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.topbar .score{flex:none;padding-left:.6rem}
+.onpage{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center;margin:0 0 2rem;padding:0 0 1rem;border-bottom:1px solid var(--rule);font-family:"IBM Plex Sans",sans-serif;font-size:.86rem}
+.onpage span{color:var(--ink-soft);margin-right:.2rem}
+.onpage a{text-decoration:none;border:1px solid var(--rule);border-radius:999px;padding:.15rem .7rem;background:#fff;color:var(--ink)}
+.onpage a:hover,.onpage a:focus-visible{border-color:var(--probe);color:var(--probe)}
+.onpage + section h2,.onpage + section > h2:first-child{margin-top:0}
 </style>
 </head>
 <body>
 
-<div class="topbar">
+<nav class="topbar" aria-label="Secciones del sitio">
   <div class="in">
-    <strong>Ley de Ohm</strong>
-    <a href="#teoria">Teoría</a>
-    <a href="#prefijos">Prefijos</a>
-    <a href="#conversion">Conversión</a>
-    <a href="#ejercicios">Ejercicios</a>
-    <a href="cuestionarios.html">Cuestionarios</a>
-    <a href="guia-pasos.html">Guía pasos 00–09</a>
-    <a href="kirchhoff.html">Kirchhoff</a>
+    <a class="brand" href="index.html" aria-current="page">⌂ Mediciones eléctricas</a>
+    <a href="ley-de-ohm.html">Ley de Ohm</a>
+    <a href="guia-pasos.html">Guía 00–09</a>
+    <a href="kirchhoff.html">Serie y paralelo</a>
     <a href="divisores-termistores.html">Divisores y termistores</a>
     <a href="sensores-senales.html">Sensores y señales</a>
-    <a href="ejercicios-combinados.html">Ejercicios combinados</a>
-    <span class="score" id="score">0 / 30</span>
+    <a href="ejercicios-combinados.html">Combinados</a>
+    <a href="cuestionarios.html">Cuestionarios</a>
   </div>
-</div>
+</nav>
 
 <header class="hero">
   <div class="in">
     <div>
-      <h1>V = I × R</h1>
-      <p>Manual breve, tabla de prefijos y 30 ejercicios con corrección automática. Cargá dos valores acá abajo y calculá el tercero.</p>
+      <div class="kicker">ELECTRICIDAD DEL AUTOMOTOR</div>
+      <h1>Mediciones eléctricas</h1>
+      <p>Teoría y ejercicios autocorregidos, desde la Ley de Ohm hasta los sensores del auto, basados en el texto guía de la consola didáctica CDE-1. Elegí por dónde empezar o seguí el recorrido en orden.</p>
     </div>
-    <div class="calc">
-      <h2>Calculadora</h2>
-      <p class="hint">Dejá vacío el campo que querés obtener.</p>
-      <div class="field">
-        <label for="cv">V</label>
-        <input type="text" id="cv" inputmode="decimal" placeholder="tensión">
-        <select id="uv" aria-label="Unidad de tensión"></select>
-      </div>
-      <div class="field">
-        <label for="ci">I</label>
-        <input type="text" id="ci" inputmode="decimal" placeholder="corriente">
-        <select id="ui" aria-label="Unidad de corriente"></select>
-      </div>
-      <div class="field">
-        <label for="cr">R</label>
-        <input type="text" id="cr" inputmode="decimal" placeholder="resistencia">
-        <select id="ur" aria-label="Unidad de resistencia"></select>
-      </div>
-      <div class="calc-actions">
-        <button class="btn" id="calcBtn">Calcular</button>
-        <button class="btn-ghost" id="clearBtn">Limpiar</button>
-      </div>
-      <div class="readout"><span class="lcd off" id="readout">Esperando dos valores</span></div>
-    </div>
+    <img src="img/guia/tuercalin.png" alt="Tuercalín, el personaje del texto guía, junto a un mecánico">
   </div>
 </header>
 
 <main>
 <div class="sheet">
 
-<section id="teoria">
-  <h2>Qué es la Ley de Ohm</h2>
-  <p class="dek">Una sola fórmula, tres despejes.</p>
-  <p class="lead">La corriente que circula por un componente es proporcional a la tensión aplicada e inversamente proporcional a su resistencia. En una fórmula: <span class="formula">V = I × R</span>.</p>
+<h2>Teoría y ejercicios</h2>
+<p class="dek">En este orden, cada página usa lo que se vio en la anterior.</p>
+<ul class="cards">
+  <li><a class="card" href="ley-de-ohm.html" style="--c:#7B3F00">
+    <span class="n">01</span>
+    <h3>Ley de Ohm</h3>
+    <p>V = I × R, el triángulo, la tabla de prefijos y cómo convertir unidades. Incluye una calculadora.</p>
+    <span class="meta"><span class="tag">30 ejercicios</span><span class="prog" data-key="ohm-practica-v1" data-total="30"></span></span>
+  </a></li>
+  <li><a class="card" href="guia-pasos.html" style="--c:#1F5F8B">
+    <span class="n">02</span>
+    <h3>Texto guía: pasos 00 a 09</h3>
+    <p>Voltímetro, amperímetro y óhmetro; Ley de Ohm en la práctica, potenciómetros y circuito serie.</p>
+    <span class="meta"><span class="tag">Resumen</span><span class="tag">Autoevaluación</span></span>
+  </a></li>
+  <li><a class="card" href="kirchhoff.html" style="--c:#B35C00">
+    <span class="n">03</span>
+    <h3>Serie, paralelo y Kirchhoff</h3>
+    <p>Cómo se reparten la tensión y la corriente, las dos reglas de Kirchhoff y la resistencia equivalente.</p>
+    <span class="meta"><span class="tag">30 ejercicios</span><span class="prog" data-key="kirchhoff-practica-v2" data-total="30"></span></span>
+  </a></li>
+  <li><a class="card" href="divisores-termistores.html" style="--c:#2E7D4F">
+    <span class="n">04</span>
+    <h3>Divisores de tensión y termistores</h3>
+    <p>Divisor de tensión, potenciómetro, componentes no lineales y los sensores de temperatura NTC y PTC.</p>
+    <span class="meta"><span class="tag">22 ejercicios</span><span class="prog" data-key="divisores-termistores-v1" data-total="22"></span></span>
+  </a></li>
+  <li><a class="card" href="sensores-senales.html" style="--c:#C0392B">
+    <span class="n">05</span>
+    <h3>Sensores y señales</h3>
+    <p>Llave Hall, valor medio, osciloscopio, control por PWM y sensor inductivo.</p>
+    <span class="meta"><span class="tag">20 ejercicios</span><span class="prog" data-key="sensores-senales-v1" data-total="20"></span></span>
+  </a></li>
+</ul>
 
-  <p>La analogía del agua funciona casi perfecto:</p>
-  <ul>
-    <li><strong>Tensión (V)</strong> — la presión del agua en el caño. Empuja.</li>
-    <li><strong>Corriente (I)</strong> — cuánta agua pasa por segundo. Fluye.</li>
-    <li><strong>Resistencia (R)</strong> — qué tan angosto es el caño. Frena.</li>
-  </ul>
-  <p>Más presión con el mismo caño y pasa más agua. La misma presión con un caño más angosto y pasa menos. Eso es todo.</p>
+<h2>Para practicar</h2>
+<p class="dek">Para cuando ya viste la teoría.</p>
+<ul class="cards">
+  <li><a class="card" href="ejercicios-combinados.html" style="--c:#C9A227">
+    <span class="n">06</span>
+    <h3>Ejercicios combinados</h3>
+    <p>Ohm y Kirchhoff juntos: serie, paralelo, circuitos mixtos, divisores y casos del auto.</p>
+    <span class="meta"><span class="tag">46 ejercicios</span><span class="prog" data-key="ohm-kirchhoff-combinados-v1" data-total="46"></span></span>
+  </a></li>
+  <li><a class="card" href="cuestionarios.html" style="--c:#4C585F">
+    <span class="n">07</span>
+    <h3>Cuestionarios</h3>
+    <p>Preguntas y respuestas de los módulos 1 y 2: multímetro, mediciones, Ley de Ohm y potenciómetros.</p>
+    <span class="meta"><span class="tag">25 preguntas</span></span>
+  </a></li>
+</ul>
 
-  <table>
-    <thead><tr><th>Magnitud</th><th>Símbolo</th><th>Unidad</th><th>Símbolo unidad</th><th>Qué mide</th></tr></thead>
-    <tbody>
-      <tr><td>Tensión</td><td class="num">V (o U, E)</td><td>volt</td><td class="num">V</td><td>La diferencia de potencial que empuja los electrones</td></tr>
-      <tr><td>Corriente</td><td class="num">I</td><td>ampere</td><td class="num">A</td><td>Cantidad de carga que pasa por segundo</td></tr>
-      <tr><td>Resistencia</td><td class="num">R</td><td>ohm</td><td class="num">Ω</td><td>La oposición al paso de la corriente</td></tr>
-    </tbody>
-  </table>
-
-  <div class="note">La letra <strong>V</strong> se usa para la magnitud (tensión) y también para la unidad (volt). Por contexto se entiende: «V = 12 V» es «la tensión vale doce volt».</div>
-
-  <h3>Las tres fórmulas</h3>
-  <table>
-    <thead><tr><th>Si te falta…</th><th>Usás</th><th>Ejemplo</th></tr></thead>
-    <tbody>
-      <tr><td>Tensión</td><td class="num">V = I × R</td><td class="num">2 A × 10 Ω = 20 V</td></tr>
-      <tr><td>Corriente</td><td class="num">I = V ÷ R</td><td class="num">20 V ÷ 10 Ω = 2 A</td></tr>
-      <tr><td>Resistencia</td><td class="num">R = V ÷ I</td><td class="num">20 V ÷ 2 A = 10 Ω</td></tr>
-    </tbody>
-  </table>
-
-  <h3>El triángulo</h3>
-  <p>Dibujás un triángulo con <strong>V</strong> arriba, y <strong>I</strong> y <strong>R</strong> abajo. Tapás con el dedo lo que querés calcular y lo que queda a la vista es la cuenta.</p>
-<pre>      ┌───────┐
-      │   V   │
-      ├───┬───┤
-      │ I │ R │
-      └───┴───┘</pre>
-  <ul>
-    <li>Tapás <strong>V</strong> y quedan I y R lado a lado: se multiplican.</li>
-    <li>Tapás <strong>I</strong> y queda V arriba de R: se dividen.</li>
-    <li>Tapás <strong>R</strong> y queda V arriba de I: se dividen.</li>
-  </ul>
-</section>
-
-<hr>
-
-<section id="prefijos">
-  <h2>Tabla de prefijos</h2>
-  <p class="dek">Los mismos para volt, ampere y ohm.</p>
-  <p>Un prefijo es solo un multiplicador pegado adelante de la unidad. No cambia nada más.</p>
-
-  <table>
-    <thead><tr><th>Prefijo</th><th>Símbolo</th><th class="num">Multiplica por</th><th class="num">Notación científica</th></tr></thead>
-    <tbody>
-      <tr><td>giga</td><td class="num">G</td><td class="num">1 000 000 000</td><td class="num">10⁹</td></tr>
-      <tr><td>mega</td><td class="num">M</td><td class="num">1 000 000</td><td class="num">10⁶</td></tr>
-      <tr><td>kilo</td><td class="num">k</td><td class="num">1 000</td><td class="num">10³</td></tr>
-      <tr><td>sin prefijo</td><td class="num">—</td><td class="num">1</td><td class="num">10⁰</td></tr>
-      <tr><td>mili</td><td class="num">m</td><td class="num">0,001</td><td class="num">10⁻³</td></tr>
-      <tr><td>micro</td><td class="num">µ</td><td class="num">0,000001</td><td class="num">10⁻⁶</td></tr>
-      <tr><td>nano</td><td class="num">n</td><td class="num">0,000000001</td><td class="num">10⁻⁹</td></tr>
-      <tr><td>pico</td><td class="num">p</td><td class="num">0,000000000001</td><td class="num">10⁻¹²</td></tr>
-    </tbody>
-  </table>
-
-  <div class="note"><strong>M</strong> es mega (un millón) y <strong>m</strong> es mili (una milésima). Se diferencian en mil millones de veces. La <strong>k</strong> de kilo va siempre en minúscula.</div>
-
-  <h3>Cómo se ve aplicado a cada unidad</h3>
-  <table>
-    <thead><tr><th>Escrito así</th><th>Se lee</th><th class="num">Equivale a</th></tr></thead>
-    <tbody>
-      <tr><td class="num">1 kV</td><td>1 kilovolt</td><td class="num">1 000 V</td></tr>
-      <tr><td class="num">1 mV</td><td>1 milivolt</td><td class="num">0,001 V</td></tr>
-      <tr><td class="num">1 µV</td><td>1 microvolt</td><td class="num">0,000001 V</td></tr>
-      <tr><td class="num">1 kA</td><td>1 kiloampere</td><td class="num">1 000 A</td></tr>
-      <tr><td class="num">1 mA</td><td>1 miliampere</td><td class="num">0,001 A</td></tr>
-      <tr><td class="num">1 µA</td><td>1 microampere</td><td class="num">0,000001 A</td></tr>
-      <tr><td class="num">1 kΩ</td><td>1 kiloohm</td><td class="num">1 000 Ω</td></tr>
-      <tr><td class="num">1 MΩ</td><td>1 megaohm</td><td class="num">1 000 000 Ω</td></tr>
-      <tr><td class="num">1 GΩ</td><td>1 gigaohm</td><td class="num">1 000 000 000 Ω</td></tr>
-    </tbody>
-  </table>
-  <p>En electrónica vas a ver casi siempre estos seis: mV, kV, mA, µA, kΩ y MΩ. Los demás aparecen mucho menos.</p>
-</section>
-
-<hr>
-
-<section id="conversion">
-  <h2>Cómo convertir entre unidades</h2>
-  <p class="dek">Hacia la base se multiplica, desde la base se divide.</p>
-  <ul>
-    <li>47 kΩ a Ω: multiplico por 1 000 → 47 000 Ω</li>
-    <li>47 000 Ω a kΩ: divido por 1 000 → 47 kΩ</li>
-    <li>12 mA a A: multiplico por 0,001 → 0,012 A</li>
-    <li>0,012 A a mA: divido por 0,001 → 12 mA</li>
-  </ul>
-
-  <h3>El truco de correr la coma</h3>
-  <p>Multiplicar o dividir por 1 000 es mover la coma <strong>tres lugares</strong>. Por un millón, <strong>seis lugares</strong>.</p>
-  <ul>
-    <li>Vas a una unidad <strong>más chica</strong> (de V a mV, de A a µA): el número se hace <strong>más grande</strong>, coma a la derecha.</li>
-    <li>Vas a una unidad <strong>más grande</strong> (de Ω a kΩ, de mV a V): el número se hace <strong>más chico</strong>, coma a la izquierda.</li>
-  </ul>
-  <ul>
-    <li>0,047 A a mA: tres a la derecha → <strong>47 mA</strong></li>
-    <li>2 200 000 Ω a MΩ: seis a la izquierda → <strong>2,2 MΩ</strong></li>
-    <li>0,0008 V a µV: seis a la derecha → <strong>800 µV</strong></li>
-    <li>1 500 mA a A: tres a la izquierda → <strong>1,5 A</strong></li>
-  </ul>
-
-  <h3>La escalera</h3>
-  <p>Para saltar entre dos prefijos sin pasar por la base, contá los escalones. Cada escalón vale 1 000, o sea tres lugares de coma.</p>
-<pre>  G  →  M  →  k  →  base  →  m  →  µ  →  n  →  p
-    ×1000  ×1000  ×1000   ×1000  ×1000  ×1000  ×1000</pre>
-  <p>Bajando (hacia la derecha) el número crece, subiendo se achica. De MΩ a kΩ hay un escalón bajando: 3,3 MΩ = 3 300 kΩ. De µA a mA hay uno subiendo: 500 µA = 0,5 mA.</p>
-
-  <h3>Cuando el prefijo se cancela</h3>
-  <p>Si en una división aparece <strong>el mismo prefijo arriba y abajo</strong>, se cancela y podés dividir los números directamente:</p>
-<pre>  kV ÷ kΩ = 1 000 V ÷ 1 000 Ω = V ÷ Ω = A</pre>
-  <p>Entonces 6 kV ÷ 12 kΩ = 0,5 A, sin pasar nada a volt ni a ohm. Lo mismo con <span class="formula">mV ÷ mA = V ÷ A = Ω</span>.</p>
-  <div class="note">Vale <strong>solo</strong> si el prefijo es el mismo de los dos lados. Si son distintos (mV y kΩ, por ejemplo), pasá todo a unidades base y listo.</div>
-
-  <h3>Antes de resolver</h3>
-  <p>El grueso de los errores no son de fórmula, son de unidades. Cuatro pasos y no fallás:</p>
-  <ol>
-    <li>Anotá los tres valores y marcá cuál falta.</li>
-    <li>Pasá todo a unidades base: V, A y Ω.</li>
-    <li>Aplicá la fórmula.</li>
-    <li>Convertí el resultado a la unidad que te piden.</li>
-  </ol>
-  <p>Los errores que más se repiten:</p>
-  <ul>
-    <li><strong>Mezclar unidades.</strong> Dividir 12 V por 2,4 kΩ y anotar «5» sin aclarar si son A o mA. Son mA.</li>
-    <li><strong>Confundir m con M.</strong> 5 mΩ y 5 MΩ son cosas completamente distintas.</li>
-    <li><strong>Olvidar el último paso.</strong> Te piden µA y dejaste 0,000005 A.</li>
-    <li><strong>Correr la coma para el lado equivocado.</strong> Si pasás a una unidad más chica, el número tiene que quedar más grande.</li>
-    <li><strong>Resultados sin sentido físico.</strong> Si te da 1 MΩ con 3 A, eso serían tres millones de volt.</li>
-  </ul>
-</section>
-
-<hr>
-
-<section id="ejercicios">
-  <h2>Ejercicios</h2>
-  <p class="dek">Escribí el resultado en la unidad que pide cada consigna y comprobá.</p>
-  <div class="ex-bar">
-    <div class="progress"><i id="bar"></i></div>
-    <span class="count" id="count">0 correctos de 30</span>
-    <button class="btn-dark" id="checkAll">Comprobar todo</button>
-    <button class="btn-line" id="resetAll">Borrar respuestas</button>
-  </div>
-  <div id="exList"></div>
-</section>
+<p class="note">La barra de arriba está en todas las páginas: desde cualquier lugar podés saltar a otra sección o volver a este menú con <strong>⌂ Mediciones eléctricas</strong>.</p>
 
 </div>
 </main>
 
-<footer>Se aceptan coma o punto decimal. Tus respuestas quedan guardadas en este navegador.</footer>
+<footer>Tu progreso en los ejercicios queda guardado en este navegador. Figuras del «Texto guía para uso del alumno» de la consola CDE-1.</footer>
 
-<script src="app.js"></script>
+<script>
+document.querySelectorAll(".prog").forEach(el => {
+  const total = Number(el.dataset.total);
+  let done = 0;
+  try {
+    const saved = JSON.parse(localStorage.getItem(el.dataset.key) || "{}") || {};
+    done = Object.values(saved).filter(v => v && v.ok).length;
+  } catch (e) {}
+  el.innerHTML = '<span class="bar"><i style="width:' + (done / total * 100) + '%"></i></span><span class="txt">' + done + " / " + total + "</span>";
+  el.setAttribute("aria-label", done + " de " + total + " ejercicios correctos");
+});
+</script>
 </body>
 </html>
